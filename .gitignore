@@ -1,0 +1,9 @@
+*.exe
+build/
+.project
+.cproject
+bin/
+compile_commands.json
+run-msbuild.bat
+.clangd/
+*.swp
