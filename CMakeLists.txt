@@ -114,7 +114,8 @@ add_subdirectory(src/cli)
 
 if(${BASYX_BUILD_TESTS})
     include( CTest )
-    add_subdirectory(tests)
+    add_subdirectory(tests/tests_libaas)
+    add_subdirectory(tests/tests_misc)
 endif()
 
 ###############################################

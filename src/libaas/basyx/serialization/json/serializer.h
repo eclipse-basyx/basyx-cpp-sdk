@@ -116,11 +116,21 @@ namespace basyx::serialization::json
 		json["valueType"] = property.get_value_type().to_string();
 	};
 
-	template<typename T>
+	template<>
 	inline void serialize_helper(json_t & json, const SubmodelElementCollection & collection)
 	{
 		serialize_submodelelement_helper(json, collection);
 
+		json_t value = json_t::array();
+
+		//auto & heh = collection.begin();
+
+		for (const auto & element : collection) {
+			value.emplace_back(serialize(*element));
+		};
+
+		if (value.size() > 0)
+			json["value"] = value;
 	};
 
 	template<typename T>
@@ -137,6 +147,12 @@ namespace basyx::serialization::json
 		{
 		case ModelTypes::MultiLanguageProperty:
 			return serialize_submodelelement<MultiLanguageProperty>(json, submodelElement);
+		case ModelTypes::Property:
+			//submodelElement.serialize_json(json);
+			return;
+		case ModelTypes::SubmodelElementCollection:
+			return serialize_submodelelement<SubmodelElementCollection>(json, submodelElement);
+
 			//return serialize_helper<MultiLanguageProperty>(json, static_cast<const MultiLanguageProperty&>(submodelElement));
 		};
 	};

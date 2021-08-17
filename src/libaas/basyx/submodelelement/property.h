@@ -3,6 +3,7 @@
 #include <basyx/submodelelement/dataelement.h>
 #include <basyx/langstringset.h>
 #include <basyx/modeltype.h>
+//#include <basyx/serialization/serializable.h>
 
 #include <util/string_view/string_view.hpp>
 
@@ -13,7 +14,10 @@ namespace basyx
 {
 
 template<typename DataType>
-class Property : public DataElement, private ModelType<ModelTypes::Property>
+class Property : 
+	public DataElement, 
+	private ModelType<ModelTypes::Property>
+	//private serialization::Serializable<Property<DataType>>
 {
 private:
 	util::optional<DataType> value;

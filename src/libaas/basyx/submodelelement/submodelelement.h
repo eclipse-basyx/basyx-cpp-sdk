@@ -6,6 +6,7 @@
 #include <basyx/hassemantics.h>
 #include <basyx/langstringset.h>
 #include <basyx/modeltype.h>
+#include <basyx/serialization/serializable_base.h>
 
 #include <util/string_view/string_view.hpp>
 
@@ -14,7 +15,12 @@
 namespace basyx
 {
 
-class SubmodelElement : public Referable, public HasKind, public HasSemantics, public virtual modeltype_base
+class SubmodelElement : 
+	public Referable, 
+	public HasKind,
+	public HasSemantics, 
+	public virtual modeltype_base 
+	//public virtual serialization::serializable_base
 {
 protected:
 	SubmodelElement(util::string_view idShort) : Referable(idShort) {};

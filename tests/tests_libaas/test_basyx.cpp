@@ -239,7 +239,64 @@ TEST_F(BaseTest, SubmodelElementCollection_2)
 	col.add(i1);
 	col.add(i2);
 
+	auto r0 = col.get("none");
+	ASSERT_EQ(r0, nullptr);
+
 	auto r1 = col.get("i1");
+	ASSERT_NE(r1, nullptr);
+
+	auto r2 = col.get<Property<int>>("i2");
+	ASSERT_NE(r2, nullptr);
+	ASSERT_EQ(*r2->get_value(), 5);
+
+	int j = 2;
+};
+
+TEST_F(BaseTest, IntPropertyCopy)
+{
+	Property<int> i{ "i", 1 };
+	auto i2 = i;
+
+	i2.~Property();
+	i.~Property();
+
+	int j = 2;
+}
+
+TEST_F(BaseTest, StringProperty)
+{
+	Property<std::string> s{ "string_prop", "test" };
+	auto s2 = s;
+
+	s.set_value("LOL");
+
+	s2.~Property();
+	s.~Property();
+
+	int j = 2;
+}
+
+TEST_F(BaseTest, SubmodelElementCollection_3)
+{
+	SubmodelElementCollection col1{ "col1" };
+	{
+		SubmodelElementCollection col2{ "col2" };
+
+		Property<int> i{ "int_prop", 2 };
+		Property<float> f{ "float_prop", 5.0f };
+
+		Property<std::string> s{ "string_prop", "test" };
+		auto s2 = s;
+
+		//s2.~Property();
+
+		//col1.add(Property<int>("int_prop", 2));
+		col1.add(f);
+		//col2.add(s);
+		//col1.add(std::move(col2));
+	
+		int j = 2;
+	};
 
 	int j = 2;
 };

@@ -54,11 +54,18 @@ private:
 		};
 #endif
 	} _internals;
+private:
+	constexpr void _copy_internal(const optional& rhs) {
+		this->_internals._empty = rhs._internals._empty;
+		if (rhs.has_value()) {
+			this->emplace(rhs.value());
+		}
+	};
 public:
 	constexpr optional() noexcept = default;
 
-	constexpr optional(const optional&) = default;
-	constexpr optional& operator=(const optional&) = default;
+	constexpr optional(const optional& rhs) { this->_copy_internal(rhs); };
+	constexpr optional& operator=(const optional& rhs) { this->_copy_internal(rhs); return *this; };
 
 	constexpr optional(optional&&) noexcept = default;
 	constexpr optional& operator=(optional&&) noexcept = default;

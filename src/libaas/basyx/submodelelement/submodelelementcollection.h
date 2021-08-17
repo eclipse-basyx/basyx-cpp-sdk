@@ -34,13 +34,17 @@ public:
 	SubmodelElementCollection(SubmodelElementCollection&&) noexcept = default;
 	SubmodelElementCollection& operator=(SubmodelElementCollection&&) noexcept = default;
 
-	virtual ~SubmodelElementCollection() = default;
+	virtual ~SubmodelElementCollection() {
+		int j = 2;
+	};
 public:
 	valueIterator_t begin() noexcept { return this->valueList.begin(); };
 	valueIterator_t end() noexcept { return this->valueList.end(); };
 
 	constValueIterator_t begin() const noexcept { return this->valueList.begin(); };
-	constValueIterator_t end() const noexcept { return this->valueList.begin(); };
+	constValueIterator_t end() const noexcept { return this->valueList.end(); };
+private:
+	SubmodelElement * find_element_internal(util::string_view idShort) const noexcept;
 public:
 	template<typename Element>
 	void add(Element && e)
@@ -51,26 +55,35 @@ public:
 	};
 
 	// Get SubmodelElement by idShort
-	util::optional<SubmodelElement&> get(util::string_view idShort) noexcept {
-		auto find_result = std::find_if(this->valueList.begin(), this->valueList.end(), [idShort](const auto & item) {
-			return false;
-		});
+	SubmodelElement * get(util::string_view idShort) noexcept {
+		return find_element_internal(idShort);
+	};
 
-		if (find_result == this->valueList.end())
-			return {};
-
-		return *find_result->get();
+	const SubmodelElement * get(util::string_view idShort) const noexcept {
+		return find_element_internal(idShort);
 	};
 
 	// Get typed element by idShort
 	template<typename Element>
-	util::optional<Element&> get(util::string_view idShort) noexcept {
-		auto find_result = std::find_if(this->valueList.begin(), this->valueList.end(), [idShort](const auto & item) {
-			return false;
-		});
+	Element * get(util::string_view idShort) noexcept {
+		auto element = get(idShort);
 
-		return 5;
+		if (element != nullptr)
+			return dynamic_cast<Element *>(element);
+		return nullptr;
 	};
+
+	// Get typed const element by idShort
+	template<typename Element>
+	const Element * get(util::string_view idShort) const noexcept {
+		auto element = get(idShort);
+
+		if (element != nullptr)
+			return dynamic_cast<const Element *>(element);
+		return nullptr;
+	};
+
+	std::size_t size() const noexcept { return this->valueList.size(); }
 };
 
 }
