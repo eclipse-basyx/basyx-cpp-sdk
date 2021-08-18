@@ -135,21 +135,20 @@ TEST_F(JsonTest, SubmodelElementCollection)
 
 		Property<int> i{ "int_prop", 2 };
 		Property<float> f{ "float_prop", 5.0f };
-
 		Property<std::string> s{ "string_prop", "test" };
-		auto s2 = s;
-
-		s2.~Property();
-
+		MultiLanguageProperty mlp{ "mlp", {
+			{"en", "test"},
+			{"de", "beispiel"}
+			} };
 
 		col1.add(Property<int>("int_prop", 2));
 		col1.add(f);
-		//col2.add(s);
-		//col1.add(std::move(col2));
+		col2.add(mlp);
+		col2.add(s);
+		col1.add(std::move(col2));
 	};
 
-	//auto json = basyx::serialization::json::serialize(col1);
+	auto json = basyx::serialization::json::serialize(col1);
 
 	int j = 2;
 };
-

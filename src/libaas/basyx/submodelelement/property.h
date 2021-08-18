@@ -13,9 +13,18 @@
 namespace basyx
 {
 
+class property_base : public DataElement
+{
+public:
+	property_base(util::string_view idShort) : DataElement(idShort) {};
+	virtual ~property_base() = default;
+public:
+	virtual util::string_view get_value_type() const = 0;
+};
+
 template<typename DataType>
 class Property : 
-	public DataElement, 
+	public property_base, 
 	private ModelType<ModelTypes::Property>
 	//private serialization::Serializable<Property<DataType>>
 {
@@ -23,11 +32,11 @@ private:
 	util::optional<DataType> value;
 	util::optional<Reference> valueId;
 public:
-	Property(util::string_view idShort) : DataElement(idShort) {
+	Property(util::string_view idShort) : property_base(idShort) {
 	};
 
 	template<typename U=DataType>
-	Property(util::string_view idShort, U && u) : DataElement(idShort), value(std::forward<U>(u)) {};
+	Property(util::string_view idShort, U && u) : property_base(idShort), value(std::forward<U>(u)) {};
 
 	//// Enable string_view constructor for DataType == std::string
 	//template <typename U = DataType, std::enable_if_t<std::is_same<DataType, std::string>::value, bool> = true>
@@ -47,10 +56,10 @@ public:
 	const util::optional<Reference> & get_value_id() const { return this->valueId; }
 	void set_value_id(const Reference & reference) { this->valueId = reference; };
 
+	util::string_view get_value_type() const override { return detail::data_type_def<DataType>::value_type; };
+
 	const util::optional<DataType> & get_value() const { return this->value; };
 	util::optional<DataType> & get_value() { return this->value; };
-
-	util::string_view get_value_type() const { return detail::data_type_def<DataType>::value_type; };
 
 	template<typename U = DataType>
 	void set_value(U && value) {

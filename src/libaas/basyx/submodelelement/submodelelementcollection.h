@@ -27,7 +27,18 @@ private:
 	bool allowDuplicates;
 public:
 	SubmodelElementCollection(util::string_view idShort) : SubmodelElement(idShort) {};
+	SubmodelElementCollection(util::string_view idShort, valueList_t list) : SubmodelElement(idShort), valueList(std::move(list)) {};
 	
+	template<typename... Args>
+	SubmodelElementCollection(util::string_view idShort, Args&&... args) 
+		: SubmodelElement(idShort) 
+	{
+		util::vector_helper::emplace_variadic(valueList, 
+			std::make_unique<Args>( std::forward<Args>(args) ) ...);
+	};
+
+
+
 	SubmodelElementCollection(const SubmodelElementCollection&) = default;
 	SubmodelElementCollection& operator=(const SubmodelElementCollection&) = default;
 
@@ -50,7 +61,6 @@ public:
 	void add(Element && e)
 	{
 		using value_t = std::remove_reference<Element>::type;
-
 		valueList.emplace_back(std::make_unique<value_t>( std::forward<Element>(e) ));
 	};
 

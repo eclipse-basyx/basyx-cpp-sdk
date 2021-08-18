@@ -278,26 +278,19 @@ TEST_F(BaseTest, StringProperty)
 
 TEST_F(BaseTest, SubmodelElementCollection_3)
 {
-	SubmodelElementCollection col1{ "col1" };
-	{
-		SubmodelElementCollection col2{ "col2" };
+	SubmodelElementCollection col1("col1",
+		Property<int>("i1", 2),
+		Property<float>("f2", 5.0f),
+		MultiLanguageProperty("mlp", {
+			{ "de","beispiel" },
+			{ "en","example" },
+		})
+	);
 
-		Property<int> i{ "int_prop", 2 };
-		Property<float> f{ "float_prop", 5.0f };
+	ASSERT_EQ(col1.size(), 3);
 
-		Property<std::string> s{ "string_prop", "test" };
-		auto s2 = s;
-
-		//s2.~Property();
-
-		//col1.add(Property<int>("int_prop", 2));
-		col1.add(f);
-		//col2.add(s);
-		//col1.add(std::move(col2));
-	
-		int j = 2;
-	};
-
-	int j = 2;
+	// Check first property
+	auto prop1 = col1.get("i1");
+	ASSERT_EQ(prop1->get_model_type(), ModelTypes::Property);
 };
 

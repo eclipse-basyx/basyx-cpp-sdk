@@ -102,7 +102,7 @@ namespace basyx::serialization::json
 	};
 
 	template<typename T>
-	inline void serialize_helper(json_t & json, const Property<T> & property)
+	inline void serialize_helper_property(json_t & json, const Property<T> & property)
 	{
 		serialize_submodelelement_helper(json, property);
 		//serialize_helper(json, static_cast<const SubmodelElement&>(multiLangProperty));
@@ -157,7 +157,6 @@ namespace basyx::serialization::json
 		};
 	};
 
-
 	template <typename T>
 	inline json_t serialize(const T& t)
 	{
@@ -166,5 +165,4 @@ namespace basyx::serialization::json
 
 		return json;
 	}
-
 };
