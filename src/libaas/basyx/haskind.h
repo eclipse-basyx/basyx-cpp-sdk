@@ -1,14 +1,9 @@
 #pragma once
 
+#include <basyx/enums/ModelingKind.h>
 
 namespace basyx
 {
-enum class ModelingKind
-{
-	Template,
-	Instance
-};
-
 class HasKind
 {
 public:

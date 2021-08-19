@@ -32,6 +32,10 @@ public:
 
 	IdentifierType get_id_type() const { return idType; };
 	void set_id_type(IdentifierType idType) { this->idType = idType; };
+public:
+	static Identifier Custom(util::string_view id) { return Identifier(IdentifierType::Custom, id); }
+	static Identifier IRDI(util::string_view id) { return Identifier(IdentifierType::IRDI, id); }
+	static Identifier IRI(util::string_view id) { return Identifier(IdentifierType::IRI, id); }
 };
 
 };

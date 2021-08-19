@@ -78,7 +78,6 @@ if(NOT json_POPULATED)
   add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
-
 ### GoogleTest ###
 if(${BASYX_BUILD_TESTS})
     include(GoogleTest)
@@ -106,6 +105,7 @@ endif()
 
 add_subdirectory(src/util)
 add_subdirectory(src/libaas)
+add_subdirectory(src/http)
 add_subdirectory(src/cli)
 
 ###############################################

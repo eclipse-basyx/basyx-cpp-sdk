@@ -3,6 +3,7 @@
 #include <basyx/langstringset.h>
 #include <basyx/key.h>
 #include <basyx/reference.h>
+#include <basyx/submodel.h>
 
 #include <basyx/submodelelement/operation.h>
 #include <basyx/submodelelement/operationvariable.h>
@@ -294,3 +295,12 @@ TEST_F(BaseTest, SubmodelElementCollection_3)
 	ASSERT_EQ(prop1->get_model_type(), ModelTypes::Property);
 };
 
+TEST_F(BaseTest, Submodel)
+{
+	Submodel sm("sm", { IdentifierType::Custom, "test/sm_1" } );
+
+	sm.get_submodel_elements().add(Property<int>("p1", 2));
+	sm.get_submodel_elements().add(Property<int>("p2", 3));
+
+	int j = 2;
+}

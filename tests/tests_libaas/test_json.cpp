@@ -1,8 +1,10 @@
 #include <gtest/gtest.h>
 
+#include <basyx/submodelelement/multilanguageproperty.h>
 #include <basyx/langstringset.h>
 #include <basyx/key.h>
 #include <basyx/reference.h>
+#include <basyx/submodel.h>
 
 #include <basyx/serialization/json/serializer.h>
 
@@ -127,9 +129,9 @@ TEST_F(JsonTest, SubmodelElement)
 
 TEST_F(JsonTest, SubmodelElementProperty)
 {
-	std::unique_ptr<SubmodelElement> mlp = std::make_unique<Property<int>>("prop", 5);
+	std::unique_ptr<SubmodelElement> prop = std::make_unique<Property<int>>("prop", 5);
 
-	auto json = basyx::serialization::json::serialize_serializable(*mlp);
+	auto json = basyx::serialization::json::serialize(*prop);
 	
 	ASSERT_EQ(json["idShort"], "prop");
 	ASSERT_EQ(json["value"], 5);
@@ -141,6 +143,8 @@ TEST_F(JsonTest, SubmodelElementCollection)
 {
 	SubmodelElementCollection col1{ "col1" };
 	{
+		col1.set_category("test");
+
 		SubmodelElementCollection col2{ "col2" };
 
 		Property<int> i{ "int_prop", 2 };
@@ -159,6 +163,45 @@ TEST_F(JsonTest, SubmodelElementCollection)
 	};
 
 	auto json = basyx::serialization::json::serialize(col1);
+
+	ASSERT_EQ(json["value"].size(), 3);
+	ASSERT_EQ(json["modeltype"]["name"], "SubmodelElementCollection" );
+	ASSERT_EQ(json["category"], "test");
+
+	bool found_int_prop = false;
+	bool found_float_prop = false;
+	bool found_collection_prop = false;
+
+	for (const auto & entry : json["value"]) {
+		if (entry["idShort"] == "int_prop") {
+			found_int_prop = true;
+			ASSERT_EQ(entry["value"], 2);
+		};
+		
+		if (entry["idShort"] == "float_prop") {
+			found_float_prop = true;
+			ASSERT_EQ(entry["value"], 5.0f);
+		};
+
+		if (entry["idShort"] == "col2") {
+			found_collection_prop = true;
+			ASSERT_EQ(entry["value"].size(), 2);
+		};
+	}
+
+	ASSERT_TRUE(found_int_prop);
+	ASSERT_TRUE(found_float_prop);
+	ASSERT_TRUE(found_collection_prop);
+};
+
+TEST_F(JsonTest, Submodel)
+{
+	Submodel sm("sm", { IdentifierType::Custom, "test/sm_1" });
+
+	sm.get_submodel_elements().add(Property<int>("p1", 2));
+	sm.get_submodel_elements().add(Property<int>("p2", 3));
+
+	auto json = basyx::serialization::json::serialize(sm);
 
 	int j = 2;
 };

@@ -1,10 +1,12 @@
 #pragma once
 
 #include <basyx/submodelelement/submodelelement.h>
+#include <basyx/serialization/serializable.h>
 
 #include <basyx/modeltype.h>
 
 #include <util/string_view/string_view.hpp>
+#include <util/container/container.hpp>
 
 #include <string>
 
@@ -13,7 +15,8 @@ namespace basyx
 
 class SubmodelElementCollection : 
 	public SubmodelElement, 
-	private ModelType<ModelTypes::SubmodelElementCollection>
+	private ModelType<ModelTypes::SubmodelElementCollection>,
+	private serialization::Serializable<SubmodelElementCollection>
 {
 public:
 	using valuePtr_t = std::unique_ptr<SubmodelElement>;

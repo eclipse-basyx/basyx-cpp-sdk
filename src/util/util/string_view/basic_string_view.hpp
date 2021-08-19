@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <string>
+#include <ostream>
 
 namespace basyx::util {
 
@@ -12,8 +13,11 @@ class basic_string_view
 public:
 	using char_type = CharT;
 	using size_type = std::size_t;
+	using const_reference = const CharT&;
 	using const_iterator = const CharT*;
 	using iterator = const_iterator;
+public:
+	static constexpr size_type npos = size_type(-1);
 private:
 	const char_type * _data = nullptr;
 	size_type _sz = 0;
@@ -29,7 +33,8 @@ public:
 	template<typename buffer_t>
 	constexpr basic_string_view(const buffer_t & buf)
 		: _data(buf.data()) , _sz(buf.size())
-	{};
+	{
+	};
 
 	constexpr basic_string_view(const CharT* s)
 		: _data(s)
@@ -77,7 +82,33 @@ public:
 public:
 	// saves the contents of the string_view to a string
 	constexpr std::basic_string<CharT> to_string() const { return std::basic_string<CharT>(_data, _sz); }
+
+	// Returns a const reference to the character at specified location pos. 
+	// No bounds checking is performed : the behavior is undefined if pos >= size().
+	constexpr const_reference operator[](size_type pos) const { return this->_data[pos]; };
+
+	// returns a substring
+	constexpr basic_string_view substr(size_type pos = 0, size_type count = npos) const
+	{
+		size_type rcount = std::min( count, size() - pos );
+		return util::string_view{ &_data[pos], rcount };
+	};
 };
+
+template<typename CharT>
+inline constexpr bool operator==(basic_string_view<CharT> lhs, basic_string_view<CharT> rhs) noexcept
+{
+	return lhs.compare(rhs) == 0;
+}
+
+template<typename CharT>
+std::ostream &operator <<(std::ostream& os, const basic_string_view<CharT>& sv) 
+{
+	for (const auto c : sv)
+		os.put(c);
+
+	return os;
+}
 
 }
 

@@ -6,6 +6,8 @@
 
 #include <util/string_view/string_view.hpp>
 
+#include <basyx/serialization/serializable.h>
+
 #include <string>
 
 namespace basyx
@@ -13,7 +15,8 @@ namespace basyx
 
 class MultiLanguageProperty : 
 	public DataElement, 
-	private ModelType<ModelTypes::MultiLanguageProperty>
+	private ModelType<ModelTypes::MultiLanguageProperty>,
+	private serialization::Serializable<MultiLanguageProperty>
 {
 private:
 	langstringset_t value;
