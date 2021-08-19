@@ -49,17 +49,15 @@ namespace basyx::serialization::json
 		}
 	};
 
-	template<typename T>
-	inline void serialize_helper(json_t & json, const T & t) {};
+	//template<typename T>
+	//inline void serialize_helper(json_t & json, const T & t) {};
 
-	template<>
 	inline void serialize_helper(json_t & json, const HasSemantics & hasSemantics)
 	{
 		if(hasSemantics.semanticId)
 			json["semanticId"] = serialize(*hasSemantics.semanticId);
 	};
 
-	template<>
 	inline void serialize_helper(json_t & json, const Referable & referable)
 	{
 		json["idShort"] = referable.get_id_short().to_string();
@@ -74,21 +72,25 @@ namespace basyx::serialization::json
 			json["displayName"] = serialize(*referable.get_displayname());
 	};
 
-	template<>
 	inline void serialize_helper(json_t & json, const modeltype_base & modelType)
 	{
 		json["modeltype"] = json_t{ {"name", ModelTypes_::to_string(modelType.get_model_type()) } };
 	};
 
 
+	template<typename T, typename U>
+	inline void serialize_helper_h(json_t & json, const U & element)
+	{
+		serialize_helper(json, static_cast<const T&>(element));
+	}
+
 	inline void serialize_submodelelement_helper(json_t & json, const SubmodelElement & submodelElement)
 	{
-		serialize_helper<Referable>(json, submodelElement);
-		serialize_helper<HasSemantics>(json, submodelElement);
-		serialize_helper<modeltype_base>(json, submodelElement);
+		serialize_helper_h<Referable>(json, submodelElement);
+		serialize_helper_h<HasSemantics>(json, submodelElement);
+		serialize_helper_h<modeltype_base>(json, submodelElement);
 	};
 
-	template<>
 	inline void serialize_helper(json_t & json, const MultiLanguageProperty & multiLangProperty)
 	{
 		serialize_submodelelement_helper(json, multiLangProperty);
@@ -102,7 +104,7 @@ namespace basyx::serialization::json
 	};
 
 	template<typename T>
-	inline void serialize_helper_property(json_t & json, const Property<T> & property)
+	inline void serialize_helper(json_t & json, const Property<T> & property)
 	{
 		serialize_submodelelement_helper(json, property);
 		//serialize_helper(json, static_cast<const SubmodelElement&>(multiLangProperty));
@@ -116,7 +118,7 @@ namespace basyx::serialization::json
 		json["valueType"] = property.get_value_type().to_string();
 	};
 
-	template<>
+	//template<>
 	inline void serialize_helper(json_t & json, const SubmodelElementCollection & collection)
 	{
 		serialize_submodelelement_helper(json, collection);
@@ -136,7 +138,7 @@ namespace basyx::serialization::json
 	template<typename T>
 	inline void serialize_submodelelement(json_t & json, const SubmodelElement & submodelElement)
 	{
-		serialize_helper<T>(json, static_cast<const T&>(submodelElement));
+		serialize_helper(json, static_cast<const T&>(submodelElement));
 	};
 
 	inline void serialize_helper(json_t & json, const SubmodelElement & submodelElement)
@@ -165,4 +167,13 @@ namespace basyx::serialization::json
 
 		return json;
 	}
+
+	inline json_t serialize_serializable(const serializable_base & serializable)
+	{
+		json_t json;
+
+		serializable.serialize_json(json);
+
+		return json;
+	};
 };

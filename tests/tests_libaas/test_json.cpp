@@ -125,7 +125,17 @@ TEST_F(JsonTest, SubmodelElement)
 	int j = 2;
 };
 
+TEST_F(JsonTest, SubmodelElementProperty)
+{
+	std::unique_ptr<SubmodelElement> mlp = std::make_unique<Property<int>>("prop", 5);
 
+	auto json = basyx::serialization::json::serialize_serializable(*mlp);
+	
+	ASSERT_EQ(json["idShort"], "prop");
+	ASSERT_EQ(json["value"], 5);
+	ASSERT_EQ(json["modeltype"]["name"], "Property");
+	ASSERT_EQ(json["valueType"], "int");
+};
 
 TEST_F(JsonTest, SubmodelElementCollection)
 {
