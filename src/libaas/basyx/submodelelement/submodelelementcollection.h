@@ -63,7 +63,7 @@ public:
 	template<typename Element>
 	void add(Element && e)
 	{
-		using value_t = std::remove_reference<Element>::type;
+		using value_t = typename std::remove_reference<Element>::type;
 		valueList.emplace_back(std::make_unique<value_t>( std::forward<Element>(e) ));
 	};
 

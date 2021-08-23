@@ -7,4 +7,4 @@ const IdentifierType IdentifierType::IRDI = 11;
 const IdentifierType IdentifierType::IRI = 12;
 
 const LocalKeyType LocalKeyType::IdShort = 20;
-const LocalKeyType LocalKeyType::Fragmentid = 21;
+const LocalKeyType LocalKeyType::FragmentId = 21;

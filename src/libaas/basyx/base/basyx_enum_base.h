@@ -1,10 +1,6 @@
 #pragma once
 
-#include <string>
-
-#include <util/optional/optional.hpp>
-
-#include <basyx/langstringset.h>
+#include <cstdint>
 
 namespace basyx
 {
@@ -16,8 +12,8 @@ public:
 	constexpr static val_t uninitialized = -1;
 protected:
 	val_t _val = 0;
-protected:
-	constexpr basyx_enum_base() : _val(0) {};
+public:
+	constexpr basyx_enum_base() : _val(uninitialized) {};
 	constexpr basyx_enum_base(const val_t _val) : _val(_val) {};
 	constexpr basyx_enum_base(int _val) : _val(_val) {};
 public:

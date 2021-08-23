@@ -20,7 +20,7 @@ private:
 public:
 	Reference(const Key & key) : keys{ key } {};
 	Reference(Key && key) : keys{ std::move(key) } {};
-	Reference(util::string_view str);
+	Reference(util::string_view from_string);
 	Reference(const Referable & referable);
 	Reference(std::initializer_list<Key> init_list) : keys{ std::move(init_list) } {};
 public:

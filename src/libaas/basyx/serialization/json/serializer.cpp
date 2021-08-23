@@ -1,8 +1,14 @@
 #include <basyx/serialization/json/serializer_fwd.h>
 
+#include <basyx/key.h>
+#include <basyx/reference.h>
 #include <basyx/submodel.h>
 
+#include <basyx/submodelelement/blob.h>
+#include <basyx/submodelelement/file.h>
 #include <basyx/submodelelement/property.h>
+#include <basyx/submodelelement/referenceelement.h>
+#include <basyx/submodelelement/relationshipelement.h>
 #include <basyx/submodelelement/multilanguageproperty.h>
 #include <basyx/submodelelement/submodelelementcollection.h>
 
@@ -25,6 +31,108 @@ template<typename T>
 inline void serialize_submodelelement(json_t & json, const SubmodelElement & submodelElement)
 {
 	serialize_helper(json, static_cast<const T&>(submodelElement));
+};
+
+void serialize_helper(json_t & json, const Key & key)
+{
+	json["type"] = KeyElements_::to_string(key.get_type());
+	json["idType"] = KeyType_::to_string(key.get_id_type());
+	json["local"] = false;
+	json["value"] = key.get_value();
+};
+
+inline void serialize_helper(json_t & json, const Reference & reference)
+{
+	auto keyList = json_t::array();
+
+	for (std::size_t i = 0; i < reference.size(); ++i)
+	{
+		keyList.emplace_back(serialize(reference.get_key(i)));
+	};
+
+	json["keys"] = std::move(keyList);
+};
+
+void serialize_helper(json_t & json, const Referable & referable)
+{
+	json["idShort"] = referable.get_id_short().to_string();
+
+	if (referable.get_category())
+		json["category"] = *referable.get_category();
+
+	if (referable.get_description())
+		json["description"] = serialize(*referable.get_description());
+
+	if (referable.get_displayname())
+		json["displayName"] = serialize(*referable.get_displayname());
+};
+
+void serialize_helper(json_t & json, const AdministrativeInformation & administrativeInformation)
+{
+	auto & version = administrativeInformation.get_version();
+	auto & revision = administrativeInformation.get_revision();
+
+	if(version)
+		json["version"] = *version;
+
+	if(revision)
+		json["revision"] = *revision;
+};
+
+void serialize_helper(json_t & json, const ReferenceElement & ref_element)
+{
+	serialize_submodelelement_helper(json, ref_element);
+
+	if (ref_element.getValue())
+		json["value"] = serialize(*ref_element.getValue());
+}
+
+void serialize_helper(json_t & json, const RelationshipElement& rel_element)
+{
+	serialize_submodelelement_helper(json, rel_element);
+
+	json["first"] = serialize(rel_element.getFirst());
+	json["second"] = serialize(rel_element.getSecond());
+}
+
+
+void serialize_helper(json_t & json, const Blob & blob)
+{
+	serialize_submodelelement_helper(json, blob);
+
+	// Todo: encode blob.getBlob() in base64
+	json["value"] = "";
+
+	json["mimeType"] = blob.getMimeType();
+};
+
+void serialize_helper(json_t & json, const File & file)
+{
+	serialize_submodelelement_helper(json, file);
+
+	if (file.getValue())
+		json["value"] = *file.getValue();
+	else
+		json["value"] = "";
+
+	json["mimeType"] = file.getMimeType();
+};
+
+
+void serialize_helper(json_t & json, const Identifier & identifier)
+{
+	json["id"] = identifier.get_id();
+	json["idType"] =  KeyType_::to_string( identifier.get_id_type() );
+};
+
+void serialize_helper(json_t & json, const Identifiable & identifiable)
+{
+	serialize_helper_h<Referable>(json, identifiable);
+
+	json["identification"] = serialize(identifiable.getIdentification());
+
+	if (identifiable.getAdministration())
+		json["administration"] = serialize(*identifiable.getAdministration());
 };
 
 void serialize_helper(json_t & json, const SubmodelElementCollection & collection)

@@ -117,6 +117,17 @@ TEST_F(OptionalTest, Assignment2)
 	ASSERT_EQ(*str, "test");
 };
 
+TEST_F(OptionalTest, MoveAssignment)
+{
+	util::optional<std::string> str("test");
+	auto str2 = std::move(str);
+
+	ASSERT_FALSE(str.has_value());
+	ASSERT_TRUE(str2.has_value());
+	ASSERT_TRUE(str2);
+	ASSERT_EQ(*str2, "test");
+};
+
 TEST_F(OptionalTest, EmplaceTrivial)
 {
 	constexpr int val = 2;

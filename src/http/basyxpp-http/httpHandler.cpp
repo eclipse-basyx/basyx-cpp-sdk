@@ -35,6 +35,17 @@ void httpHandler::handleRequests()
 	{
 		auto idShort = view_from_match(req.matches[1]);
 		spdlog::info("GET submodel: {}", idShort);
+
+		auto sm = getSubmodel(idShort);
+
+		if (!sm) {
+			spdlog::warn("Submodel {} not found!", idShort);
+			res.set_content("Submodel not found!", TXT_PLAIN);
+			return;
+		}
+
+		auto json = basyx::serialization::json::serialize(*sm);
+		res.set_content(json.dump(4), TXT_JSON);
 	});
 
 	// Retrieves the minimized version of a Submodel, i.e. only the values of SubmodelElements are serialized and returned

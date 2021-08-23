@@ -9,9 +9,6 @@
 
 #include <basyx/haskind.h>
 
-#include <basyx/reference.h>
-#include <basyx/key.h>
-
 namespace basyx::serialization::json
 {
 	using json_t = nlohmann::json;
@@ -36,26 +33,6 @@ namespace basyx::serialization::json
 
 	void serialize_helper(json_t & json, const MultiLanguageProperty & multiLangProperty);
 
-	inline void serialize_helper(json_t & json, const Key & key)
-	{
-		json["type"] = key.get_type();
-		json["idType"] = static_cast<int>(key.get_id_type());
-		json["local"] = true;
-		json["value"] = key.get_value();
-	};
-
-	inline void serialize_helper(json_t & json, const Reference & reference)
-	{
-		auto keyList = json_t::array();
-
-		for (std::size_t i = 0; i < reference.size(); ++i)
-		{
-			keyList.emplace_back(serialize(reference.get_key(i)));
-		};
-
-		json["keys"] = std::move(keyList);
-	};
-
 	inline void serialize_helper(json_t & json, const langstringset_t & langstrings)
 	{
 		json = json_t::array();
@@ -73,27 +50,13 @@ namespace basyx::serialization::json
 
 	inline void serialize_helper(json_t & json, const HasSemantics & hasSemantics)
 	{
-		if(hasSemantics.semanticId)
-			json["semanticId"] = serialize(*hasSemantics.semanticId);
+		if(hasSemantics.getSemanticId())
+			json["semanticId"] = serialize(*hasSemantics.getSemanticId());
 	};
 
 	inline void serialize_helper(json_t & json, const HasKind & hasKind)
 	{
 		json["kind"] = ModelingKind_::to_string( hasKind.kind );
-	};
-
-	inline void serialize_helper(json_t & json, const Referable & referable)
-	{
-		json["idShort"] = referable.get_id_short().to_string();
-
-		if (referable.get_category())
-			json["category"] = *referable.get_category();
-
-		if (referable.get_description())
-			json["description"] = serialize(*referable.get_description());
-
-		if (referable.get_displayname())
-			json["displayName"] = serialize(*referable.get_displayname());
 	};
 
 	inline void serialize_helper(json_t & json, const modeltype_base & modelType)

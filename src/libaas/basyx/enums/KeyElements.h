@@ -4,7 +4,6 @@
 #include <string>
 
 namespace basyx {
-namespace submodel {
 
 enum class KeyElements {
     GlobalReference,
@@ -43,8 +42,6 @@ public:
     static const char * to_string(KeyElements value);
 };
 
-
-}
 }
 
 #endif /* BASYX_SUBMODEL_ENUMERATIONS_KEYELEMENTS_H */

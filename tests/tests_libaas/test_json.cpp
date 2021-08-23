@@ -34,23 +34,19 @@ protected:
 
 TEST_F(JsonTest, Key)
 {
-	Key key{ "type", "value", basyx::KeyType::IdentifierType::Custom };
+	Key key{ KeyElements::Asset, "value", basyx::KeyType::IdentifierType::Custom };
 
 	auto json = basyx::serialization::json::serialize(key);
-
-	int j = 2;
 };
 
 TEST_F(JsonTest, Reference)
 {
-	Key key1{ "type1", "value1", basyx::KeyType::IdentifierType::Custom };
-	Key key2{ "type2", "value2", basyx::KeyType::IdentifierType::Custom };
+	Key key1{ KeyElements::Asset, "value1", basyx::KeyType::IdentifierType::Custom };
+	Key key2{ KeyElements::Asset, "value2", basyx::KeyType::IdentifierType::Custom };
 
 	Reference reference{ key1, key2 };
 
 	auto json = basyx::serialization::json::serialize(reference);
-
-	int j = 2;
 };
 
 
@@ -62,8 +58,6 @@ TEST_F(JsonTest, LangStrings)
 	};
 
 	auto json = basyx::serialization::json::serialize(ls);
-
-	int j = 2;
 };
 
 TEST_F(JsonTest, MultiLanguageProperty)
@@ -202,6 +196,4 @@ TEST_F(JsonTest, Submodel)
 	sm.get_submodel_elements().add(Property<int>("p2", 3));
 
 	auto json = basyx::serialization::json::serialize(sm);
-
-	int j = 2;
 };

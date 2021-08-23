@@ -91,7 +91,7 @@ public:
 	constexpr basic_string_view substr(size_type pos = 0, size_type count = npos) const
 	{
 		size_type rcount = std::min( count, size() - pos );
-		return util::string_view{ &_data[pos], rcount };
+		return { &_data[pos], rcount };
 	};
 };
 

@@ -18,11 +18,11 @@ namespace basyx
 			: code(code.to_string()), value(value.to_string())
 		{};
 
-		constexpr langstring_t(const langstring_t & other) = default;
-		constexpr langstring_t& operator=(const langstring_t & other) = default;
+		langstring_t(const langstring_t & other) = default;
+		langstring_t& operator=(const langstring_t & other) = default;
 
-		constexpr langstring_t(langstring_t && other) noexcept = default;
-		constexpr langstring_t& operator=(langstring_t && other) noexcept = default;
+		langstring_t(langstring_t && other) noexcept = default;
+		langstring_t& operator=(langstring_t && other) noexcept = default;
 	public:
 		constexpr util::string_view get_code() const noexcept { return code; };
 		constexpr util::string_view get_value() const noexcept { return value; };
