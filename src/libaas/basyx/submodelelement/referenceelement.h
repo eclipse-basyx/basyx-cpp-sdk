@@ -36,7 +36,7 @@ public:
 	util::optional<Reference> & getValue() { return this->value; };
 
 	template<typename T>
-	void setValue(T && t) { this->value.emplace(std::forward<T>(t); };
+	void setValue(T && t) { this->value.emplace(std::forward<T>(t)); };
 };
 
 }

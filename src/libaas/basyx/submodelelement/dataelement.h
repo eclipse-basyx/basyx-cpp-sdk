@@ -1,12 +1,8 @@
 #pragma once
 
-#include <basyx/reference.h>
 #include <basyx/submodelelement/submodelelement.h>
-#include <basyx/langstringset.h>
 
 #include <util/string_view/string_view.hpp>
-
-#include <string>
 
 namespace basyx
 {

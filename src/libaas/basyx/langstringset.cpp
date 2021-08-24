@@ -2,27 +2,26 @@
 
 using namespace basyx;
 
-langstringset_t::langstringset_t(util::string_view language_code, util::string_view value)
+langstringset_t::langstringset_t(util::string_view language_code, util::string_view value) 
 {
 	this->add(language_code, value);
 };
 
-langstringset_t::langstringset_t(langstring_t langstring)
+langstringset_t::langstringset_t(langstring_t langstring) 
 {
 	this->add(std::move(langstring));
 };
 
 langstringset_t::langstringset_t(std::initializer_list<langstring_t> init_list)
 	: langStrings(std::forward<std::initializer_list<langstring_t>>(init_list))
-{
-};
-
+{};
 
 void langstringset_t::add(util::string_view language_code, util::string_view value) {
 	this->add({ language_code, value });
 };
 
-void langstringset_t::add(langstring_t langstring) {
+void langstringset_t::add(langstring_t langstring) 
+{
 	auto code = langstring.get_code();
 	auto existing = std::find_if(langStrings.begin(), langStrings.end(), [code](const auto & it) {
 		return it.get_code() == code;

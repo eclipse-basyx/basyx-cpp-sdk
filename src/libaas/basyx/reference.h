@@ -27,8 +27,8 @@ public:
 	Reference(const Reference &) = default;
 	Reference& operator=(const Reference &) = default;
 
-	Reference(Reference &&) = default;
-	Reference& operator=(Reference &&) = default;
+	Reference(Reference &&) noexcept = default;
+	Reference& operator=(Reference &&) noexcept = default;
 public:
 	const Key & get_key(std::size_t index) const { return keys[index]; };
 	const std::size_t size() const { return keys.size(); };

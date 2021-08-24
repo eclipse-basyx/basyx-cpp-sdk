@@ -67,7 +67,7 @@ TEST_F(JsonTest, MultiLanguageProperty)
 		{"de", "beispiel"}
 		} };
 
-	mlp.set_description({
+	mlp.setDescription({
 		{"en", "test"},
 		{"de", "beispiel"}
 	});
@@ -110,7 +110,7 @@ TEST_F(JsonTest, SubmodelElement)
 		{"de", "beispiel"}
 	});
 
-	mlpp->set_description({
+	mlpp->setDescription({
 		{"en", "test"},
 		{"de", "beispiel"}
 	});
@@ -137,7 +137,7 @@ TEST_F(JsonTest, SubmodelElementCollection)
 {
 	SubmodelElementCollection col1{ "col1" };
 	{
-		col1.set_category("test");
+		col1.setCategory("test");
 
 		SubmodelElementCollection col2{ "col2" };
 
@@ -192,8 +192,8 @@ TEST_F(JsonTest, Submodel)
 {
 	Submodel sm("sm", { IdentifierType::Custom, "test/sm_1" });
 
-	sm.get_submodel_elements().add(Property<int>("p1", 2));
-	sm.get_submodel_elements().add(Property<int>("p2", 3));
+	sm.get_submodel_elements().addElement(Property<int>("p1", 2));
+	sm.get_submodel_elements().addElement(Property<int>("p2", 3));
 
 	auto json = basyx::serialization::json::serialize(sm);
 };

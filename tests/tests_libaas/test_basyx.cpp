@@ -4,6 +4,7 @@
 #include <basyx/langstringset.h>
 #include <basyx/reference.h>
 #include <basyx/submodel.h>
+#include <basyx/views/view.h>
 
 #include <basyx/submodelelement/multilanguageproperty.h>
 #include <basyx/submodelelement/operation.h>
@@ -95,14 +96,14 @@ TEST_F(BaseTest, MultiLangProp)
 {
     basyx::MultiLanguageProperty mlp { "multiLang" };
 
-    mlp.set_category("test");
-    ASSERT_TRUE(mlp.get_category());
-    ASSERT_EQ(mlp.get_category().value(), "test");
+    mlp.setCategory("test");
+    ASSERT_TRUE(mlp.getCategory());
+    ASSERT_EQ(mlp.getCategory().value(), "test");
 
-    mlp.set_description({ { "en", "example" },
+    mlp.setDescription({ { "en", "example" },
         { "de", "beispiel" } });
 
-    auto& description = mlp.get_description();
+    auto& description = mlp.getDescription();
 
     ASSERT_TRUE(description);
     ASSERT_EQ(description->size(), 2);
@@ -291,9 +292,9 @@ TEST_F(BaseTest, SubmodelElementCollection_3)
         Property<int>("i1", 2),
         Property<float>("f2", 5.0f),
         MultiLanguageProperty("mlp", {
-                                         { "de", "beispiel" },
-                                         { "en", "example" },
-                                     }));
+            { "de", "beispiel" },
+            { "en", "example" },
+        }));
 
     ASSERT_EQ(col1.size(), 3);
 
@@ -306,8 +307,8 @@ TEST_F(BaseTest, Submodel)
 {
     Submodel sm("sm", { IdentifierType::Custom, "test/sm_1" });
 
-    sm.get_submodel_elements().add(Property<int>("p1", 2));
-    sm.get_submodel_elements().add(Property<int>("p2", 3));
+    sm.get_submodel_elements().addElement(Property<int>("p1", 2));
+    sm.get_submodel_elements().addElement(Property<int>("p2", 3));
 
     sm.setSemanticId("custom_submodel");
 }
@@ -319,24 +320,36 @@ TEST_F(BaseTest, SubmodelAddElements)
 	using stringProp_t = Property<std::string>;
 
 	Submodel sm("sm1", Identifier::IRI("https://admin-shell.io/cpp#sm1"));
-	sm.set_category("test");
+	sm.setCategory("test");
 	sm.setSemanticId("0173-1#02-AAR972#002");
 	sm.setAdministration({ "1.0", "v2" });
 
 	Submodel sm2("sm2", Identifier::IRI("https://admin-shell.io/cpp#sm2"));
 
-	sm.get_submodel_elements().add(Property<std::string>("testProperty1", "Yay a value!"));
-	sm.get_submodel_elements().add(Property<std::string>("testProperty2", "Values and values! :O"));
+	sm.get_submodel_elements().addElement(Property<std::string>("testProperty1", "Yay a value!"));
+	sm.get_submodel_elements().addElement(Property<std::string>("testProperty2", "Values and values! :O"));
 
 	ASSERT_EQ(sm.get_submodel_elements().size(), 2);
 
-	auto * elem_1 = sm.get_submodel_elements().get<stringProp_t>("testProperty1");
+	auto * elem_1 = sm.get_submodel_elements().getElement<stringProp_t>("testProperty1");
 	ASSERT_TRUE(elem_1 != nullptr);
 	ASSERT_EQ(*elem_1->get_value(), "Yay a value!");
 
-	auto * elem_2 = sm.get_submodel_elements().get<stringProp_t>("testProperty2");
+	auto * elem_2 = sm.get_submodel_elements().getElement<stringProp_t>("testProperty2");
 	ASSERT_TRUE(elem_2 != nullptr);
 	ASSERT_EQ(*elem_2->get_value(), "Values and values! :O");
 
 	spdlog::set_level(spdlog::level::info);
+}
+
+TEST_F(BaseTest, View)
+{
+	View view_1("view");
+	ASSERT_EQ(view_1.size(), 0);
+
+	View view_2("view", 
+		"0173-1#02-AAR972#002", 
+		"0173-1#02-AAR972#002"
+	);
+	ASSERT_EQ(view_2.size(), 2);
 }

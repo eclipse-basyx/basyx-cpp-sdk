@@ -12,10 +12,10 @@ namespace basyx
 class Referable
 {
 private:
-	std::string _idShort;
-	util::optional<std::string> _category;
-	util::optional<langstringset_t> _displayName;
-	util::optional<langstringset_t> _description;
+	std::string idShort;
+	util::optional<std::string> category;
+	util::optional<langstringset_t> displayName;
+	util::optional<langstringset_t> description;
 public:
 	Referable(util::string_view idShort);
 
@@ -27,18 +27,18 @@ public:
 
 	~Referable() = default;
 public:
-	util::string_view get_id_short() const;
+	util::string_view getIdShort() const;
 	
-	const util::optional<std::string> & get_category() const;
-	void set_category(util::string_view category);
+	const util::optional<std::string> & getCategory() const;
+	void setCategory(util::string_view category);
 
-	const util::optional<langstringset_t> & get_displayname() const;
-	util::optional<langstringset_t> & get_displayname();
-	void set_displayname(langstringset_t displayname);
+	const util::optional<langstringset_t> & getDisplayname() const;
+	util::optional<langstringset_t> & getDisplayname();
+	void setDisplayname(langstringset_t displayname);
 
-	const util::optional<langstringset_t> & get_description() const;
-	util::optional<langstringset_t> & get_description();
-	void set_description(langstringset_t displayname);
+	const util::optional<langstringset_t> & getDescription() const;
+	util::optional<langstringset_t> & getDescription();
+	void setDescription(langstringset_t displayname);
 };
 
 };

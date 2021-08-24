@@ -20,6 +20,7 @@ class AnnotatedRelationshipElement : public SubmodelElement,
 private:
 	Reference first;
 	Reference second;
+	util::optional<Reference> annotation;
 public:
 	AnnotatedRelationshipElement(util::string_view idShort, Reference first, Reference second);
 
@@ -33,12 +34,16 @@ public:
 public:
 	const Reference & getFirst() const { return this->first; };
 	const Reference & getSecond() const { return this->second; };
+	const util::optional<Reference> & getAnnotation() const { return this->annotation; };
 
 	template<typename T>
-	void setFirst(T && t) { this->first = std::forward<T>(t); };
+	void setFirst(T && reference) { this->first = std::forward<T>(reference); };
 
 	template<typename T>
-	void setSecond(T && t) { this->second = std::forward<T>(t); };
+	void setSecond(T && reference) { this->second = std::forward<T>(reference); };
+
+	template<typename T>
+	void setAnnotation(T && reference) { this->annotation = std::forward<T>(reference); };
 };
 
 }

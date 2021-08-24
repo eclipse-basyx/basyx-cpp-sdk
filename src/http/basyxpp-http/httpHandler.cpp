@@ -73,7 +73,13 @@ void httpHandler::handleRequests()
 
 		auto & submodelElements = s->get_submodel_elements();
 
-		auto json = basyx::serialization::json::serialize(submodelElements);
+		auto json = basyx::serialization::json::json_t::array();
+
+		for (const auto & element : submodelElements) {
+			json.emplace_back(basyx::serialization::json::serialize(*element));
+		}
+
+		//auto json = basyx::serialization::json::serialize(submodelElements);
 		res.set_content(json.dump(4), TXT_JSON);
 	});
 
@@ -181,15 +187,23 @@ httpHandler::pathList_t httpHandler::splitPath(util::string_view path, char deli
 
 SubmodelElement * httpHandler::getSubmodelElementByPathList(httpHandler::pathList_t & pathList, Submodel & sm)
 {
-	SubmodelElement * element = &sm.get_submodel_elements();
+	if (pathList.empty())
+		return nullptr;
 
-	for(const auto & path : pathList)
+	auto path = pathList.cbegin();
+
+	// Get first element from submodel
+	auto element = sm.get_submodel_elements().getElement(*path);
+	if (element == nullptr)
+		return nullptr;
+
+	for(path++;path != pathList.end(); ++path)
 	{
 		if (element->get_model_type() != ModelTypes::SubmodelElementCollection)
 			return nullptr;
 
 		auto collection = static_cast<SubmodelElementCollection*>(element);
-		element = collection->get(path);
+		element = collection->get(*path);
 
 		if (element == nullptr)
 			return nullptr;
@@ -210,7 +224,7 @@ Submodel * httpHandler::getSubmodel(util::string_view idShort) {
 }
 
 bool httpHandler::submodelExists(Submodel &submodel) {
-	return submodelExists(submodel.get_id_short());
+	return submodelExists(submodel.getIdShort());
 }
 
 bool httpHandler::submodelExists(util::string_view idShort) {
@@ -225,7 +239,7 @@ ERROR_CODES httpHandler::addSubmodelToServer(Submodel &submodel) {
 		return ERROR_CODES::ERR_ALREADY_EXISTS;
 
 	submodelMutex.lock();
-	auto result = submodels.emplace(submodel.get_id_short().to_string(), &submodel);
+	auto result = submodels.emplace(submodel.getIdShort().to_string(), &submodel);
 	submodelMutex.unlock();
 	if (result.second)
 		return ERROR_CODES::ERR_OK;
@@ -239,7 +253,7 @@ ERROR_CODES httpHandler::removeSubmodelFromServer(Submodel & submodel)
 		return ERROR_CODES::ERR_DOES_NOT_EXIST;
 
 	submodelMutex.lock();
-	auto iter = submodels.find(submodel.get_id_short().to_string());
+	auto iter = submodels.find(submodel.getIdShort().to_string());
 	submodels.erase(iter);
 	submodelMutex.unlock();
 	return ERROR_CODES::ERR_OK;

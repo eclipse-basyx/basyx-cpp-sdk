@@ -18,7 +18,10 @@ namespace basyx
 	class AdministrativeInformation;
 	class SubmodelElementCollection;
 	class RelationshipElement;
+	class AnnotatedRelationshipElement;
+	class Capability;
 	class SubmodelElement;
+	class BasicEvent;
 	class Submodel;
 	class File;
 	class Blob;
@@ -45,10 +48,13 @@ namespace basyx::serialization::json
 	void serialize_helper(json_t & json, const Submodel&);
 	void serialize_helper(json_t & json, const ReferenceElement&);
 	void serialize_helper(json_t & json, const RelationshipElement&);
+	void serialize_helper(json_t & json, const AnnotatedRelationshipElement&);
 	void serialize_helper(json_t & json, const MultiLanguageProperty&);
-	void serialize_helper(json_t & json, const File &);
-	void serialize_helper(json_t & json, const Blob &);
-	void serialize_helper(json_t & json, const SubmodelElementCollection &);
+	void serialize_helper(json_t & json, const Capability&);
+	void serialize_helper(json_t & json, const File&);
+	void serialize_helper(json_t & json, const BasicEvent&);
+	void serialize_helper(json_t & json, const Blob&);
+	void serialize_helper(json_t & json, const SubmodelElementCollection&);
 	
 	template<typename T>
 	void serialize_helper(json_t & json, const Property<T>& prop);

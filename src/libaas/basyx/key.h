@@ -26,10 +26,10 @@ public:
 	Key(KeyElements type, util::string_view value, KeyType idType);
 
 	Key(const Key&) = default;
-	Key(Key&&) = default;
-
 	Key & operator=(const Key&) = default;
-	Key & operator=(Key&&) = default;
+
+	Key(Key&&) noexcept = default;
+	Key & operator=(Key&&) noexcept = default;
 
 	~Key() = default;
 public:

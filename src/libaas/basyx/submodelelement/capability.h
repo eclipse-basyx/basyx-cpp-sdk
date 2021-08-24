@@ -1,42 +1,27 @@
 #pragma once
 
-#include <basyx/submodelelement/dataelement.h>
-#include <basyx/langstringset.h>
-
+#include <basyx/submodelelement/submodelelement.h>
 #include <basyx/modeltype.h>
-
-#include <basyx/submodelelement/property.h>
-
-#include <util/string_view/string_view.hpp>
-
-#include <string>
+#include <basyx/serialization/serializable.h>
 
 namespace basyx
 {
 
-class ReferenceElement : 
-	public DataElement, 
-	private ModelType<ModelTypes::ReferenceElement>,
-	private serialization::Serializable<ReferenceElement>
+class Capability : 
+	public SubmodelElement, 
+	private ModelType<ModelTypes::Capability>,
+	private serialization::Serializable<Capability>
 {
-private:
-	util::optional<Reference> value;
 public:
-	ReferenceElement(util::string_view idShort) : DataElement(idShort) {};
+	Capability(util::string_view idShort) : SubmodelElement(idShort) {};
 
-	ReferenceElement(const ReferenceElement&) = default;
-	ReferenceElement& operator=(const ReferenceElement&) = default;
+	Capability(const Capability&) = default;
+	Capability& operator=(const Capability&) = default;
 
-	ReferenceElement(ReferenceElement&&) = default;
-	ReferenceElement& operator=(ReferenceElement&&) = default;
+	Capability(Capability&&) = default;
+	Capability& operator=(Capability&&) = default;
 
-	~ReferenceElement() = default;
-public:
-	const util::optional<Reference> & getValue() const { return this->value; };
-	util::optional<Reference> & getValue() { return this->value; };
-
-	template<typename T>
-	void setValue(T && t) { this->value.emplace(std::forward<T>(t); };
+	~Capability() = default;
 };
 
 }

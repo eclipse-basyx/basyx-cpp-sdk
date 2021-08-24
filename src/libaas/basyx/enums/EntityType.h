@@ -4,7 +4,6 @@
 #include <string>
 
 namespace basyx {
-namespace submodel {
 
 enum class EntityType {
     CoManagedEntity,
@@ -19,7 +18,6 @@ public:
 };
 
 
-}
 }
 
 #endif /* BASYX_SUBMODEL_ENUMERATIONS_ENTITYTYPE_H */

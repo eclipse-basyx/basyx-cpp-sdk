@@ -7,8 +7,11 @@
 #include <basyx/submodelelement/blob.h>
 #include <basyx/submodelelement/file.h>
 #include <basyx/submodelelement/property.h>
+#include <basyx/submodelelement/capability.h>
 #include <basyx/submodelelement/referenceelement.h>
 #include <basyx/submodelelement/relationshipelement.h>
+#include <basyx/submodelelement/basicevent.h>
+#include <basyx/submodelelement/annotatedrelationshipelement.h>
 #include <basyx/submodelelement/multilanguageproperty.h>
 #include <basyx/submodelelement/submodelelementcollection.h>
 
@@ -18,7 +21,6 @@ namespace basyx::serialization::json
 void serialize_helper(json_t & json, const MultiLanguageProperty & multiLangProperty)
 {
 	serialize_submodelelement_helper(json, multiLangProperty);
-	//serialize_helper(json, static_cast<const SubmodelElement&>(multiLangProperty));
 
 	if (!multiLangProperty.get_value().empty())
 		json["value"] = serialize(multiLangProperty.get_value());
@@ -41,7 +43,13 @@ void serialize_helper(json_t & json, const Key & key)
 	json["value"] = key.get_value();
 };
 
-inline void serialize_helper(json_t & json, const Reference & reference)
+void serialize_helper(json_t & json, const Capability & capability)
+{
+	serialize_submodelelement_helper(json, capability);
+}
+
+
+void serialize_helper(json_t & json, const Reference & reference)
 {
 	auto keyList = json_t::array();
 
@@ -55,16 +63,16 @@ inline void serialize_helper(json_t & json, const Reference & reference)
 
 void serialize_helper(json_t & json, const Referable & referable)
 {
-	json["idShort"] = referable.get_id_short().to_string();
+	json["idShort"] = referable.getIdShort().to_string();
 
-	if (referable.get_category())
-		json["category"] = *referable.get_category();
+	if (referable.getCategory())
+		json["category"] = *referable.getCategory();
 
-	if (referable.get_description())
-		json["description"] = serialize(*referable.get_description());
+	if (referable.getDescription())
+		json["description"] = serialize(*referable.getDescription());
 
-	if (referable.get_displayname())
-		json["displayName"] = serialize(*referable.get_displayname());
+	if (referable.getDisplayname())
+		json["displayName"] = serialize(*referable.getDisplayname());
 };
 
 void serialize_helper(json_t & json, const AdministrativeInformation & administrativeInformation)
@@ -95,6 +103,27 @@ void serialize_helper(json_t & json, const RelationshipElement& rel_element)
 	json["second"] = serialize(rel_element.getSecond());
 }
 
+void serialize_helper(json_t & json, const AnnotatedRelationshipElement& rel_element)
+{
+	serialize_submodelelement_helper(json, rel_element);
+
+	json["first"] = serialize(rel_element.getFirst());
+	json["second"] = serialize(rel_element.getSecond());
+
+	auto annotations = json_t::array();
+
+	if (rel_element.getAnnotation())
+		annotations.push_back(serialize(*rel_element.getAnnotation()));
+	
+	json["annotation"] = annotations;
+}
+
+void serialize_helper(json_t & json, const BasicEvent & basicEvent)
+{
+	serialize_submodelelement_helper(json, basicEvent);
+
+	json["observed"] = serialize(basicEvent.getObserved());
+}
 
 void serialize_helper(json_t & json, const Blob & blob)
 {

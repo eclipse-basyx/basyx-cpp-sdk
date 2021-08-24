@@ -4,52 +4,52 @@ namespace basyx
 {
 
 Referable::Referable(util::string_view idShort)
-	: _idShort( idShort.to_string() )
+	: idShort( idShort.to_string() )
 {};
 
-util::string_view Referable::get_id_short() const
+util::string_view Referable::getIdShort() const
 {
-	return this->_idShort;
+	return this->idShort;
 }
 
-const util::optional<std::string>& Referable::get_category() const
+const util::optional<std::string>& Referable::getCategory() const
 {
-	return _category;
+	return category;
 }
 
-void Referable::set_category(util::string_view category)
+void Referable::setCategory(util::string_view category)
 {
-	this->_category.emplace(category.to_string());
+	this->category.emplace(category.to_string());
 }
 
-const util::optional<langstringset_t> & Referable::get_displayname() const
+const util::optional<langstringset_t> & Referable::getDisplayname() const
 {
-	return this->_displayName;
+	return this->displayName;
 }
 
-util::optional<langstringset_t> & Referable::get_displayname()
+util::optional<langstringset_t> & Referable::getDisplayname()
 {
-	return this->_displayName;
+	return this->displayName;
 }
 
-void Referable::set_displayname(langstringset_t displayname)
+void Referable::setDisplayname(langstringset_t displayname)
 {
-	this->_displayName = std::move(displayname);
+	this->displayName = std::move(displayname);
 }
 
-const util::optional<langstringset_t> & Referable::get_description() const
+const util::optional<langstringset_t> & Referable::getDescription() const
 {
-	return this->_description;
+	return this->description;
 }
 
-util::optional<langstringset_t> & Referable::get_description()
+util::optional<langstringset_t> & Referable::getDescription()
 {
-	return this->_description;
+	return this->description;
 }
 
-void Referable::set_description(langstringset_t description)
+void Referable::setDescription(langstringset_t description)
 {
-	this->_description = std::move(description);
+	this->description = std::move(description);
 }
 
 };

@@ -6,7 +6,7 @@
 #include <basyx/haskind.h>
 #include <basyx/hassemantics.h>
 
-#include <basyx/submodelelement/submodelelementcollection.h>
+#include <basyx/base/elementcontainer.h>
 
 #include <initializer_list>
 #include <vector>
@@ -22,9 +22,9 @@ class Submodel :
 	public ModelType<ModelTypes::Submodel>
 {
 private:
-	SubmodelElementCollection submodelElements;
+	ElementContainer<SubmodelElement> submodelElements;
 public:
-	Submodel(util::string_view idShort, Identifier identifier) : Identifiable(idShort, std::move(identifier)), submodelElements("elements") {};
+	Submodel(util::string_view idShort, Identifier identifier) : Identifiable(idShort, std::move(identifier)) {};
 public:
 	Submodel(const Submodel &) = default;
 	Submodel& operator=(const Submodel &) = default;
@@ -32,9 +32,9 @@ public:
 	Submodel(Submodel &&) = default;
 	Submodel& operator=(Submodel &&) = default;
 public:
-	const SubmodelElementCollection & get_submodel_elements() const { return this->submodelElements; };
-	SubmodelElementCollection & get_submodel_elements() { return this->submodelElements; };
-	void set_submodel_elements(SubmodelElementCollection elements) { this->submodelElements = std::move(elements); };
+	const ElementContainer<SubmodelElement> & get_submodel_elements() const { return this->submodelElements; };
+	ElementContainer<SubmodelElement> & get_submodel_elements() { return this->submodelElements; };
+	void set_submodel_elements(ElementContainer<SubmodelElement> elements) { this->submodelElements = std::move(elements); };
 };
 
 };

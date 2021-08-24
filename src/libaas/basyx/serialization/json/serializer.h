@@ -45,9 +45,6 @@ namespace basyx::serialization::json
 		}
 	};
 
-	//template<typename T>
-	//inline void serialize_helper(json_t & json, const T & t) {};
-
 	inline void serialize_helper(json_t & json, const HasSemantics & hasSemantics)
 	{
 		if(hasSemantics.getSemanticId())
@@ -93,32 +90,6 @@ namespace basyx::serialization::json
 		json["valueType"] = property.get_value_type().to_string();
 	};
 
-	//inline void serialize_helper(json_t & json, const SubmodelElement & submodelElement)
-	//{
-	//	auto modeltype = submodelElement.get_model_type();
-
-	//	switch (modeltype)
-	//	{
-	//	case ModelTypes::MultiLanguageProperty:
-	//		return serialize_submodelelement<MultiLanguageProperty>(json, submodelElement);
-	//	case ModelTypes::Property:
-	//		//submodelElement.serialize_json(json);
-	//		return;
-	//	case ModelTypes::SubmodelElementCollection:
-	//		return serialize_submodelelement<SubmodelElementCollection>(json, submodelElement);
-
-	//		//return serialize_helper<MultiLanguageProperty>(json, static_cast<const MultiLanguageProperty&>(submodelElement));
-	//	};
-	//};
-
-	//template <typename T, typename std::enable_if<!std::is_base_of<serializable_base, T>::value>::type>
-	//inline json_t serialize(const T& t)
-	//{
-	//	json_t json;
-	//	serialize_helper(json, t);
-
-	//	return json;
-	//}
 
 	inline json_t serialize(const serializable_base & serializable)
 	{
@@ -128,13 +99,4 @@ namespace basyx::serialization::json
 
 		return json;
 	};
-
-	//inline json_t serialize(const serializable_base & serializable)
-	//{
-	//	json_t json;
-
-	//	serializable.serialize_json(json);
-
-	//	return json;
-	//};
 };
