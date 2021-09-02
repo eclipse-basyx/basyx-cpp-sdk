@@ -33,6 +33,8 @@ target_link_libraries(basyxpp-http
 		BaSyx::util
 	)
 
-add_subdirectory(basyxpp-http-tests)
+if(${BASYX_BUILD_TESTS})
+	add_subdirectory(basyxpp-http-tests)
+endif()
 
 build_source_group()
