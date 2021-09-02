@@ -2,7 +2,7 @@
 ###             basyxpp-http         ###
 ########################################
 
-project(basyxpp-http-lib)
+project(basyxpp-http)
 
 set(SOURCE_FILES 
 	basyxpp-http/httpHandler.cpp
@@ -22,10 +22,10 @@ target_link_libraries(${PROJECT_NAME}
 		BaSyx::util
 )
 
-add_library(BaSyx::http ALIAS basyxpp-http-lib)
+add_library(BaSyx::http ALIAS basyxpp-http)
 
-add_executable(basyxpp-http basyxpp-http/main.cpp)
-target_link_libraries(basyxpp-http
+add_executable(basyxpp-http-exe basyxpp-http/main.cpp)
+target_link_libraries(basyxpp-http-exe
 	PUBLIC
 		spdlog::spdlog
 		BaSyx::http
