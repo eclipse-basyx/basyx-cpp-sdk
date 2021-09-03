@@ -3,6 +3,7 @@
 #include <basyx/key.h>
 #include <basyx/reference.h>
 #include <basyx/submodel.h>
+#include <basyx/assetadministrationshell.h>
 
 #include <basyx/submodelelement/blob.h>
 #include <basyx/submodelelement/file.h>
@@ -43,12 +44,6 @@ void serialize_helper(json_t & json, const Key & key)
 	json["value"] = key.get_value();
 };
 
-void serialize_helper(json_t & json, const Capability & capability)
-{
-	serialize_submodelelement_helper(json, capability);
-}
-
-
 void serialize_helper(json_t & json, const Reference & reference)
 {
 	auto keyList = json_t::array();
@@ -74,6 +69,43 @@ void serialize_helper(json_t & json, const Referable & referable)
 	if (referable.getDisplayname())
 		json["displayName"] = serialize(*referable.getDisplayname());
 };
+
+void serialize_helper(json_t & json, const AssetAdministrationShell & aas)
+{
+	serialize_helper_h<Identifiable>(json, aas);
+	//serialize_helper_h<HasDataSpecification>(json, aas);
+	serialize_helper_h<modeltype_base>(json, aas);
+
+	if (aas.getDerivedFrom())
+		json["derivedFrom"] = serialize(*aas.getDerivedFrom());
+
+	auto submodels = json_t::array();
+	for (const auto & submodel : aas.getSubmodels()) {
+		submodels.emplace_back(serialize(*submodel));
+	};
+
+	auto views = json_t::array();
+	for (const auto & view : aas.getViews()) {
+		views.emplace_back(serialize(*view));
+	};
+
+	json["submodels"] = std::move(submodels);
+	json["views"] = std::move(views);
+
+	// actually, ToDo: 
+	// json["assetInformation"] = serialize(aas.getAssetInformation());
+	json["assetInformation"] = aas.getAssetInformation();
+
+	if(aas.getSecurity())
+		// actually, ToDo: 
+		// json["security"] = serialize(*aas.getSecurity());
+		json["security"] = *aas.getSecurity();
+};
+
+void serialize_helper(json_t & json, const Capability & capability)
+{
+	serialize_submodelelement_helper(json, capability);
+}
 
 void serialize_helper(json_t & json, const AdministrativeInformation & administrativeInformation)
 {
@@ -175,7 +207,19 @@ void serialize_helper(json_t & json, const SubmodelElementCollection & collectio
 	};
 
 	if (value.size() > 0)
-		json["value"] = value;
+		json["value"] = std::move(value);
+};
+
+void serialize_helper(json_t & json, const View & view)
+{
+	serialize_helper_h<Referable>(json, view);
+	//serialize_helper_h<HasDataSpecification>(json, view);
+	serialize_helper_h<modeltype_base>(json, view);
+
+	auto containedElements = json_t::array();
+	for (const auto & containedElement : view.getContainedElements()) {
+		containedElements.emplace_back(serialize(containedElement));
+	}
 };
 
 

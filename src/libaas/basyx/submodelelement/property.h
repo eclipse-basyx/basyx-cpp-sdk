@@ -1,5 +1,7 @@
 #pragma once
 
+#include <basyx/base/valuetypedefs.h>
+
 #include <basyx/submodelelement/dataelement.h>
 #include <basyx/langstringset.h>
 #include <basyx/modeltype.h>
@@ -13,46 +15,31 @@
 namespace basyx
 {
 
-namespace detail {
-
-template<typename T> struct data_type_def {};
-template<> struct data_type_def<int8_t> { static constexpr char value_type[] = "byte"; };
-template<> struct data_type_def<char> { static constexpr char value_type[] = "byte"; };
-template<> struct data_type_def<uint8_t> { static constexpr char value_type[] = "unsignedByte"; };
-template<> struct data_type_def<int16_t> { static constexpr char value_type[] = "short"; };
-template<> struct data_type_def<uint16_t> { static constexpr char value_type[] = "unsignedShort"; };
-template<> struct data_type_def<int32_t> { static constexpr char value_type[] = "int"; };
-template<> struct data_type_def<uint32_t> { static constexpr char value_type[] = "unsignedInt"; };
-template<> struct data_type_def<int64_t> { static constexpr char value_type[] = "long"; };
-template<> struct data_type_def<uint64_t> { static constexpr char value_type[] = "unsignedLong"; };
-template<> struct data_type_def<std::string> { static constexpr char value_type[] = "string"; };
-template<> struct data_type_def<float> { static constexpr char value_type[] = "float"; };
-template<> struct data_type_def<double> { static constexpr char value_type[] = "double"; };
-template<> struct data_type_def<bool> { static constexpr char value_type[] = "boolean"; };
-
-};
-
-class property_base : public DataElement
+class property_base : public DataElement, private ModelType<ModelTypes::Property>
 {
 public:
 	property_base(util::string_view idShort) : DataElement(idShort) {};
 	virtual ~property_base() = default;
 public:
 	virtual util::string_view get_value_type() const = 0;
+
+	virtual const util::optional<Reference> & get_value_id() const = 0;
+	virtual void set_value_id(const Reference & reference) = 0;
+
+	template<typename DataType>
+	Property<DataType> * cast() { return dynamic_cast<Propert<DataType>(this); };
 };
 
 template<typename DataType>
 class Property : 
 	public property_base, 
-	private ModelType<ModelTypes::Property>,
 	private serialization::Serializable<Property<DataType>>
 {
 private:
 	util::optional<DataType> value;
 	util::optional<Reference> valueId;
 public:
-	Property(util::string_view idShort) : property_base(idShort) {
-	};
+	Property(util::string_view idShort) : property_base(idShort) {};
 
 	template<typename U=DataType>
 	Property(util::string_view idShort, U && u) : property_base(idShort), value(std::forward<U>(u)) {};
@@ -72,13 +59,12 @@ public:
 
 	~Property() = default;
 public:
-	const util::optional<Reference> & get_value_id() const { return this->valueId; }
-	void set_value_id(const Reference & reference) { this->valueId = reference; };
+	const util::optional<Reference> & get_value_id() const override { return this->valueId; }
+	void set_value_id(const Reference & reference) override { this->valueId = reference; };
 
 	util::string_view get_value_type() const override { return detail::data_type_def<DataType>::value_type; };
 
 	const util::optional<DataType> & get_value() const { return this->value; };
-	util::optional<DataType> & get_value() { return this->value; };
 
 	template<typename U = DataType>
 	void set_value(U && value) {

@@ -16,7 +16,7 @@
 namespace basyx
 {
 	
-class View : public Referable, public HasSemantics
+class View : public Referable, public HasSemantics, public ModelType<ModelTypes::View>
 {
 public:
 	using elementsContainer_t = std::vector<Reference>;
@@ -39,7 +39,7 @@ public:
 	std::size_t size() const { return containedElements.size(); };
 public:
 	const elementsContainer_t & getContainedElements() const { return containedElements; };
-	elementsContainer_t & getContainedElments() { return containedElements; };
+	elementsContainer_t & getContainedElements() { return containedElements; };
 	void setContainedElements(elementsContainer_t containedElements) { this->containedElements = std::move(containedElements); };
 };
 

@@ -7,6 +7,9 @@
 #include <basyx/submodel.h>
 #include <basyx/views/view.h>
 
+#include <basyx/constraints/qualifier.h>
+#include <basyx/constraints/formula.h>
+
 #include <basyx/submodelelement/multilanguageproperty.h>
 #include <basyx/submodelelement/operation.h>
 #include <basyx/submodelelement/operationvariable.h>
@@ -361,6 +364,14 @@ TEST_F(BaseTest, AssetAdministrationShell)
 	AssetAdministrationShell aas("aas", Identifier::IRI("https://admin-shell.io/aas"), 0);
 	aas.getViews().add(View{ "view" });
 	aas.getSubmodels().add(Submodel("sm", { IdentifierType::Custom, "test/sm_1" }));
+}
 
 
+TEST_F(BaseTest, QualifierTest)
+{
+	std::unique_ptr<Constraint> constraint_formula = std::make_unique<Formula>();
+	std::unique_ptr<Constraint> constraint_qualifier = std::make_unique<Qualifier<int>>("test", 5);
+
+	ASSERT_EQ(constraint_formula->get_model_type(), ModelTypes::Formula);
+	ASSERT_EQ(constraint_qualifier->get_model_type(), ModelTypes::Qualifier);
 }

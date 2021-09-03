@@ -20,7 +20,7 @@ template<ModelTypes modelType>
 class ModelType : public virtual modeltype_base
 {
 public:
-	ModelTypes get_model_type() const override { return modelType; };
+	constexpr ModelTypes get_model_type() const override { return modelType; };
 };
 
 };
