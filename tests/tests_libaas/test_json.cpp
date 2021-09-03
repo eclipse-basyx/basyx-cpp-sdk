@@ -192,8 +192,8 @@ TEST_F(JsonTest, Submodel)
 {
 	Submodel sm("sm", { IdentifierType::Custom, "test/sm_1" });
 
-	sm.get_submodel_elements().addElement(Property<int>("p1", 2));
-	sm.get_submodel_elements().addElement(Property<int>("p2", 3));
+	sm.getSubmodelElements().add(Property<int>("p1", 2));
+	sm.getSubmodelElements().add(Property<int>("p2", 3));
 
 	auto json = basyx::serialization::json::serialize(sm);
 };

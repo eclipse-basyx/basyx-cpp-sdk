@@ -26,7 +26,7 @@ private:
 
 	template<typename First, typename... Tail>
 	void _insert_variadic(First && first, Tail&&... tail) {
-		this->addElement(std::forward<First>(first));
+		this->add(std::forward<First>(first));
 		_insert_variadic(std::forward<Tail>(tail)...);
 	};
 public:
@@ -46,20 +46,20 @@ public:
 	std::size_t size() const { return elementList.size(); };
 	bool hasEntry(util::string_view idShort);
 public:
-	ElementType* const getElement(util::string_view idShort);
-	ElementType* const getElement(std::size_t n);
+	ElementType* const get(util::string_view idShort);
+	ElementType* const get(std::size_t n);
 
-	const ElementType* const getElement(util::string_view idShort) const;
-	const ElementType* const getElement(std::size_t n) const;
+	const ElementType* const get(util::string_view idShort) const;
+	const ElementType* const get(std::size_t n) const;
 public:
-	template<typename T> T* const getElement(util::string_view idShort) { return dynamic_cast<T*>(getElement(idShort)); };
-	template<typename T> T* const getElement(std::size_t n) { return dynamic_cast<T*>(getElement(n)); };
+	template<typename T> T* const get(util::string_view idShort) { return dynamic_cast<T*>(get(idShort)); };
+	template<typename T> T* const get(std::size_t n) { return dynamic_cast<T*>(get(n)); };
 
-	template<typename T> const T* const getElement(util::string_view idShort) const { return dynamic_cast<T*>(getElement(idShort)); };
-	template<typename T> const T* const getElement(std::size_t n) const { return dynamic_cast<T*>(getElement(n)); };
+	template<typename T> const T* const get(util::string_view idShort) const { return dynamic_cast<T*>(get(idShort)); };
+	template<typename T> const T* const get(std::size_t n) const { return dynamic_cast<T*>(get(n)); };
 public:
-	template<typename T> T* const addElement(T && t) { return this->addElement(std::make_unique<T>(std::forward<T>(t))); };
-	template<typename T> T* const addElement(std::unique_ptr<T> element) {
+	template<typename T> T* const add(T && t) { return this->add(std::make_unique<T>(std::forward<T>(t))); };
+	template<typename T> T* const add(std::unique_ptr<T> element) {
 		if (this->hasEntry(element->getIdShort()))
 			return nullptr;
 		auto ptr = element.get();
@@ -84,7 +84,7 @@ inline bool ElementContainer<ElementType>::hasEntry(util::string_view idShort)
 };
 
 template<typename ElementType>
-inline const ElementType* const ElementContainer<ElementType>::getElement(util::string_view idShort) const
+inline const ElementType* const ElementContainer<ElementType>::get(util::string_view idShort) const
 {
 	auto ret = std::find_if(elementList.begin(), elementList.end(),
 		[&idShort](const elementEntry_t & element) { return element->getIdShort() == idShort; });
@@ -96,7 +96,7 @@ inline const ElementType* const ElementContainer<ElementType>::getElement(util::
 };
 
 template<typename ElementType>
-inline ElementType* const ElementContainer<ElementType>::getElement(util::string_view idShort)
+inline ElementType* const ElementContainer<ElementType>::get(util::string_view idShort)
 {
 	auto ret = std::find_if(elementList.begin(), elementList.end(),
 		[&idShort](const elementEntry_t & element) { return element->getIdShort() == idShort; });
@@ -108,7 +108,7 @@ inline ElementType* const ElementContainer<ElementType>::getElement(util::string
 };
 
 template<typename ElementType>
-inline ElementType * const ElementContainer<ElementType>::getElement(std::size_t n)
+inline ElementType * const ElementContainer<ElementType>::get(std::size_t n)
 {
 	if (n > this->elementList.size())
 		return nullptr;
@@ -117,13 +117,15 @@ inline ElementType * const ElementContainer<ElementType>::getElement(std::size_t
 };
 
 template<typename ElementType>
-inline const ElementType * const ElementContainer<ElementType>::getElement(std::size_t n) const
+inline const ElementType * const ElementContainer<ElementType>::get(std::size_t n) const
 {
 	if (n > this->elementList.size())
 		return nullptr;
 
 	return this->elementList.at(n).get();
 };
+
+
 
 
 };

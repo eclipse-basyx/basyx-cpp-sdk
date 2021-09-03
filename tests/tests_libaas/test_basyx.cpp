@@ -3,6 +3,7 @@
 #include <basyx/key.h>
 #include <basyx/langstringset.h>
 #include <basyx/reference.h>
+#include <basyx/assetadministrationshell.h>
 #include <basyx/submodel.h>
 #include <basyx/views/view.h>
 
@@ -307,8 +308,8 @@ TEST_F(BaseTest, Submodel)
 {
     Submodel sm("sm", { IdentifierType::Custom, "test/sm_1" });
 
-    sm.get_submodel_elements().addElement(Property<int>("p1", 2));
-    sm.get_submodel_elements().addElement(Property<int>("p2", 3));
+    sm.getSubmodelElements().add(Property<int>("p1", 2));
+    sm.getSubmodelElements().add(Property<int>("p2", 3));
 
     sm.setSemanticId("custom_submodel");
 }
@@ -326,16 +327,16 @@ TEST_F(BaseTest, SubmodelAddElements)
 
 	Submodel sm2("sm2", Identifier::IRI("https://admin-shell.io/cpp#sm2"));
 
-	sm.get_submodel_elements().addElement(Property<std::string>("testProperty1", "Yay a value!"));
-	sm.get_submodel_elements().addElement(Property<std::string>("testProperty2", "Values and values! :O"));
+	sm.getSubmodelElements().add(Property<std::string>("testProperty1", "Yay a value!"));
+	sm.getSubmodelElements().add(Property<std::string>("testProperty2", "Values and values! :O"));
 
-	ASSERT_EQ(sm.get_submodel_elements().size(), 2);
+	ASSERT_EQ(sm.getSubmodelElements().size(), 2);
 
-	auto * elem_1 = sm.get_submodel_elements().getElement<stringProp_t>("testProperty1");
+	auto * elem_1 = sm.getSubmodelElements().get<stringProp_t>("testProperty1");
 	ASSERT_TRUE(elem_1 != nullptr);
 	ASSERT_EQ(*elem_1->get_value(), "Yay a value!");
 
-	auto * elem_2 = sm.get_submodel_elements().getElement<stringProp_t>("testProperty2");
+	auto * elem_2 = sm.getSubmodelElements().get<stringProp_t>("testProperty2");
 	ASSERT_TRUE(elem_2 != nullptr);
 	ASSERT_EQ(*elem_2->get_value(), "Values and values! :O");
 
@@ -352,4 +353,14 @@ TEST_F(BaseTest, View)
 		"0173-1#02-AAR972#002"
 	);
 	ASSERT_EQ(view_2.size(), 2);
+}
+
+
+TEST_F(BaseTest, AssetAdministrationShell)
+{
+	AssetAdministrationShell aas("aas", Identifier::IRI("https://admin-shell.io/aas"), 0);
+	aas.getViews().add(View{ "view" });
+	aas.getSubmodels().add(Submodel("sm", { IdentifierType::Custom, "test/sm_1" }));
+
+
 }

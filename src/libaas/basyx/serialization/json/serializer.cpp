@@ -188,7 +188,7 @@ void serialize_helper(json_t & json, const Submodel & submodel)
 
 	json_t submodelElements = json_t::array();
 
-	for (const auto & element : submodel.get_submodel_elements()) {
+	for (const auto & element : submodel.getSubmodelElements()) {
 		submodelElements.emplace_back(serialize(*element));
 	};
 

@@ -71,7 +71,7 @@ void httpHandler::handleRequests()
 			return;
 		}
 
-		auto & submodelElements = s->get_submodel_elements();
+		auto & submodelElements = s->getSubmodelElements();
 
 		auto json = basyx::serialization::json::json_t::array();
 
@@ -193,7 +193,7 @@ SubmodelElement * httpHandler::getSubmodelElementByPathList(httpHandler::pathLis
 	auto path = pathList.cbegin();
 
 	// Get first element from submodel
-	auto element = sm.get_submodel_elements().getElement(*path);
+	auto element = sm.getSubmodelElements().get(*path);
 	if (element == nullptr)
 		return nullptr;
 

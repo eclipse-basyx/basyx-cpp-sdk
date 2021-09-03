@@ -32,9 +32,9 @@ public:
 	Submodel(Submodel &&) = default;
 	Submodel& operator=(Submodel &&) = default;
 public:
-	const ElementContainer<SubmodelElement> & get_submodel_elements() const { return this->submodelElements; };
-	ElementContainer<SubmodelElement> & get_submodel_elements() { return this->submodelElements; };
-	void set_submodel_elements(ElementContainer<SubmodelElement> elements) { this->submodelElements = std::move(elements); };
+	const ElementContainer<SubmodelElement> & getSubmodelElements() const { return this->submodelElements; };
+	ElementContainer<SubmodelElement> & getSubmodelElements() { return this->submodelElements; };
+	void setSubmodelElements(ElementContainer<SubmodelElement> elements) { this->submodelElements = std::move(elements); };
 };
 
 };

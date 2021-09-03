@@ -10,6 +10,8 @@
 using namespace basyx;
 using namespace basyx::CREST;
 
+
+
 void print_elems(basyx::SubmodelElementCollection & coll)
 {
 	auto json = basyx::serialization::json::serialize(coll);
@@ -20,36 +22,39 @@ void print_elems(basyx::SubmodelElementCollection & coll)
 
 int main()
 {
-    spdlog::info("C++ submodel REST server");
+	spdlog::info("C++ submodel REST server");
 
-    // Create submodels
-    Submodel sm("sm1", Identifier::IRI("https://admin-shell.io/cpp#sm1"));
-    sm.setCategory("test");
-    sm.setSemanticId("0173-1#02-AAR972#002");
-    sm.setAdministration({ "1.0", "v2" });
+	// Create submodels
+	Submodel sm("sm1", Identifier::IRI("https://admin-shell.io/cpp#sm1"));
+	sm.setCategory("test");
+	sm.setSemanticId("0173-1#02-AAR972#002");
+	sm.setAdministration({ "1.0", "v2" });
 
-    Submodel sm2("sm2", Identifier::IRI("https://admin-shell.io/cpp#sm2"));
+	Submodel sm2("sm2", Identifier::IRI("https://admin-shell.io/cpp#sm2"));
 
-    sm.get_submodel_elements().addElement(Property<std::string>("testProperty1", "Yay a value!"));
-    sm.get_submodel_elements().addElement(Property<std::string>("testProperty2", "Values and values! :O"));
-    sm.get_submodel_elements().addElement(Property<uint32_t>("intProp", 32));
+	// Add submodel elements to submodel
+	sm.getSubmodelElements().add(Property<std::string>("testProperty1", "Yay a value!"));
+	sm.getSubmodelElements().add(Property<std::string>("testProperty2", "Values and values! :O"));
+	sm.getSubmodelElements().add(Property<uint32_t>("intProp", 32));
 
-    sm.get_submodel_elements().addElement(SubmodelElementCollection("collection",
-        MultiLanguageProperty("multiLang", { { "de", "beispiel" }, { "en", "example" } }),
-        Property<float>("floatProp", 5.0f),
-        SubmodelElementCollection("collection2",
-            Property<float>("floatProp", 5.0f),
-            Property<float>("floatProp2", 5.0f))));
+	sm.getSubmodelElements().add(SubmodelElementCollection("collection",
+		MultiLanguageProperty("multiLang", { { "de", "beispiel" }, { "en", "example" } }),
+		Property<float>("floatProp", 5.0f),
+		SubmodelElementCollection("collection2",
+			Property<float>("floatProp", 5.0f),
+			Property<float>("floatProp2", 5.0f))));
 
-    sm2.get_submodel_elements().addElement(Property<std::string>("testProperty2", "TEST"));
+	sm2.getSubmodelElements().add(Property<std::string>("testProperty2", "Test"));
 
-    httpHandler handler(std::string("0.0.0.0"), 8080);
-    handler.addSubmodelToServer(sm2);
-    if (handler.addSubmodelToServer(sm) == ERROR_CODES::ERR_OK)
-        spdlog::info("Submodel added to server");
-    else
-        spdlog::error("Error adding submodel to server");
-    handler.run();
+	// Add to handler and start server
+	httpHandler handler(std::string("0.0.0.0"), 8080);
+	
+	if (handler.addSubmodelToServer(sm) == ERROR_CODES::ERR_OK)
+		spdlog::info("Submodel added to server");
+	else
+		spdlog::error("Error adding submodel to server");	
+	handler.addSubmodelToServer(sm2);
+	handler.run();
 
-    return 0;
+	return 0;
 }
