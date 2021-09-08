@@ -78,6 +78,19 @@ if(NOT json_POPULATED)
   add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 
+### pugixml
+
+FetchContent_Declare(
+  pugixml
+  GIT_REPOSITORY https://github.com/zeux/pugixml
+)
+
+FetchContent_GetProperties(pugixml)
+if(NOT pugixml_POPULATED)
+  FetchContent_Populate(pugixml)
+  add_subdirectory(${pugixml_SOURCE_DIR} ${pugixml_BINARY_DIR} EXCLUDE_FROM_ALL)
+endif()
+
 ### GoogleTest ###
 if(${BASYX_BUILD_TESTS})
     include(GoogleTest)
@@ -97,8 +110,6 @@ endif()
 ###           Library Directory             ###
 ###############################################
 
-#add_subdirectory(lib/json)
-
 ###############################################
 ###           Source Directory              ###
 ###############################################
@@ -116,6 +127,7 @@ if(${BASYX_BUILD_TESTS})
     include( CTest )
     add_subdirectory(tests/tests_libaas)
     add_subdirectory(tests/tests_misc)
+    add_subdirectory(tests/tests_xml)
 endif()
 
 ###############################################
