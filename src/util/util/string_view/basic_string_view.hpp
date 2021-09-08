@@ -49,6 +49,8 @@ public:
 
 	constexpr basic_string_view(std::nullptr_t) = delete;
 public:
+	// returns a pointer to the data
+	constexpr const char * data() const noexcept { return _data; };
 	// returns the number of characters
 	constexpr size_type size() const noexcept { return _sz; };
 	// returns the number of characters

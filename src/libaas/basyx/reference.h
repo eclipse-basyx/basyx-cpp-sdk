@@ -15,13 +15,17 @@ namespace basyx
 	
 class Reference
 {
+public:
+	using keyList_t = std::vector<Key>;
 private:
-	std::vector<Key> keys;
+	keyList_t keys;
 public:
 	Reference(const Key & key) : keys{ key } {};
 	Reference(Key && key) : keys{ std::move(key) } {};
 	Reference(util::string_view from_string);
 	Reference(const Referable & referable);
+	Reference(const keyList_t & keyList) : keys(keyList) {};
+	Reference(keyList_t && keyList) : keys(std::move(keyList)) {};
 	Reference(std::initializer_list<Key> init_list) : keys{ std::move(init_list) } {};
 public:
 	Reference(const Reference &) = default;

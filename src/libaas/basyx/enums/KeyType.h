@@ -3,6 +3,8 @@
 
 #include <basyx/base/basyx_enum_base.h>
 
+#include <util/string_view/string_view.hpp>
+
 #include <string>
 
 namespace basyx {
@@ -41,21 +43,21 @@ public:
 class KeyType_
 {
 public:
-    static KeyType from_string(const std::string & name);
+    static KeyType from_string(util::string_view name);
     static const char * to_string(KeyType value);
 };
 
 class IdentifierType_
 {
 public:
-	static IdentifierType from_string(const std::string & name);
+	static IdentifierType from_string(util::string_view name);
 	static const char * to_string(IdentifierType value);
 };
 
 class LocalKeyType_
 {
 public:
-	static LocalKeyType from_string(const std::string & name);
+	static LocalKeyType from_string(util::string_view name);
 	static const char * to_string(LocalKeyType value);
 };
 

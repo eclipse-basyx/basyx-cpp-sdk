@@ -40,10 +40,10 @@ static const std::array<enum_pair_t, 27> string_to_enum =
     std::make_pair("Submodel", KeyElements::Submodel),
 };
 
-KeyElements KeyElements_::from_string(const std::string & name)
+KeyElements KeyElements_::from_string(util::string_view name)
 {
     auto pair = std::find_if(string_to_enum.begin(), string_to_enum.end(), 
-		[&name](const enum_pair_t & pair) {
+		[name](const enum_pair_t & pair) {
 			return !name.compare(pair.first);
 	});
 
