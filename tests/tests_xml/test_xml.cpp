@@ -108,7 +108,7 @@ TEST_F(XmlTest, XPath)
 	auto node = root.select_node("/root/nodes/node[@id='2']");
 	ASSERT_TRUE(node);
 	ASSERT_EQ(node.node().attribute("int").as_int(), 1234);
-	int j = 2;
+	
 };
 
 

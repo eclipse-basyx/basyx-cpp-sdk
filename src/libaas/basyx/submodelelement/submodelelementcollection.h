@@ -48,9 +48,7 @@ public:
 	SubmodelElementCollection(SubmodelElementCollection&&) noexcept = default;
 	SubmodelElementCollection& operator=(SubmodelElementCollection&&) noexcept = default;
 
-	virtual ~SubmodelElementCollection() {
-		int j = 2;
-	};
+	virtual ~SubmodelElementCollection() = default;
 public:
 	valueIterator_t begin() noexcept { return this->valueList.begin(); };
 	valueIterator_t end() noexcept { return this->valueList.end(); };

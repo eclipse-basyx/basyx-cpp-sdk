@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basyx/base/elementcontainer.h>
+#include <basyx/asset/assetinformation.h>
 #include <basyx/submodel.h>
 #include <basyx/reference.h>
 #include <basyx/identifiable.h>
@@ -13,7 +14,7 @@ namespace basyx
 
 // ToDo: replace placeholders
 using Security = int;
-using AssetInformation = int;
+//using AssetInformation = int;
 // --------------------------
 
 class AssetAdministrationShell : 
@@ -27,7 +28,11 @@ private:
 	ElementContainer<View> views;
 	AssetInformation assetInformation;
 public:
-	AssetAdministrationShell(util::string_view idShort, Identifier identifier, AssetInformation assetInformation) : Identifiable(idShort, std::move(identifier)) {};
+	AssetAdministrationShell(util::string_view idShort, Identifier identifier, AssetInformation assetInformation)
+		: Identifiable(idShort, std::move(identifier)), assetInformation(std::move(assetInformation)) {};
+
+	AssetAdministrationShell(util::string_view idShort, util::string_view id, AssetInformation assetInformation)
+		: Identifiable(idShort, Identifier(id)), assetInformation(std::move(assetInformation)) {};
 public:
 	AssetAdministrationShell(const AssetAdministrationShell &) = default;
 	AssetAdministrationShell& operator=(const AssetAdministrationShell &) = default;

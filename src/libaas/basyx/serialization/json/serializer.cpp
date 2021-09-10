@@ -36,6 +36,22 @@ inline void serialize_submodelelement(json_t & json, const SubmodelElement & sub
 	serialize_helper(json, static_cast<const T&>(submodelElement));
 };
 
+void serialize_helper(json_t & json, const HasSemantics & hasSemantics)
+{
+	if (hasSemantics.getSemanticId())
+		json["semanticId"] = serialize(*hasSemantics.getSemanticId());
+};
+
+void serialize_helper(json_t & json, const HasKind & hasKind)
+{
+	json["kind"] = ModelingKind_::to_string(hasKind.kind);
+};
+
+void serialize_helper(json_t & json, const modeltype_base & modelType)
+{
+	json["modeltype"] = json_t{ {"name", ModelTypes_::to_string(modelType.get_model_type()) } };
+};
+
 void serialize_helper(json_t & json, const Key & key)
 {
 	json["type"] = KeyElements_::to_string(key.get_type());
@@ -58,6 +74,8 @@ void serialize_helper(json_t & json, const Reference & reference)
 
 void serialize_helper(json_t & json, const Referable & referable)
 {
+	serialize_helper_h<modeltype_base>(json, referable);
+
 	json["idShort"] = referable.getIdShort().to_string();
 
 	if (referable.getCategory())
@@ -70,11 +88,38 @@ void serialize_helper(json_t & json, const Referable & referable)
 		json["displayName"] = serialize(*referable.getDisplayname());
 };
 
+void serialize_helper(json_t & json, const langstringset_t & langstrings)
+{
+	json = json_t::array();
+
+	for (const auto & langstring : langstrings) {
+		json.emplace_back(json_t{
+			{"language", langstring.get_code().to_string() },
+			{"text", langstring.get_value().to_string() }
+			});
+	}
+};
+
+void serialize_helper(json_t & json, const IdentifierKeyValuePair & kvPair)
+{
+	serialize_helper_h<HasSemantics>(json, kvPair);
+
+	json["key"] = kvPair.getKey();
+
+	json["value"] = json_t();
+	if(kvPair.getValue())
+		json["value"] = *kvPair.getValue();
+
+	json["subjectId"] = json_t();
+	if(kvPair.getExternalSubjectId())
+		json["subjectId"] = serialize(*kvPair.getExternalSubjectId());
+}
+
 void serialize_helper(json_t & json, const AssetAdministrationShell & aas)
 {
 	serialize_helper_h<Identifiable>(json, aas);
 	//serialize_helper_h<HasDataSpecification>(json, aas);
-	serialize_helper_h<modeltype_base>(json, aas);
+	//serialize_helper_h<modeltype_base>(json, aas);
 
 	if (aas.getDerivedFrom())
 		json["derivedFrom"] = serialize(*aas.getDerivedFrom());
@@ -92,9 +137,7 @@ void serialize_helper(json_t & json, const AssetAdministrationShell & aas)
 	json["submodels"] = std::move(submodels);
 	json["views"] = std::move(views);
 
-	// actually, ToDo: 
-	// json["assetInformation"] = serialize(aas.getAssetInformation());
-	json["assetInformation"] = aas.getAssetInformation();
+	json["assetInformation"] = serialize(aas.getAssetInformation());
 
 	if(aas.getSecurity())
 		// actually, ToDo: 
@@ -182,8 +225,8 @@ void serialize_helper(json_t & json, const File & file)
 
 void serialize_helper(json_t & json, const Identifier & identifier)
 {
-	json["id"] = identifier.get_id();
-	json["idType"] =  KeyType_::to_string( identifier.get_id_type() );
+	json["id"] = identifier.getId();
+	json["idType"] =  KeyType_::to_string( identifier.getIdType() );
 };
 
 void serialize_helper(json_t & json, const Identifiable & identifiable)
@@ -214,7 +257,7 @@ void serialize_helper(json_t & json, const View & view)
 {
 	serialize_helper_h<Referable>(json, view);
 	//serialize_helper_h<HasDataSpecification>(json, view);
-	serialize_helper_h<modeltype_base>(json, view);
+	//serialize_helper_h<modeltype_base>(json, view);
 
 	auto containedElements = json_t::array();
 	for (const auto & containedElement : view.getContainedElements()) {
@@ -228,7 +271,7 @@ void serialize_helper(json_t & json, const Submodel & submodel)
 	serialize_helper_h<Identifiable>(json, submodel);
 	serialize_helper_h<HasSemantics>(json, submodel);
 	serialize_helper_h<HasKind>(json, submodel);
-	serialize_helper_h<modeltype_base>(json, submodel);
+	//serialize_helper_h<modeltype_base>(json, submodel);
 
 	json_t submodelElements = json_t::array();
 
@@ -239,6 +282,33 @@ void serialize_helper(json_t & json, const Submodel & submodel)
 	if (submodelElements.size() > 0)
 		json["submodelElements"] = submodelElements;
 };
+
+
+void serialize_helper(json_t & json, const Asset & asset)
+{
+	serialize_helper_h<Identifiable>(json, asset);
+}
+
+void serialize_helper(json_t & json, const AssetInformation & assetInf)
+{
+	json["assetKind"] = AssetKind_::to_string(assetInf.getAssetKind());
+	
+	if (assetInf.getGlobalAssetId())
+		json["globalAssetId"] = serialize(*assetInf.getGlobalAssetId());
+
+	auto specificAssetIds = json_t::array();
+	for (const auto & assetId : assetInf.getSpecificAssetIds())
+		specificAssetIds.emplace_back(serialize(assetId));
+	json["specificAssetIds"] = specificAssetIds;
+
+	auto billOfMaterial = json_t::array();
+	for (const auto & bom : assetInf.getBillOfMaterials())
+		billOfMaterial.emplace_back(serialize(bom));
+	json["billOfMaterial"] = billOfMaterial;
+
+	if(assetInf.getDefaultThumbnail())
+		json["thumbnail"] = serialize(*assetInf.getDefaultThumbnail());
+}
 
 
 

@@ -24,6 +24,7 @@ class Submodel :
 private:
 	ElementContainer<SubmodelElement> submodelElements;
 public:
+	Submodel(util::string_view idShort, util::string_view identifier) : Identifiable(idShort, Identifier(identifier)) {};
 	Submodel(util::string_view idShort, Identifier identifier) : Identifiable(idShort, std::move(identifier)) {};
 public:
 	Submodel(const Submodel &) = default;

@@ -5,29 +5,29 @@
 #include <basyx/modeltype.h>
 #include <basyx/reference.h>
 
-namespace basyx
-{
+namespace basyx {
 
-class Formula : public Constraint, public ModelType<ModelTypes::Formula>
+class Formula : public Constraint,
+                public ModelType<ModelTypes::Formula> 
 {
 public:
-	using dependsOn_t = std::vector<Reference>;
+    using dependsOn_t = std::vector<Reference>;
 private:
-	dependsOn_t dependsOn;
+    dependsOn_t dependsOn;
 public:
-	Formula() = default;
+    Formula() = default;
 
-	Formula(const Formula&) = default;
-	Formula& operator=(const Formula&) = default;
+    Formula(const Formula&) = default;
+    Formula& operator=(const Formula&) = default;
 
-	Formula(Formula&&) = default;
-	Formula& operator=(Formula&&) = default;
+    Formula(Formula&&) = default;
+    Formula& operator=(Formula&&) = default;
 
-	~Formula() = default;
+    ~Formula() = default;
 public:
-	const dependsOn_t & getDependsOn() const { return this->dependsOn; };
-	dependsOn_t & getDependsOn() { return this->dependsOn; };
-	void setDependsOn(dependsOn_t dependsOn) { this->dependsOn = std::move(dependsOn); };
+    const dependsOn_t& getDependsOn() const { return this->dependsOn; };
+    dependsOn_t& getDependsOn() { return this->dependsOn; };
+    void setDependsOn(dependsOn_t dependsOn) { this->dependsOn = std::move(dependsOn); };
 };
 
 }

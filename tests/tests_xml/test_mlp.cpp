@@ -101,7 +101,7 @@ TEST_F(XmlTestMLP, Test_MultiLanguageProperty)
 
 	mlp.setSemanticId(std::move(ref));
 
-	int j = 2;
+	
 };
 
 

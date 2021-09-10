@@ -76,7 +76,7 @@ public:
 	zinghy z;
 	~derived()
 	{
-		int j = 2;
+		
 	};
 };
 
@@ -124,7 +124,7 @@ TEST_F(SerializerTest, Serialize_1)
 	b->serialize(js);
 	b2->serialize(xml);
 
-	int j = 2;
+	
 };
 
 }

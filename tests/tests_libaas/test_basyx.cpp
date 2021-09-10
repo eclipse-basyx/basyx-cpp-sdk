@@ -5,6 +5,8 @@
 #include <basyx/reference.h>
 #include <basyx/environment.h>
 #include <basyx/assetadministrationshell.h>
+#include <basyx/asset/asset.h>
+#include <basyx/asset/assetinformation.h>
 #include <basyx/submodel.h>
 #include <basyx/views/view.h>
 
@@ -64,7 +66,7 @@ TEST_F(BaseTest, LangStringSet)
     ASSERT_EQ(*de, "test");
 }
 
-TEST_F(BaseTest, Key)
+TEST_F(BaseTest, AutoKeyType)
 {
     Key key_1 { "CUSTOM" };
     Key key_2 { "http://test-key" };
@@ -74,23 +76,23 @@ TEST_F(BaseTest, Key)
     Key key_6 { "0173-1#02-AAR972#00" };
     Key key_7 { "0173-1x02-AAR972#00" };
 
-    ASSERT_EQ(key_1.get_id_type(), KeyType::IdentifierType::Custom);
-    ASSERT_EQ(key_2.get_id_type(), KeyType::IdentifierType::IRI);
-    ASSERT_EQ(key_3.get_id_type(), KeyType::IdentifierType::IRI);
-    ASSERT_EQ(key_4.get_id_type(), KeyType::IdentifierType::IRI);
-    ASSERT_EQ(key_5.get_id_type(), KeyType::IdentifierType::IRDI);
-    ASSERT_EQ(key_6.get_id_type(), KeyType::IdentifierType::Custom);
-    ASSERT_EQ(key_7.get_id_type(), KeyType::IdentifierType::Custom);
+    ASSERT_EQ(key_1.get_id_type(), KeyType::Custom);
+    ASSERT_EQ(key_2.get_id_type(), KeyType::IRI);
+    ASSERT_EQ(key_3.get_id_type(), KeyType::IRI);
+    ASSERT_EQ(key_4.get_id_type(), KeyType::IRI);
+    ASSERT_EQ(key_5.get_id_type(), KeyType::IRDI);
+    ASSERT_EQ(key_6.get_id_type(), KeyType::Custom);
+    ASSERT_EQ(key_7.get_id_type(), KeyType::Custom);
 };
 
 TEST_F(BaseTest, Reference)
 {
-    Key key { KeyElements::Asset, "test", KeyType::LocalKeyType::FragmentId };
+    Key key { KeyElements::Asset, "test", KeyType::FragmentId };
 
     Reference reference_1 { key };
     ASSERT_EQ(reference_1.size(), 1);
 
-    Reference reference_2({ KeyElements::AssetAdministrationShell, "test", KeyType::LocalKeyType::FragmentId });
+    Reference reference_2({ KeyElements::AssetAdministrationShell, "test", KeyType::FragmentId });
     ASSERT_EQ(reference_2.size(), 1);
 
     Reference reference_3 { key, key, key };
@@ -161,8 +163,6 @@ TEST_F(BaseTest, PropertyTest2)
     Property<std::string> p3 { "string_prop", "test" };
     ASSERT_TRUE(p3.get_value());
     ASSERT_EQ(*p3.get_value(), "test");
-
-    int j = 2;
 };
 
 TEST_F(BaseTest, RangeTest)
@@ -174,8 +174,6 @@ TEST_F(BaseTest, RangeTest)
     ASSERT_EQ(*p1.get_min(), 1);
     ASSERT_EQ(*p1.get_max(), 5);
     ASSERT_EQ(p1.get_value_type(), "unsignedInt");
-
-    int j = 2;
 };
 
 TEST_F(BaseTest, PropertyType)
@@ -186,8 +184,6 @@ TEST_F(BaseTest, PropertyType)
     ASSERT_EQ(Property<double> { "id" }.get_value_type(), "double");
     ASSERT_EQ(Property<float> { "id" }.get_value_type(), "float");
     ASSERT_EQ(Property<char> { "id" }.get_value_type(), "byte");
-
-    int j = 2;
 };
 
 TEST_F(BaseTest, OperationVariable)
@@ -211,8 +207,6 @@ TEST_F(BaseTest, Operation)
 TEST_F(BaseTest, SubmodelElement)
 {
     std::unique_ptr<SubmodelElement> prop = std::make_unique<MultiLanguageProperty>("mlp");
-
-    int j = 2;
 }
 
 TEST_F(BaseTest, SubmodelElementCollection)
@@ -237,8 +231,6 @@ TEST_F(BaseTest, SubmodelElementCollection)
     col2.add(mlp);
 
     col.add(std::move(col2));
-
-    int j = 2;
 };
 
 TEST_F(BaseTest, SubmodelElementCollection_2)
@@ -261,8 +253,6 @@ TEST_F(BaseTest, SubmodelElementCollection_2)
     auto r2 = col.get<Property<int>>("i2");
     ASSERT_NE(r2, nullptr);
     ASSERT_EQ(*r2->get_value(), 5);
-
-    int j = 2;
 };
 
 TEST_F(BaseTest, IntPropertyCopy)
@@ -272,8 +262,6 @@ TEST_F(BaseTest, IntPropertyCopy)
 
     i2.~Property();
     i.~Property();
-
-    int j = 2;
 }
 
 TEST_F(BaseTest, StringProperty)
@@ -286,8 +274,6 @@ TEST_F(BaseTest, StringProperty)
 
     s.~Property();
     s2.~Property();
-
-    int j = 2;
 }
 
 TEST_F(BaseTest, SubmodelElementCollection_3)
@@ -310,7 +296,7 @@ TEST_F(BaseTest, SubmodelElementCollection_3)
 
 TEST_F(BaseTest, Submodel)
 {
-    Submodel sm("sm", { IdentifierType::Custom, "test/sm_1" });
+	Submodel sm("sm", "test/sm_1");
 
     sm.getSubmodelElements().add(Property<int>("p1", 2));
     sm.getSubmodelElements().add(Property<int>("p2", 3));
@@ -359,25 +345,6 @@ TEST_F(BaseTest, View)
 	ASSERT_EQ(view_2.size(), 2);
 }
 
-
-TEST_F(BaseTest, AssetAdministrationShell)
-{
-	AssetAdministrationShell aas("aas", Identifier::IRI("https://admin-shell.io/aas"), 0);
-	aas.getViews().add(View{ "view" });
-	aas.getSubmodels().add(Submodel("sm", { IdentifierType::Custom, "test/sm_1" }));
-}
-
-TEST_F(BaseTest, Environment)
-{
-	Environment env;
-	env.getAssetAdministrationShells().add(
-		AssetAdministrationShell("aas", Identifier::IRI("https://admin-shell.io/aas"), 0)
-	);
-	// TODO : Fixme when the real element is used
-	env.getAssetInformations().add(5);
-}
-
-
 TEST_F(BaseTest, QualifierTest)
 {
 	std::unique_ptr<Constraint> constraint_formula = std::make_unique<Formula>();
@@ -385,4 +352,32 @@ TEST_F(BaseTest, QualifierTest)
 
 	ASSERT_EQ(constraint_formula->get_model_type(), ModelTypes::Formula);
 	ASSERT_EQ(constraint_qualifier->get_model_type(), ModelTypes::Qualifier);
+}
+
+
+TEST_F(BaseTest, AssetInfTest)
+{
+	Asset asset{ "testAsset", Identifier::Custom("test") };
+
+	AssetInformation assetInf{ AssetKind::Instance };
+
+	assetInf.setAsset(asset);
+};
+
+TEST_F(BaseTest, AssetAdministrationShell)
+{
+	AssetAdministrationShell aas("aas", Identifier::IRI("https://admin-shell.io/aas"), { AssetKind::Instance });
+	aas.getViews().add(View{ "view" });
+	aas.getSubmodels().add(Submodel("sm", Identifier::Custom("test/sm_1")));
+}
+
+TEST_F(BaseTest, Environment)
+{
+	Environment env;
+
+	env.getAssetAdministrationShells().add(
+		AssetAdministrationShell("aas", Identifier::IRI("https://admin-shell.io/aas"), AssetInformation{ AssetKind::Instance })
+	);
+
+	env.getAssetInformations().emplace_back(AssetInformation{ AssetKind::Type });
 }

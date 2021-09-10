@@ -1,65 +1,39 @@
 #ifndef BASYX_SUBMODEL_ENUMERATIONS_KEYTYPE_H
 #define BASYX_SUBMODEL_ENUMERATIONS_KEYTYPE_H
 
-#include <basyx/base/basyx_enum_base.h>
-
 #include <util/string_view/string_view.hpp>
-
-#include <string>
 
 namespace basyx {
 
-struct IdentifierType : public basyx_enum_base
-{
-private:
-	using basyx_enum_base::basyx_enum_base;
-public:
-	static const IdentifierType Custom;
-	static const IdentifierType IRDI;
-	static const IdentifierType IRI;
-};
+	enum class KeyType {
+		Custom,
+		IRI,
+		IRDI,
+		IdShort,
+		FragmentId
+	};
 
-struct LocalKeyType : public basyx_enum_base
-{
-private:
-	using basyx_enum_base::basyx_enum_base;
-public:
-	static const LocalKeyType IdShort;
-	static const LocalKeyType FragmentId;
-};
+	class KeyType_
+	{
+	public:
+		static KeyType from_string(util::string_view str_v);
+		static const char * to_string(KeyType id);
+	public:
+		static constexpr KeyType from_id(util::string_view id)
+		{
+			// If begins with an URI schema, assume it's an IRDI
+			if ((id.substr(0, 7) == "http://") || (id.substr(0, 8) == "https://") || (id.substr(0, 6) == "urn://"))
+				return KeyType::IRI;
 
-struct KeyType : public basyx_enum_base
-{
-public:
-	using IdentifierType = basyx::IdentifierType;
-	using LocalKeyType = basyx::LocalKeyType;
-private:
-	using basyx_enum_base::basyx_enum_base;
-public:
-	KeyType(LocalKeyType rhs) : basyx_enum_base{ rhs } {};
-	KeyType(IdentifierType rhs) : basyx_enum_base{ rhs } {};
-};
+			// check if it is an ISO/IEC 11179-6 eClass identifier, see: https://wiki.eclass.eu/wiki/IRDI
+			// e.g. 0173-1#02-AAR972#002
+			else if (id.length() == 20 && id[4] == '-' && id[6] == '#' && id[9] == '-' && id[16] == '#')
+				return KeyType::IRDI;
 
-class KeyType_
-{
-public:
-    static KeyType from_string(util::string_view name);
-    static const char * to_string(KeyType value);
-};
-
-class IdentifierType_
-{
-public:
-	static IdentifierType from_string(util::string_view name);
-	static const char * to_string(IdentifierType value);
-};
-
-class LocalKeyType_
-{
-public:
-	static LocalKeyType from_string(util::string_view name);
-	static const char * to_string(LocalKeyType value);
-};
+			// otherwise, assume it's a Custom identifier
+			return KeyType::Custom;
+		};
+	};
 
 
 }

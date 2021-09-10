@@ -1,12 +1,12 @@
 #pragma once
 
-#include <string>
-
 #include <util/optional/optional.hpp>
 
 #include <basyx/langstringset.h>
 
 #include <basyx/key.h>
+
+#include <string>
 
 namespace basyx
 {
@@ -14,10 +14,12 @@ namespace basyx
 class Identifier
 {
 private:
-	IdentifierType idType;
+	KeyType idType;
 	std::string id;
+private:
+	Identifier(KeyType idType, util::string_view id);
 public:
-	Identifier(IdentifierType idType, util::string_view id);
+	Identifier(util::string_view id);
 
 	Identifier(const Identifier&) = default;
 	Identifier(Identifier&&) = default;
@@ -27,15 +29,15 @@ public:
 
 	~Identifier() = default;
 public:
-	const std::string & get_id() const { return id; };
-	void set_id(const std::string & value) { this->id = id; };
+	const std::string & getId() const { return id; };
+	//void set_id(const std::string & value) { this->id = id; };
 
-	IdentifierType get_id_type() const { return idType; };
-	void set_id_type(IdentifierType idType) { this->idType = idType; };
+	KeyType getIdType() const { return idType; };
+	//void set_id_type(IdentifierType idType) { this->idType = idType; };
 public:
-	static Identifier Custom(util::string_view id) { return Identifier(IdentifierType::Custom, id); }
-	static Identifier IRDI(util::string_view id) { return Identifier(IdentifierType::IRDI, id); }
-	static Identifier IRI(util::string_view id) { return Identifier(IdentifierType::IRI, id); }
+	static Identifier Custom(util::string_view id) { return Identifier(KeyType::Custom, id); }
+	static Identifier IRDI(util::string_view id) { return Identifier(KeyType::IRDI, id); }
+	static Identifier IRI(util::string_view id) { return Identifier(KeyType::IRI, id); }
 };
 
 };

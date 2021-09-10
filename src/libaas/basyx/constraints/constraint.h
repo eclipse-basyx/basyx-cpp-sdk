@@ -2,14 +2,13 @@
 
 #include <basyx/modeltype.h>
 
-namespace basyx
-{
-	
-class Constraint : public virtual modeltype_base
+namespace basyx {
+
+class Constraint : public virtual modeltype_base 
 {
 public:
-	Constraint() = default;
-	virtual ~Constraint() = 0 {};
+    Constraint() = default;
+    virtual ~Constraint() = 0;
 };
 
 }

@@ -19,7 +19,6 @@ class SubmodelElement :
 	public Referable, 
 	public HasKind,
 	public HasSemantics, 
-	public virtual modeltype_base,
 	public virtual serialization::serializable_base
 {
 protected:

@@ -6,6 +6,8 @@
 #include <basyx/reference.h>
 #include <basyx/submodel.h>
 
+#include <basyx/assetadministrationshell.h>
+
 #include <basyx/serialization/json/serializer.h>
 
 #include <type_traits>
@@ -34,15 +36,15 @@ protected:
 
 TEST_F(JsonTest, Key)
 {
-	Key key{ KeyElements::Asset, "value", basyx::KeyType::IdentifierType::Custom };
+	Key key{ KeyElements::Asset, "value", basyx::KeyType::Custom };
 
 	auto json = basyx::serialization::json::serialize(key);
 };
 
 TEST_F(JsonTest, Reference)
 {
-	Key key1{ KeyElements::Asset, "value1", basyx::KeyType::IdentifierType::Custom };
-	Key key2{ KeyElements::Asset, "value2", basyx::KeyType::IdentifierType::Custom };
+	Key key1{ KeyElements::Asset, "value1", basyx::KeyType::Custom };
+	Key key2{ KeyElements::Asset, "value2", basyx::KeyType::Custom };
 
 	Reference reference{ key1, key2 };
 
@@ -95,8 +97,6 @@ TEST_F(JsonTest, Property)
 	auto json_int = basyx::serialization::json::serialize(p_int);
 	auto json_float = basyx::serialization::json::serialize(p_float);
 	auto json_string = basyx::serialization::json::serialize(p_string);
-
-	int j = 2;
 };
 
 TEST_F(JsonTest, SubmodelElement)
@@ -117,8 +117,6 @@ TEST_F(JsonTest, SubmodelElement)
 
 	auto model = mlp->get_model_type();
 	auto json = basyx::serialization::json::serialize(*mlp);
-
-	int j = 2;
 };
 
 TEST_F(JsonTest, SubmodelElementProperty)
@@ -190,10 +188,22 @@ TEST_F(JsonTest, SubmodelElementCollection)
 
 TEST_F(JsonTest, Submodel)
 {
-	Submodel sm("sm", { IdentifierType::Custom, "test/sm_1" });
+	Submodel sm("sm", "test/sm_1");
 
 	sm.getSubmodelElements().add(Property<int>("p1", 2));
 	sm.getSubmodelElements().add(Property<int>("p2", 3));
 
 	auto json = basyx::serialization::json::serialize(sm);
+};
+
+
+TEST_F(JsonTest, AssetInfTest)
+{
+	Asset asset{ "testAsset", Identifier::Custom("test") };
+
+	AssetInformation assetInf{ AssetKind::Instance };
+	assetInf.setAsset(asset);
+
+	auto asset_j = basyx::serialization::json::serialize(asset);
+	auto assetInf_j = basyx::serialization::json::serialize(assetInf);
 };

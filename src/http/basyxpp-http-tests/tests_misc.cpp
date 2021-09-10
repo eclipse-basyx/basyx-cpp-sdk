@@ -61,5 +61,5 @@ TEST_F(HttpMiscTest, SplitPath)
 	ASSERT_EQ(pathlist_8.size(), 3);
 	ASSERT_EQ(pathlist_9.size(), 3);
 
-	int j = 2;
+	
 };

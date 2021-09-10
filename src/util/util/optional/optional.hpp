@@ -29,12 +29,10 @@ private:
 		T* _val_view;
 		constexpr _internals_t() noexcept : _data() {
 			_val_view = reinterpret_cast<T*>(&_data[0]);
-			int j = 2;
 		};
 		constexpr _internals_t(const _internals_t& rhs) noexcept
 			: _empty(rhs._empty), _data(rhs._data) {
 			_val_view = reinterpret_cast<T*>(&_data[0]);
-			int j = 2;
 		};
 		constexpr _internals_t& operator=(const _internals_t& rhs) noexcept { 
 			_empty = rhs._empty; _data = rhs._data;
@@ -45,7 +43,6 @@ private:
 			: _empty(rhs._empty), _data(std::move(rhs._data)) {
 			rhs._empty = true;
 			_val_view = reinterpret_cast<T*>(&_data[0]);
-			int j = 2;
 		};
 		constexpr _internals_t& operator=(_internals_t&& rhs) noexcept {
 			_empty = rhs._empty; _data = std::move(rhs._data);
@@ -106,7 +103,7 @@ public:
 	template<typename... Args>
 	void emplace(Args&&... args) {
 		this->reset();
-		T * t = new (_internals._data.data()) T(std::forward<Args...>(args...));
+		new (_internals._data.data()) T(std::forward<Args...>(args...));
 		this->_internals._empty = false;
 	};
 

@@ -31,37 +31,6 @@ namespace basyx::serialization::json
 		return json;
 	};
 
-	void serialize_helper(json_t & json, const MultiLanguageProperty & multiLangProperty);
-
-	inline void serialize_helper(json_t & json, const langstringset_t & langstrings)
-	{
-		json = json_t::array();
-
-		for (const auto langstring : langstrings) {
-			json.emplace_back(json_t{ 
-				{"language", langstring.get_code().to_string() },
-				{"text", langstring.get_value().to_string() }
-			});
-		}
-	};
-
-	inline void serialize_helper(json_t & json, const HasSemantics & hasSemantics)
-	{
-		if(hasSemantics.getSemanticId())
-			json["semanticId"] = serialize(*hasSemantics.getSemanticId());
-	};
-
-	inline void serialize_helper(json_t & json, const HasKind & hasKind)
-	{
-		json["kind"] = ModelingKind_::to_string( hasKind.kind );
-	};
-
-	inline void serialize_helper(json_t & json, const modeltype_base & modelType)
-	{
-		json["modeltype"] = json_t{ {"name", ModelTypes_::to_string(modelType.get_model_type()) } };
-	};
-
-
 	template<typename T, typename U>
 	inline void serialize_helper_h(json_t & json, const U & element)
 	{

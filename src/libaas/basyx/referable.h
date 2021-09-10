@@ -6,10 +6,12 @@
 
 #include <basyx/langstringset.h>
 
+#include <basyx/modeltype.h>
+
 namespace basyx
 {
 
-class Referable
+class Referable : public virtual modeltype_base
 {
 private:
 	std::string idShort;
@@ -25,7 +27,7 @@ public:
 	Referable & operator=(const Referable&) noexcept = default;
 	Referable & operator=(Referable&&) noexcept = default;
 
-	~Referable() = default;
+	virtual ~Referable() = default;
 public:
 	util::string_view getIdShort() const;
 	

@@ -73,7 +73,7 @@ public:
 	zinghy z;
 	~derived()
 	{
-		int j = 2;
+		
 	};
 };
 
@@ -97,7 +97,7 @@ TEST_F(MiscTest, Serialize_1)
 
 	b->serialize_json(x);
 
-	int j = 2;
+	
 };
 
 

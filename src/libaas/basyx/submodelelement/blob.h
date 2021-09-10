@@ -1,8 +1,8 @@
 #pragma once
 
-#include <basyx/submodelelement/dataelement.h>
 #include <basyx/langstringset.h>
 #include <basyx/modeltype.h>
+#include <basyx/submodelelement/dataelement.h>
 
 #include <util/string_view/string_view.hpp>
 
@@ -10,43 +10,44 @@
 
 #include <string>
 
-namespace basyx
-{
+namespace basyx {
 
-class Blob : 
-	public DataElement, 
-	private ModelType<ModelTypes::Blob>,
-	private serialization::Serializable<Blob>
-{
+class Blob : public DataElement,
+             private ModelType<ModelTypes::Blob>,
+             private serialization::Serializable<Blob> {
 public:
-	using blobType_t = std::vector<uint8_t>;
+    using blobType_t = std::vector<uint8_t>;
 private:
-	blobType_t blobValue;
-	std::string mimeType;
+    std::string mimeType;
+    blobType_t blobValue;
 public:
-	Blob(util::string_view idShort, util::string_view mimeType) : DataElement(idShort), mimeType(mimeType.to_string()) {};
-	Blob(util::string_view idShort, util::string_view mimeType, blobType_t blob)
-		: DataElement(idShort), mimeType(mimeType.to_string()), blobValue(std::move(blob)) {};
+    Blob(util::string_view idShort, util::string_view mimeType)
+        : DataElement(idShort)
+        , mimeType(mimeType.to_string()) {};
 
-	Blob(const Blob&) = default;
-	Blob& operator=(const Blob&) = default;
+    Blob(util::string_view idShort, util::string_view mimeType, blobType_t blob)
+        : DataElement(idShort)
+        , mimeType(mimeType.to_string())
+        , blobValue(std::move(blob)) {};
 
-	Blob(Blob&&) = default;
-	Blob& operator=(Blob&&) = default;
+    Blob(const Blob&) = default;
+    Blob& operator=(const Blob&) = default;
 
-	~Blob() = default;
+    Blob(Blob&&) = default;
+    Blob& operator=(Blob&&) = default;
+
+    ~Blob() = default;
 public:
-	using ModelType::get_model_type;
+    using ModelType::get_model_type;
 public:
-	const std::string & getMimeType() const;
-	void setMimeType(util::string_view mimeType);
+    const std::string& getMimeType() const;
+    void setMimeType(util::string_view mimeType);
 
-	const blobType_t & getBlob() const;
-	blobType_t & getBlob();
-	void setBlob(blobType_t blob);
+    const blobType_t& getBlob() const;
+    blobType_t& getBlob();
+    void setBlob(blobType_t blob);
 public:
-	static Blob fromLocalFile(util::string_view idShort, util::string_view mimeType, util::string_view filepath);
+    static Blob fromLocalFile(util::string_view idShort, util::string_view mimeType, util::string_view filepath);
 };
-
 
 }

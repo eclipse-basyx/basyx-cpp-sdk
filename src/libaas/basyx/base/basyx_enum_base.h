@@ -15,7 +15,7 @@ protected:
 public:
 	constexpr basyx_enum_base() : _val(uninitialized) {};
 	constexpr basyx_enum_base(const val_t _val) : _val(_val) {};
-	constexpr basyx_enum_base(int _val) : _val(_val) {};
+	constexpr basyx_enum_base(const int _val) : _val(_val) {};
 public:
 	basyx_enum_base(const basyx_enum_base &) = default;
 	constexpr basyx_enum_base& operator=(const basyx_enum_base &) = default;

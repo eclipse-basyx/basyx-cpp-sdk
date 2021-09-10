@@ -1,6 +1,7 @@
 #pragma once
 
 #include <basyx/reference.h>
+#include <basyx/hassemantics.h>
 
 #include <util/optional/optional.hpp>
 #include <util/string_view/string_view.hpp>
@@ -10,7 +11,7 @@
 namespace basyx
 {
 
-class IdentifierKeyValuePair
+class IdentifierKeyValuePair : public HasSemantics
 {
 private:
 	std::string key;
@@ -31,9 +32,9 @@ public:
 	void setKey(util::string_view key) { this->key = key.to_string(); };
 
 	const util::optional<std::string> & getValue() const { return this->value; };
-	void setValue(util::string_view value) { this->value = value; }
+	void setValue(util::string_view value) { this->value = value.to_string(); }
 
-	const util::optional<Reference> getExternalSubjectId() const { return this->getExternalSubjectId; };
+	const util::optional<Reference> & getExternalSubjectId() const { return this->externalSubjectId; };
 	template<typename Ref> void setExternalSubjectId(Ref && ref) { this->externalSubjectId = std::forward<Ref>(ref); };
 };
 

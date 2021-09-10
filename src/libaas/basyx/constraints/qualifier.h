@@ -20,7 +20,7 @@ class qualifier_base :
 {
 public:
 	qualifier_base() = default;
-	~qualifier_base() = 0 {};
+	virtual ~qualifier_base() = 0;
 public:
 	virtual util::string_view getValueType() const = 0;
 };
@@ -55,7 +55,7 @@ public:
 
 	const util::optional<ValueType> & getValue() const { return this->value; };
 
-	template<typename U = DataType>
+	template<typename U = ValueType>
 	void setValue(U && value) {
 		this->value.emplace(std::forward<U>(value));
 	};

@@ -6,21 +6,18 @@
 #pragma warning(disable : 4250)
 #endif
 
-namespace basyx
-{
+namespace basyx {
 
-class modeltype_base
-{
+class modeltype_base {
 public:
-	virtual ModelTypes get_model_type() const = 0;
-	virtual ~modeltype_base() = default;
+    virtual ModelTypes get_model_type() const = 0;
+    virtual ~modeltype_base() = default;
 };
 
-template<ModelTypes modelType>
-class ModelType : public virtual modeltype_base
-{
+template <ModelTypes modelType>
+class ModelType : public virtual modeltype_base {
 public:
-	constexpr ModelTypes get_model_type() const override { return modelType; };
+    ModelTypes get_model_type() const override { return modelType; };
 };
 
 };

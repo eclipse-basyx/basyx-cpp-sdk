@@ -12,6 +12,7 @@ namespace basyx
 	class Referable;
 	class Identifiable;
 	class Identifier;
+	class IdentifierKeyValuePair;
 	class modeltype_base;
 	class AssetAdministrationShell;
 	class MultiLanguageProperty;
@@ -27,6 +28,8 @@ namespace basyx
 	class File;
 	class Blob;
 	class View;
+	class Asset;
+	class AssetInformation;
 
 	template<typename T>
 	class Property;
@@ -39,11 +42,14 @@ namespace basyx::serialization::json
 
 	void serialize_helper(json_t & json, const Key &);
 	void serialize_helper(json_t & json, const Reference &);
-	inline void serialize_helper(json_t & json, const langstringset_t &);
-	inline void serialize_helper(json_t & json, const HasSemantics &);
-	inline void serialize_helper(json_t & json, const HasKind &);
-	inline void serialize_helper(json_t & json, const modeltype_base &);
+	void serialize_helper(json_t & json, const langstringset_t &);
+	void serialize_helper(json_t & json, const HasSemantics &);
+	void serialize_helper(json_t & json, const HasKind &);
+	void serialize_helper(json_t & json, const modeltype_base &);
+	void serialize_helper(json_t & json, const Asset &);
+	void serialize_helper(json_t & json, const AssetInformation &);
 	void serialize_helper(json_t & json, const Identifier &);
+	void serialize_helper(json_t & json, const IdentifierKeyValuePair &);
 	void serialize_helper(json_t & json, const AdministrativeInformation&);
 	void serialize_helper(json_t & json, const Referable&);
 	void serialize_helper(json_t & json, const Identifiable&);

@@ -14,6 +14,7 @@ target_link_libraries(aas
 		nlohmann_json::nlohmann_json
 		spdlog::spdlog
 		BaSyx::util
+		pugixml::pugixml
 )
 
 add_library(BaSyx::libaas ALIAS aas)

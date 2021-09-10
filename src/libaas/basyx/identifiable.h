@@ -17,7 +17,7 @@ private:
 	util::optional<AdministrativeInformation> administration;
 	Identifier identification;
 public:
-	Identifiable(util::string_view idShort, IdentifierType idType, util::string_view id) : Referable(idShort), identification(idType, id) {};
+	Identifiable(util::string_view idShort, util::string_view id) : Referable(idShort), identification(id) {};
 	Identifiable(util::string_view idShort, Identifier identification) : Referable(idShort), identification(std::move(identification)) {};
 
 	Identifiable(const Identifiable&) = default;
