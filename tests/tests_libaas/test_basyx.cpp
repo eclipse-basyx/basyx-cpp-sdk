@@ -3,6 +3,7 @@
 #include <basyx/key.h>
 #include <basyx/langstringset.h>
 #include <basyx/reference.h>
+#include <basyx/environment.h>
 #include <basyx/assetadministrationshell.h>
 #include <basyx/submodel.h>
 #include <basyx/views/view.h>
@@ -364,6 +365,16 @@ TEST_F(BaseTest, AssetAdministrationShell)
 	AssetAdministrationShell aas("aas", Identifier::IRI("https://admin-shell.io/aas"), 0);
 	aas.getViews().add(View{ "view" });
 	aas.getSubmodels().add(Submodel("sm", { IdentifierType::Custom, "test/sm_1" }));
+}
+
+TEST_F(BaseTest, Environment)
+{
+	Environment env;
+	env.getAssetAdministrationShells().add(
+		AssetAdministrationShell("aas", Identifier::IRI("https://admin-shell.io/aas"), 0)
+	);
+	// TODO : Fixme when the real element is used
+	env.getAssetInformations().add(5);
 }
 
 
