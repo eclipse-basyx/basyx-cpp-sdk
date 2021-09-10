@@ -27,7 +27,7 @@ public:
 	virtual void set_value_id(const Reference & reference) = 0;
 
 	template<typename DataType>
-	Property<DataType> * cast() { return dynamic_cast<Propert<DataType>(this); };
+	Property<DataType> * cast() { return dynamic_cast<Property<DataType>>(this); };
 };
 
 template<typename DataType>
