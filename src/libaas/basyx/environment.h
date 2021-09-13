@@ -16,7 +16,7 @@ using ConceptDescription = int;
 class Environment
 {
 public:
-	using assetInformationList_t = std::vector<AssetInformation>;
+   using assetInformationList_t = std::vector<AssetInformation>;
 private:
    ElementContainer<AssetAdministrationShell> aass;
    assetInformationList_t assetInformations;
