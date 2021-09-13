@@ -30,26 +30,26 @@ private:
 		constexpr _internals_t() noexcept : _data() {
 			_val_view = reinterpret_cast<T*>(&_data[0]);
 		};
-		constexpr _internals_t(const _internals_t& rhs) noexcept
-			: _empty(rhs._empty), _data(rhs._data) {
-			_val_view = reinterpret_cast<T*>(&_data[0]);
-		};
-		constexpr _internals_t& operator=(const _internals_t& rhs) noexcept { 
-			_empty = rhs._empty; _data = rhs._data;
-			_val_view = reinterpret_cast<T*>(&_data[0]);
-			return *this;
-		};
-		constexpr _internals_t(_internals_t&& rhs) noexcept
-			: _empty(rhs._empty), _data(std::move(rhs._data)) {
-			rhs._empty = true;
-			_val_view = reinterpret_cast<T*>(&_data[0]);
-		};
-		constexpr _internals_t& operator=(_internals_t&& rhs) noexcept {
-			_empty = rhs._empty; _data = std::move(rhs._data);
-			rhs._empty = true;
-			_val_view = reinterpret_cast<T*>(&_data[0]);
-			return *this;
-		};
+		//constexpr _internals_t(const _internals_t& rhs) noexcept
+		//	: _empty(rhs._empty), _data(rhs._data) {
+		//	_val_view = reinterpret_cast<T*>(&_data[0]);
+		//};
+		//constexpr _internals_t& operator=(const _internals_t& rhs) noexcept { 
+		//	_empty = rhs._empty; _data = rhs._data;
+		//	_val_view = reinterpret_cast<T*>(&_data[0]);
+		//	return *this;
+		//};
+		//constexpr _internals_t(_internals_t&& rhs) noexcept
+		//	: _empty(rhs._empty), _data(std::move(rhs._data)) {
+		//	rhs._empty = true;
+		//	_val_view = reinterpret_cast<T*>(&_data[0]);
+		//};
+		//constexpr _internals_t& operator=(_internals_t&& rhs) noexcept {
+		//	_empty = rhs._empty; _data = std::move(rhs._data);
+		//	rhs._empty = true;
+		//	_val_view = reinterpret_cast<T*>(&_data[0]);
+		//	return *this;
+		//};
 	} _internals;
 private:
 	constexpr void _copy_internal(const optional& rhs) {

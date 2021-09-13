@@ -74,7 +74,7 @@ TEST_F(BaseTest, AutoKeyType)
     Key key_4 { "urn://test-key" };
     Key key_5 { "0173-1#02-AAR972#002" };
     Key key_6 { "0173-1#02-AAR972#00" };
-    Key key_7 { "0173-1x02-AAR972#00" };
+    Key key_7 { "0173-1x02-AAR972#002" };
 
     ASSERT_EQ(key_1.get_id_type(), KeyType::Custom);
     ASSERT_EQ(key_2.get_id_type(), KeyType::IRI);
@@ -238,7 +238,6 @@ TEST_F(BaseTest, SubmodelElementCollection_2)
     SubmodelElementCollection col { "col" };
 
     Property<int> i1 { "i1", 2 };
-
     Property<int> i2 { "i2", 5 };
 
     col.add(i1);
@@ -354,6 +353,17 @@ TEST_F(BaseTest, QualifierTest)
 	ASSERT_EQ(constraint_qualifier->get_model_type(), ModelTypes::Qualifier);
 }
 
+TEST_F(BaseTest, AutoIdentifierTest)
+{
+	Asset asset{ "testAsset", "0173-1#02-AAR972#002" };
+	ASSERT_EQ(asset.getIdentification().getIdType(), KeyType::IRDI);
+
+	AssetAdministrationShell aas{ "aas", "https://admin-shell.io/aas", { AssetKind::Instance } };
+	ASSERT_EQ(aas.getIdentification().getIdType(), KeyType::IRI);
+
+	Submodel sm{ "sm", "test/sm1" };
+	ASSERT_EQ(sm.getIdentification().getIdType(), KeyType::Custom);
+}
 
 TEST_F(BaseTest, AssetInfTest)
 {
@@ -366,9 +376,9 @@ TEST_F(BaseTest, AssetInfTest)
 
 TEST_F(BaseTest, AssetAdministrationShell)
 {
-	AssetAdministrationShell aas("aas", Identifier::IRI("https://admin-shell.io/aas"), { AssetKind::Instance });
+	AssetAdministrationShell aas("aas", "https://admin-shell.io/aas", { AssetKind::Instance });
 	aas.getViews().add(View{ "view" });
-	aas.getSubmodels().add(Submodel("sm", Identifier::Custom("test/sm_1")));
+	aas.getSubmodels().add(Submodel("sm", "test/sm_1"));
 }
 
 TEST_F(BaseTest, Environment)
@@ -376,7 +386,7 @@ TEST_F(BaseTest, Environment)
 	Environment env;
 
 	env.getAssetAdministrationShells().add(
-		AssetAdministrationShell("aas", Identifier::IRI("https://admin-shell.io/aas"), AssetInformation{ AssetKind::Instance })
+		AssetAdministrationShell("aas", "https://admin-shell.io/aas", AssetInformation{ AssetKind::Instance })
 	);
 
 	env.getAssetInformations().emplace_back(AssetInformation{ AssetKind::Type });

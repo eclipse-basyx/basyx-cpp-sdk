@@ -177,6 +177,13 @@ TEST_F(OptionalTest, ValueAccess)
 	ASSERT_EQ(*i, val);
 };
 
+TEST_F(OptionalTest, ArrowOperator)
+{
+	util::optional<std::string> opt = "test";
+	ASSERT_EQ(opt->empty(), false);
+	ASSERT_EQ(opt->size(), 4);
+};
+
 TEST_F(OptionalTest, Reset)
 {
 	constexpr int val = 2;
