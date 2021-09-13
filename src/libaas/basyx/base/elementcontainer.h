@@ -35,9 +35,13 @@ public:
 	template<typename... T>
 	ElementContainer(T&&... t) { _insert_variadic(std::forward<T>(t)...); };
 
-	ElementContainer(const ElementContainer&) = delete;
-	ElementContainer& operator=(const ElementContainer&) = delete;
-
+   ElementContainer(const ElementContainer&) = delete;
+   ElementContainer& operator=(const ElementContainer&) = delete;
+   template <typename T>
+   ElementContainer<T>& operator+=(const ElementContainer<T>& container) {
+      this->append(container);
+      return *this;
+   }
 	ElementContainer(ElementContainer&&) noexcept = default;
 	ElementContainer& operator=(ElementContainer&&) noexcept = default;
 
@@ -58,7 +62,8 @@ public:
 	template<typename T> const T* const get(util::string_view idShort) const { return dynamic_cast<T*>(get(idShort)); };
 	template<typename T> const T* const get(std::size_t n) const { return dynamic_cast<T*>(get(n)); };
 public:
-	template<typename T> T* const add(T && t) { return this->add(std::make_unique<T>(std::forward<T>(t))); };
+   template<typename T> T* const add(T & t) { return this->add(std::make_unique<T>(std::forward<T>(t))); };
+   template<typename T> T* const add(T && t) { return this->add(std::make_unique<T>(std::forward<T>(t))); };
 	template<typename T> T* const add(std::unique_ptr<T> element) {
 		if (this->hasEntry(element->getIdShort()))
 			return nullptr;
@@ -66,6 +71,14 @@ public:
 		this->elementList.emplace_back(std::move(element));
 		return ptr;
 	};
+   template<typename T>
+   void append(const ElementContainer<T>& container) {
+      for (auto it = container.begin(); it != container.end(); it++) {
+         T *element = it->get();
+         this->add(*element);
+      }
+   }
+
 public:
 	elementIterator_t begin() noexcept { return this->elementList.begin(); }
 	elementIterator_t end() noexcept { return this->elementList.end(); }
