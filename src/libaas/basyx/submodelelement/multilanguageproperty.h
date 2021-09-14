@@ -1,5 +1,6 @@
 #pragma once
 
+#include <basyx/base/copyable.h>
 #include <basyx/submodelelement/dataelement.h>
 #include <basyx/langstringset.h>
 #include <basyx/modeltype.h>
@@ -16,6 +17,7 @@ namespace basyx
 class MultiLanguageProperty : 
 	public DataElement, 
 	private ModelType<ModelTypes::MultiLanguageProperty>,
+	private Referable::Copyable<MultiLanguageProperty>,
 	private serialization::Serializable<MultiLanguageProperty>
 {
 private:
@@ -28,8 +30,8 @@ public:
 	MultiLanguageProperty(const MultiLanguageProperty&) = default;
 	MultiLanguageProperty& operator=(const MultiLanguageProperty&) = default;
 
-	MultiLanguageProperty(MultiLanguageProperty&&) = default;
-	MultiLanguageProperty& operator=(MultiLanguageProperty&&) = default;
+	MultiLanguageProperty(MultiLanguageProperty&&) noexcept = default;
+	MultiLanguageProperty& operator=(MultiLanguageProperty&&) noexcept = default;
 
 	~MultiLanguageProperty() = default;
 public:

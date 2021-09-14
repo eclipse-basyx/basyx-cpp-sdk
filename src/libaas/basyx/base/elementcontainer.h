@@ -1,6 +1,6 @@
 #pragma once
 
-#include <basyx/submodelelement/submodelelement.h>
+#include <basyx/referable.h>
 
 #include <util/string_view/string_view.hpp>
 #include <util/container/container.hpp>
@@ -13,6 +13,7 @@ namespace basyx
 template<typename ElementType>
 class ElementContainer
 {
+static_assert(std::is_convertible<ElementType*, Referable*>::value, "Only Referables supported by ElementContainer!");
 public:
 	using element_t = ElementType;
 	using elementEntry_t = std::unique_ptr<element_t>;
@@ -37,15 +38,17 @@ public:
 
    ElementContainer(const ElementContainer&) = delete;
    ElementContainer& operator=(const ElementContainer&) = delete;
-   template <typename T>
-   ElementContainer<T>& operator+=(const ElementContainer<T>& container) {
-      this->append(container);
-      return *this;
-   }
-	ElementContainer(ElementContainer&&) noexcept = default;
-	ElementContainer& operator=(ElementContainer&&) noexcept = default;
+
+   ElementContainer(ElementContainer&&) noexcept = default;
+   ElementContainer& operator=(ElementContainer&&) noexcept = default;
 
 	~ElementContainer() = default;
+public:
+	template <typename T>
+	ElementContainer<ElementType>& operator+=(const ElementContainer<T>& container) {
+		this->append(container);
+		return *this;
+	}
 public:
 	std::size_t size() const { return elementList.size(); };
 	bool hasEntry(util::string_view idShort);
@@ -64,21 +67,22 @@ public:
 public:
    template<typename T> T* const add(T & t) { return this->add(std::make_unique<T>(std::forward<T>(t))); };
    template<typename T> T* const add(T && t) { return this->add(std::make_unique<T>(std::forward<T>(t))); };
-	template<typename T> T* const add(std::unique_ptr<T> element) {
+	
+   template<typename T> T* const add(std::unique_ptr<T> element) {
 		if (this->hasEntry(element->getIdShort()))
 			return nullptr;
 		auto ptr = element.get();
 		this->elementList.emplace_back(std::move(element));
 		return ptr;
 	};
-   template<typename T>
+
+    template<typename T>
    void append(const ElementContainer<T>& container) {
       for (auto it = container.begin(); it != container.end(); it++) {
          T *element = it->get();
          this->add(*element);
       }
    }
-
 public:
 	elementIterator_t begin() noexcept { return this->elementList.begin(); }
 	elementIterator_t end() noexcept { return this->elementList.end(); }

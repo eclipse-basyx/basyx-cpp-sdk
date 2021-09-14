@@ -142,3 +142,23 @@ TEST_F(ElementContainerTest, Submodel)
 	container.add(Submodel("sm", Identifier::Custom("test")));
 	ASSERT_EQ(container.size(), 1);
 }
+
+TEST_F(ElementContainerTest, Append)
+{
+	ElementContainer<SubmodelElement> container;
+	container.add(Property<int>("intProp1", 2));
+	container.add(Property<int>("intProp2", 2));
+
+	ElementContainer<SubmodelElement> container2;
+	container2.add(Property<std::string>("stringProp", "test"));
+	container2.add(MultiLanguageProperty("multiLangProp", { {"en","test"},{"de","test"} }));
+
+	ASSERT_EQ(container.size(), 2);
+	ASSERT_EQ(container2.size(), 2);
+
+	//container.append(container2);
+
+	ASSERT_EQ(container.size(), 4);
+	ASSERT_NE(container.get<Property<std::string>>("stringProp"), nullptr);
+	ASSERT_NE(container.get<MultiLanguageProperty>("multiLangProp"), nullptr);
+}

@@ -4,15 +4,18 @@
 
 #include <util/optional/optional.hpp>
 
+#include <basyx/base/copyable.h>
 #include <basyx/langstringset.h>
-
 #include <basyx/modeltype.h>
 
 namespace basyx
 {
 
-class Referable : public virtual modeltype_base
+class Referable : public virtual modeltype_base, public virtual copyable_base<Referable>
 {
+public:
+	template<typename T>
+	using Copyable = Copyable<T, Referable>;
 private:
 	std::string idShort;
 	util::optional<std::string> category;

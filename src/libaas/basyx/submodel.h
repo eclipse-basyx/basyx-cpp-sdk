@@ -5,6 +5,7 @@
 #include <basyx/identifiable.h>
 #include <basyx/haskind.h>
 #include <basyx/hassemantics.h>
+#include <basyx/submodelelement/submodelelement.h>
 
 #include <basyx/base/elementcontainer.h>
 
