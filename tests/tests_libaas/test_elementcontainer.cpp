@@ -143,7 +143,7 @@ TEST_F(ElementContainerTest, Submodel)
 	ASSERT_EQ(container.size(), 1);
 }
 
-TEST_F(ElementContainerTest, Append)
+TEST_F(ElementContainerTest, Append_1)
 {
 	ElementContainer<SubmodelElement> container;
 	container.add(Property<int>("intProp1", 2));
@@ -156,9 +156,33 @@ TEST_F(ElementContainerTest, Append)
 	ASSERT_EQ(container.size(), 2);
 	ASSERT_EQ(container2.size(), 2);
 
-	//container.append(container2);
+	container.append(container2);
 
 	ASSERT_EQ(container.size(), 4);
-	ASSERT_NE(container.get<Property<std::string>>("stringProp"), nullptr);
-	ASSERT_NE(container.get<MultiLanguageProperty>("multiLangProp"), nullptr);
+
+	auto stringProp = container.get<Property<std::string>>("stringProp");
+	ASSERT_NE(stringProp, nullptr);
+	ASSERT_EQ(*stringProp->get_value(), "test");
+
+	auto multiLangProp = container.get<MultiLanguageProperty>("multiLangProp");
+	ASSERT_NE(multiLangProp, nullptr);
+	ASSERT_EQ(multiLangProp->get_value().size(), 2);
+}
+
+TEST_F(ElementContainerTest, Append_2)
+{
+	ElementContainer<SubmodelElement> container;
+	container.add(Property<int>("intProp1", 2));
+	container.add(Property<int>("intProp2", 2));
+
+	ElementContainer<SubmodelElement> container2;
+	auto original = container2.add(Property<std::string>("stringProp", "test"));
+	
+	container.append(container2);
+
+	auto copy = container.get<Property<std::string>>("stringProp");
+	copy->set_value("edited");
+
+	ASSERT_EQ(copy->get_value(), "edited");
+	ASSERT_EQ(original->get_value(), "test");
 }

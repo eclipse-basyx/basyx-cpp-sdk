@@ -78,10 +78,9 @@ public:
 
     template<typename T>
    void append(const ElementContainer<T>& container) {
-      for (auto it = container.begin(); it != container.end(); it++) {
-         T *element = it->get();
-         this->add(*element);
-      }
+	   for (const auto & entry : container) {
+		   this->add(std::move(entry->copy<ElementType>()));
+	   };
    }
 public:
 	elementIterator_t begin() noexcept { return this->elementList.begin(); }

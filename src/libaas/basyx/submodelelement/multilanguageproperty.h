@@ -15,7 +15,7 @@ namespace basyx
 {
 
 class MultiLanguageProperty : 
-	public DataElement, 
+	public DataElement,
 	private ModelType<ModelTypes::MultiLanguageProperty>,
 	private Referable::Copyable<MultiLanguageProperty>,
 	private serialization::Serializable<MultiLanguageProperty>

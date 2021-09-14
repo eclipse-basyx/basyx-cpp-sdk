@@ -33,7 +33,8 @@ public:
 template<typename DataType>
 class Property : 
 	public property_base, 
-	private serialization::Serializable<Property<DataType>>
+	private serialization::Serializable<Property<DataType>>,
+	private Referable::Copyable<Property<DataType>>
 {
 private:
 	util::optional<DataType> value;
