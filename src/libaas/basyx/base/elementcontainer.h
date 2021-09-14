@@ -36,11 +36,14 @@ public:
 	template<typename... T>
 	ElementContainer(T&&... t) { _insert_variadic(std::forward<T>(t)...); };
 
-   ElementContainer(const ElementContainer&) = delete;
-   ElementContainer& operator=(const ElementContainer&) = delete;
+	template<typename T> ElementContainer(ElementContainer<T>& other) { this->append(other); };
+	template<typename T> ElementContainer& operator=(ElementContainer<T>& other) { this->append(other); return *this; };
 
-   ElementContainer(ElementContainer&&) noexcept = default;
-   ElementContainer& operator=(ElementContainer&&) noexcept = default;
+	template<typename T> ElementContainer(const ElementContainer<T>& other) { this->append(other); };
+	template<typename T> ElementContainer& operator=(const ElementContainer<T>& other) { this->append(other); return *this; };
+
+	ElementContainer(ElementContainer&&) noexcept = default;
+	ElementContainer& operator=(ElementContainer&&) noexcept = default;
 
 	~ElementContainer() = default;
 public:
@@ -65,10 +68,10 @@ public:
 	template<typename T> const T* const get(util::string_view idShort) const { return dynamic_cast<T*>(get(idShort)); };
 	template<typename T> const T* const get(std::size_t n) const { return dynamic_cast<T*>(get(n)); };
 public:
-   template<typename T> T* const add(T & t) { return this->add(std::make_unique<T>(std::forward<T>(t))); };
-   template<typename T> T* const add(T && t) { return this->add(std::make_unique<T>(std::forward<T>(t))); };
-	
-   template<typename T> T* const add(std::unique_ptr<T> element) {
+	template<typename T> T* const add(T & t) { return this->add(std::make_unique<T>(std::forward<T>(t))); };
+	template<typename T> T* const add(T && t) { return this->add(std::make_unique<T>(std::forward<T>(t))); };
+
+	template<typename T> T* const add(std::unique_ptr<T> element) {
 		if (this->hasEntry(element->getIdShort()))
 			return nullptr;
 		auto ptr = element.get();
@@ -76,12 +79,12 @@ public:
 		return ptr;
 	};
 
-    template<typename T>
-   void append(const ElementContainer<T>& container) {
-	   for (const auto & entry : container) {
-		   this->add(std::move(entry->template copy<ElementType>()));
-	   };
-   }
+	template<typename T>
+	void append(const ElementContainer<T>& container) {
+		for (const auto & entry : container) {
+			this->add(std::move(entry->template copy<ElementType>()));
+		};
+	}
 public:
 	elementIterator_t begin() noexcept { return this->elementList.begin(); }
 	elementIterator_t end() noexcept { return this->elementList.end(); }
@@ -90,7 +93,7 @@ public:
 };
 
 template<typename ElementType>
-inline bool ElementContainer<ElementType>::hasEntry(util::string_view idShort) 
+inline bool ElementContainer<ElementType>::hasEntry(util::string_view idShort)
 {
 	for (const auto & entry : elementList)
 		if (entry->getIdShort() == idShort)
@@ -140,8 +143,5 @@ inline const ElementType * const ElementContainer<ElementType>::get(std::size_t 
 
 	return this->elementList.at(n).get();
 };
-
-
-
 
 };

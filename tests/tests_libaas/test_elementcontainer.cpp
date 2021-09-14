@@ -55,6 +55,29 @@ TEST_F(ElementContainerTest, Constructor_2)
 	ASSERT_EQ(container_2.size(), 2);
 }
 
+TEST_F(ElementContainerTest, CopyConstructor)
+{
+	ElementContainer<SubmodelElement> container;
+	container.add(Property<int>("intProp1", 2));
+	container.add(Property<int>("intProp2", 2));
+
+	ElementContainer<SubmodelElement> container_2(container);
+
+	ASSERT_EQ(container_2.size(), 2);
+}
+
+TEST_F(ElementContainerTest, MoveConstructor)
+{
+	ElementContainer<SubmodelElement> container;
+	container.add(Property<int>("intProp1", 2));
+	container.add(Property<int>("intProp2", 2));
+
+	ElementContainer<SubmodelElement> container_2 = std::move(container);
+
+	ASSERT_EQ(container.size(), 0);
+	ASSERT_EQ(container_2.size(), 2);
+}
+
 TEST_F(ElementContainerTest, AddElement_1)
 {
 	ElementContainer<SubmodelElement> container;
@@ -119,6 +142,36 @@ TEST_F(ElementContainerTest, GetElement_3)
 
 	auto wrong_prop = container.get<MultiLanguageProperty>("intProp1");
 	ASSERT_EQ(wrong_prop, nullptr);
+}
+
+TEST_F(ElementContainerTest, Iteration)
+{
+	ElementContainer<SubmodelElement> container;
+	container.add(Property<int>("intProp1", 1));
+	container.add(Property<int>("intProp2", 2));
+	container.add(Property<int>("intProp3", 3));
+	container.add(Property<int>("intProp4", 4));
+
+	bool prop1_found = false;
+	bool prop2_found = false;
+	bool prop3_found = false;
+	bool prop4_found = false;
+
+	for (const auto & entry : container) {
+		if (entry->getIdShort() == "intProp1")
+			prop1_found = true;
+
+		if (entry->getIdShort() == "intProp2")
+			prop2_found = true;
+
+		if (entry->getIdShort() == "intProp3")
+			prop3_found = true;
+
+		if (entry->getIdShort() == "intProp4")
+			prop4_found = true;
+	}
+
+	ASSERT_TRUE(prop1_found && prop2_found && prop3_found && prop4_found);
 }
 
 TEST_F(ElementContainerTest, SubClass)
