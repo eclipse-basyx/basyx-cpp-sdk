@@ -171,6 +171,36 @@ public:
 	constexpr T&& operator*() && { return reinterpret_cast<T&&>(*_internals._data.data()); }
 };
 
+template<class T, class U>
+constexpr bool operator==(const optional<T>& lhs, const optional<U>& rhs) noexcept {
+	return lhs.has_value() && rhs.has_value() && *lhs == *rhs;
+};
+
+template<class T, class U>
+constexpr bool operator!=(const optional<T>& lhs, const optional<U>& rhs) noexcept {
+	return !(lhs == rhs);
+};
+
+template<class T, class U>
+constexpr bool operator==(const optional<T>& opt, U && u) noexcept {
+	return opt.has_value() && *opt == u;
+};
+
+template<class T, class U>
+constexpr bool operator==(U && u, const optional<T>& opt) noexcept {
+	return opt.has_value() && *opt == u;
+};
+
+template<class T, class U>
+constexpr bool operator!=(const optional<T>& opt, U && u) noexcept {
+	return !(opt == u);
+};
+
+template<class T, class U>
+constexpr bool operator!=(U && u, const optional<T>& opt) noexcept {
+	return !(opt == u);
+};
+
 template<class T>
 constexpr bool operator==(const optional<T>& opt, util::nullopt_t) noexcept {
 	return !opt.has_value();

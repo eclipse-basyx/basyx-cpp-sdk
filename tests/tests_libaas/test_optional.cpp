@@ -184,6 +184,22 @@ TEST_F(OptionalTest, ArrowOperator)
 	ASSERT_EQ(opt->size(), 4);
 };
 
+TEST_F(OptionalTest, EqualOperators)
+{
+	util::optional<std::string> str1 = "test";
+	util::optional<std::string> str2 = "value";
+	util::optional<std::string> empty;
+
+	ASSERT_NE(str1, str2);
+	ASSERT_NE(str1, empty);
+
+	ASSERT_EQ(str1, "test");
+	ASSERT_NE(str1, "value");
+
+	ASSERT_EQ("test", str1);
+	ASSERT_NE("value", str1);
+};
+
 TEST_F(OptionalTest, Reset)
 {
 	constexpr int val = 2;
