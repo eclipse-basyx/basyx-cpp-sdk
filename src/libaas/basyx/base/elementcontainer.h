@@ -79,7 +79,7 @@ public:
     template<typename T>
    void append(const ElementContainer<T>& container) {
 	   for (const auto & entry : container) {
-		   this->add(std::move(entry->copy<ElementType>()));
+		   this->add(std::move(entry->template copy<ElementType>()));
 	   };
    }
 public:
