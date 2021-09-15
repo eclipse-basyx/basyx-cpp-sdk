@@ -1,36 +1,36 @@
 #ifndef BASYX_SUBMODEL_ENUMERATIONS_DATATYPEIEC61360_H
 #define BASYX_SUBMODEL_ENUMERATIONS_DATATYPEIEC61360_H
 
-#include <string>
+#include <util/string_view/string_view.hpp>
 
 namespace basyx {
-namespace submodel {
 
 enum class DataTypeIEC61360 {
-    Boolean,
-    Date,
-    Rational,
-    Rational_Measure,
-    Real_Count,
-    Real_Currency,
-    Real_Measure,
-    String,
-    String_Translatable,
-    Time,
-    Timestamp,
-    Url,
-    Undefined,
+	Date,
+	String,
+	String_Translatable,
+	Real_Measure,
+	Real_Count,
+	Real_Currency,
+	Boolean,
+	Url,
+	Rational,
+	Rational_Measure,
+	Time,
+	Timestamp,
+	Integer_Count,
+	Integer_Measure,
+	Integer_Currency,
 };
 
 class DataTypeIEC61360_
 {
 public:
-    static DataTypeIEC61360 from_string(const std::string & name);
+    static DataTypeIEC61360 from_string(util::string_view name);
     static const char * to_string(DataTypeIEC61360 value);
 };
 
 
-}
 }
 
 #endif /* BASYX_SUBMODEL_ENUMERATIONS_DATATYPEIEC61360_H */
