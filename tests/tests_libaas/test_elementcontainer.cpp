@@ -239,3 +239,32 @@ TEST_F(ElementContainerTest, Append_2)
 	ASSERT_EQ(copy->get_value(), "edited");
 	ASSERT_EQ(original->get_value(), "test");
 }
+
+TEST_F(ElementContainerTest, Append_3)
+{
+	ElementContainer<SubmodelElement> container;
+	container.add(Property<int>("intProp1", 1));
+	container.add(Property<int>("intProp2", 2));
+
+	ElementContainer<SubmodelElement> container2;
+	container2.add(Property<int>("intProp2", 42));
+	container2.add(Property<int>("intProp3", 3));
+
+	ASSERT_EQ(container.size(), 2);
+	ASSERT_EQ(container2.size(), 2);
+
+	container.append(container2);
+
+	// Should only add intProp3, since intProp2 already exists
+	ASSERT_EQ(container.size(), 3);
+
+	ASSERT_NE(container.get(0), nullptr);
+	ASSERT_EQ(container.get(0)->getIdShort(), "intProp1");
+
+	ASSERT_NE(container.get(1), nullptr);
+	ASSERT_EQ(container.get(1)->getIdShort(), "intProp2");
+	ASSERT_EQ(container.get<Property<int>>(1)->get_value(), 2);
+
+	ASSERT_NE(container.get(2), nullptr);
+	ASSERT_EQ(container.get(2)->getIdShort(), "intProp3");
+}

@@ -67,8 +67,6 @@ TEST_F(CopyableTest, TestSameType)
 TEST_F(CopyableTest, WrongCopy)
 {
 	MultiLanguageProperty mlp{ "test", {{"en", "example"},{"de", "test"}} };
-
 	auto do_not_do_this = mlp.copy<SubmodelElementCollection>();
-
 	ASSERT_EQ(do_not_do_this, nullptr);
 }
