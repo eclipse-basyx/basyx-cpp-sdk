@@ -6,6 +6,7 @@
 #include <basyx/submodel.h>
 
 #include <util/string_view/string_view.hpp>
+#include <util/algorithm/string.hpp>
 
 #include <string>
 #include <unordered_map>
@@ -27,7 +28,7 @@ enum ERROR_CODES {
 
 class httpHandler {
 public:
-	using pathList_t = std::vector<util::string_view>;
+	using pathList_t = util::algorithm::string::splitList_t<char>;
 private:
 	std::string ip;
 	uint16_t port;
@@ -37,19 +38,7 @@ private:
 	std::mutex submodelMutex;
 
 	void handleRequests();
-
-	//pathList_t getBasyxPathElements(std::string path, basyx::Submodel &submodel);
-	//basyx::Submodel * getSubmodelByPath(std::string path);
 public:
-	//pathList_t splitString(std::string, std::string delimiter);
-	pathList_t splitPath(util::string_view path, char delimiter);
-	//object *getBasyxObjectByVectorizedPath(std::vector<std::string> *vec,
-	//      object *obj);
-
-	//std::shared_ptr<basyx::object> getBasyxObjectByVectorizedPath(std::vector<std::string> *vec, std::shared_ptr<basyx::object> objectPointer);
-
-	//SubmodelElement * getSubmodelElementByPathList(const pathList_t2 & pathList, Submodel & sm);
-
 	SubmodelElement * getSubmodelElementByPathList(pathList_t & pathList, Submodel & sm);
 public:
 	httpHandler(std::string ip, uint16_t port);

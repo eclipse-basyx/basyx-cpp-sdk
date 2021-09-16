@@ -100,7 +100,7 @@ void httpHandler::handleRequests()
 			return;
 		}
 
-		auto pathList = splitPath(idShortPath, '/');
+		auto pathList = util::algorithm::string::split(idShortPath, '/');
 		auto element = getSubmodelElementByPathList(pathList, *sm);
 
 		if(!element) {
@@ -130,7 +130,7 @@ void httpHandler::handleRequests()
 			return;
 		}
 
-		auto pathList = splitPath(idShortPath, '/');
+		auto pathList = util::algorithm::string::split(idShortPath, '/');
 		auto element = getSubmodelElementByPathList(pathList, *sm);
 
 		if (!element) {
@@ -163,27 +163,6 @@ void httpHandler::handleRequests()
 		// Notiz: Ganze OperationVariables verschicken
 	});
 }
-
-httpHandler::pathList_t httpHandler::splitPath(util::string_view path, char delimiter)
-{
-	pathList_t pathList;
-
-	util::optional<std::size_t> wordBegin;
-	for (std::size_t i = 0; i < path.size(); ++i) {
-		if (path[i] == delimiter && wordBegin) {
-			pathList.push_back( path.substr(*wordBegin, i - *wordBegin) );
-			wordBegin.reset();
-		}
-		else if (path[i] != delimiter && !wordBegin) {
-			wordBegin = i;
-		};
-	};
-
-	if (wordBegin)
-		pathList.push_back( path.substr(*wordBegin, path.length() ) );
-
-	return pathList;
-};
 
 SubmodelElement * httpHandler::getSubmodelElementByPathList(httpHandler::pathList_t & pathList, Submodel & sm)
 {
