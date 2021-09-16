@@ -112,6 +112,26 @@ std::ostream &operator <<(std::ostream& os, const basic_string_view<CharT>& sv)
 	return os;
 }
 
+template<class CharT, class U>
+constexpr bool operator==(util::basic_string_view<CharT> lhs, const U & rhs) noexcept {
+	return lhs == util::basic_string_view<CharT>{ rhs };
+};
+
+template<class CharT, class U>
+constexpr bool operator!=(util::basic_string_view<CharT> lhs, const U & rhs) noexcept {
+	return !(lhs == rhs);
+};
+
+template<class CharT, class U>
+constexpr bool operator==(const U & rhs, util::basic_string_view<CharT> lhs) noexcept {
+	return lhs == util::basic_string_view<CharT>{ rhs };
+};
+
+template<class CharT, class U>
+constexpr bool operator!=(const U & rhs, util::basic_string_view<CharT> lhs) noexcept {
+	return !(lhs == rhs);
+};
+
 }
 
 #endif

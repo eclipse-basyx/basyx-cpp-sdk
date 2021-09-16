@@ -87,3 +87,13 @@ TEST_F(StringViewTest, EqualsOperator)
 	ASSERT_TRUE(sv2 != "test1234");
 	ASSERT_TRUE(sv1 == str);
 }
+
+TEST_F(StringViewTest, StringInteropTests)
+{
+	std::string str("Test");
+	util::string_view sv = str;
+	ASSERT_EQ(sv, "Test");
+	ASSERT_TRUE(sv == str);
+	ASSERT_TRUE(str == sv);
+
+}
