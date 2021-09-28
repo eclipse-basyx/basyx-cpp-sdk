@@ -38,7 +38,11 @@ public:
 	ElementContainer(T&&... t) { _insert_variadic(std::forward<T>(t)...); };
 
 	template<typename T> ElementContainer(ElementContainer<T>& other) { this->append(other); };
-	template<typename T> ElementContainer& operator=(ElementContainer<T>& other) { this->append(other); return *this; };
+   template<typename T> ElementContainer& operator=(ElementContainer<T>& other) {
+      this->elementList.clear();
+      this->append(other);
+      return *this;
+   };
 
 	template<typename T> ElementContainer(const ElementContainer<T>& other) { this->append(other); };
 	template<typename T> ElementContainer& operator=(const ElementContainer<T>& other) { 
