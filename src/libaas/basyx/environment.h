@@ -31,7 +31,7 @@ public:
 public:
    const ElementContainer<AssetAdministrationShell> & getAssetAdministrationShells() const { return this->aass; };
    ElementContainer<AssetAdministrationShell> & getAssetAdministrationShells() { return this->aass; };
-   void setAssetAdministrationShells(ElementContainer<AssetAdministrationShell> aass) { this->aass = std::move(aass); };
+   void setAssetAdministrationShells(ElementContainer<AssetAdministrationShell> aass) { this->aass = aass; };
 
    const assetInformationList_t & getAssetInformations() const { return this->assetInformations; };
    assetInformationList_t & getAssetInformations() { return this->assetInformations; };
