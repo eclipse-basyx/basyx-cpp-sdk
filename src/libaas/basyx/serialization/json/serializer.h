@@ -39,9 +39,9 @@ namespace basyx::serialization::json
 
 	inline void serialize_submodelelement_helper(json_t & json, const SubmodelElement & submodelElement)
 	{
+		serialize_helper_h<modeltype_base>(json, submodelElement);
 		serialize_helper_h<Referable>(json, submodelElement);
 		serialize_helper_h<HasSemantics>(json, submodelElement);
-		serialize_helper_h<modeltype_base>(json, submodelElement);
 	};
 
 	template<typename T>

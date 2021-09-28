@@ -11,6 +11,7 @@
 #include <basyx/submodelelement/capability.h>
 #include <basyx/submodelelement/referenceelement.h>
 #include <basyx/submodelelement/relationshipelement.h>
+#include <basyx/submodelelement/entity.h>
 #include <basyx/submodelelement/basicevent.h>
 #include <basyx/submodelelement/annotatedrelationshipelement.h>
 #include <basyx/submodelelement/multilanguageproperty.h>
@@ -70,6 +71,20 @@ void serialize_helper(json_t & json, const Reference & reference)
 	};
 
 	json["keys"] = std::move(keyList);
+};
+
+void serialize_helper(json_t & json, const Entity & entity)
+{
+	serialize_submodelelement_helper(json, entity);
+
+	json["statements"] = json_t::array();
+
+	if(entity.getGlobalAssetId())
+		json["globalAssetId"] = serialize(*entity.getGlobalAssetId());
+
+	if(entity.getSpecificAssetId())
+		json["specificAssetIds"] = serialize(*entity.getSpecificAssetId());
+
 };
 
 void serialize_helper(json_t & json, const Referable & referable)
@@ -271,7 +286,6 @@ void serialize_helper(json_t & json, const Submodel & submodel)
 	serialize_helper_h<Identifiable>(json, submodel);
 	serialize_helper_h<HasSemantics>(json, submodel);
 	serialize_helper_h<HasKind>(json, submodel);
-	//serialize_helper_h<modeltype_base>(json, submodel);
 
 	json_t submodelElements = json_t::array();
 

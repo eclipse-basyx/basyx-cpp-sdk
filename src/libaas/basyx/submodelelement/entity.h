@@ -34,7 +34,7 @@ public:
 	~Entity() = default;
 public:
 	const util::optional<Reference> & getGlobalAssetId() const { return this->globalAssetId; };
-	template<typename Ref> void setGlobalAssetId(Ref && ref) { this->globalAssetId.emplace(std::forward<Ref>(ref); };
+	template<typename Ref> void setGlobalAssetId(Ref && ref) { this->globalAssetId.emplace(std::forward<Ref>(ref)); };
 
 	EntityType getEntityType() const { return this->entityType; };
 	void setEntityType(EntityType entityType) { this->entityType = entityType; };
@@ -43,7 +43,7 @@ public:
 	statementList_t & getStatement() { return this->statement; };
 	void setStatement(statementList_t statement) { this->statement = std::move(statement); };
 
-	const util::optional<IdentifierKeyValuePair> & getSpecificAssetId() const { return this->getSpecificAssetId; };
+	const util::optional<IdentifierKeyValuePair> & getSpecificAssetId() const { return this->specificAssetId; };
 	void setSpecificAssetId(IdentifierKeyValuePair specificAssetId) { this->specificAssetId = std::move(specificAssetId); };
 };
 

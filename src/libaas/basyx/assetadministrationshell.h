@@ -51,7 +51,7 @@ public:
 
 	const ElementContainer<Submodel> & getSubmodels() const { return this->submodels; };
 	ElementContainer<Submodel> & getSubmodels() { return this->submodels; };
-	void setSubmodelElements(ElementContainer<Submodel> submodels) { this->submodels = std::move(submodels); };
+	void setSubmodels(ElementContainer<Submodel> submodels) { this->submodels = std::move(submodels); };
 
 	const ElementContainer<View> & getViews() const { return this->views; };
 	ElementContainer<View> & getViews() { return this->views; };

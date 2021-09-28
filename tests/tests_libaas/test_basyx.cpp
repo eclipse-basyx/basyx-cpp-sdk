@@ -19,6 +19,7 @@
 #include <basyx/submodelelement/property.h>
 #include <basyx/submodelelement/range.h>
 #include <basyx/submodelelement/submodelelementcollection.h>
+#include <basyx/submodelelement/entity.h>
 
 #include <type_traits>
 
@@ -342,6 +343,11 @@ TEST_F(BaseTest, View)
 		"0173-1#02-AAR972#002"
 	);
 	ASSERT_EQ(view_2.size(), 2);
+}
+
+TEST_F(BaseTest, EntityTest)
+{
+	Entity entity{ "entity" };
 }
 
 TEST_F(BaseTest, QualifierTest)

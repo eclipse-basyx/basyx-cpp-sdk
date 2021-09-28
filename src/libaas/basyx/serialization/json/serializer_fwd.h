@@ -22,6 +22,7 @@ namespace basyx
 	class RelationshipElement;
 	class AnnotatedRelationshipElement;
 	class Capability;
+	class Entity;
 	class SubmodelElement;
 	class BasicEvent;
 	class Submodel;
@@ -58,6 +59,7 @@ namespace basyx::serialization::json
 	void serialize_helper(json_t & json, const RelationshipElement&);
 	void serialize_helper(json_t & json, const AnnotatedRelationshipElement&);
 	void serialize_helper(json_t & json, const MultiLanguageProperty&);
+	void serialize_helper(json_t & json, const Entity&);
 	void serialize_helper(json_t & json, const Capability&);
 	void serialize_helper(json_t & json, const File&);
 	void serialize_helper(json_t & json, const BasicEvent&);

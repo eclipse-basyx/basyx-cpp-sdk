@@ -11,12 +11,15 @@
 namespace basyx
 {
 
-class Referable : public virtual modeltype_base, public virtual copyable_base<Referable>
+class Referable : public virtual modeltype_base, 
+				  public virtual copyable_base<Referable>
 {
 public:
 	template<typename T>
 	using Copyable = Copyable<T, Referable>;
+	using parent_t = const Referable *;
 private:
+	parent_t parent;
 	std::string idShort;
 	util::optional<std::string> category;
 	util::optional<langstringset_t> displayName;
@@ -44,6 +47,9 @@ public:
 	const util::optional<langstringset_t> & getDescription() const;
 	util::optional<langstringset_t> & getDescription();
 	void setDescription(langstringset_t displayname);
+
+	parent_t getParent() const { return this->parent; };
+	void setParent(const Referable * parent) { this->parent = parent; };
 };
 
 };

@@ -22,6 +22,7 @@ public:
 	using elementConstIterator_t = typename elementList_t::const_iterator;
 private:
 	elementList_t elementList;
+	const Referable * owner;
 private:
 	void _insert_variadic() { };
 
@@ -31,7 +32,7 @@ private:
 		_insert_variadic(std::forward<Tail>(tail)...);
 	};
 public:
-	ElementContainer() {};
+	ElementContainer(const Referable * owner = nullptr) : owner(owner) {};
 
 	template<typename... T>
 	ElementContainer(T&&... t) { _insert_variadic(std::forward<T>(t)...); };
@@ -75,6 +76,7 @@ public:
 		if (this->hasEntry(element->getIdShort()))
 			return nullptr;
 		auto ptr = element.get();
+		ptr->setParent(this->owner);
 		this->elementList.emplace_back(std::move(element));
 		return ptr;
 	};

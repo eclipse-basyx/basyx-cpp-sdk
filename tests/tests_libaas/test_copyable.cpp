@@ -52,6 +52,10 @@ TEST_F(CopyableTest, TestBase)
 	auto base_copy_casted = dynamic_cast<MultiLanguageProperty*>(base_copy.get());
 	ASSERT_NE(base_copy_casted, nullptr);
 	ASSERT_EQ(base_copy_casted->get_value().size(), 2);
+
+	auto copy_back = base_copy->copy<MultiLanguageProperty>();
+	ASSERT_NE(copy_back, nullptr);
+	ASSERT_EQ(copy_back->get_value().size(), 2);
 }
 
 TEST_F(CopyableTest, TestSameType)
@@ -69,4 +73,7 @@ TEST_F(CopyableTest, WrongCopy)
 	MultiLanguageProperty mlp{ "test", {{"en", "example"},{"de", "test"}} };
 	auto do_not_do_this = mlp.copy<SubmodelElementCollection>();
 	ASSERT_EQ(do_not_do_this, nullptr);
+
+	auto do_not_do_this_too = mlp.copy<Submodel>();
+	ASSERT_EQ(do_not_do_this_too, nullptr);
 }

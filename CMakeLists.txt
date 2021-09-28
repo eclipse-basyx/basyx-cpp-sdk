@@ -79,7 +79,6 @@ if(NOT json_POPULATED)
 endif()
 
 ### pugixml
-
 FetchContent_Declare(
   pugixml
   GIT_REPOSITORY https://github.com/zeux/pugixml
@@ -104,7 +103,6 @@ if(${BASYX_BUILD_TESTS})
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(googletest)
 endif()
-
 
 ###############################################
 ###           Library Directory             ###

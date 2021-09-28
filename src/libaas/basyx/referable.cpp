@@ -5,6 +5,7 @@ namespace basyx
 
 Referable::Referable(util::string_view idShort)
 	: idShort( idShort.to_string() )
+	, parent(nullptr)
 {};
 
 util::string_view Referable::getIdShort() const
