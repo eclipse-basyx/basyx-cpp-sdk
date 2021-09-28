@@ -19,7 +19,8 @@ using Security = int;
 
 class AssetAdministrationShell : 
 	public Identifiable, 
-	public ModelType<ModelTypes::AssetAdministrationShell>
+   public ModelType<ModelTypes::AssetAdministrationShell>,
+   private Identifiable::Copyable<AssetAdministrationShell>
 {
 private:
 	util::optional<Security> security;
@@ -34,14 +35,26 @@ public:
 	AssetAdministrationShell(util::string_view idShort, util::string_view id, AssetInformation assetInformation)
 		: Identifiable(idShort, Identifier(id)), assetInformation(std::move(assetInformation)) {};
 public:
-	AssetAdministrationShell(const AssetAdministrationShell &) = default;
-	AssetAdministrationShell& operator=(const AssetAdministrationShell &) = default;
+   AssetAdministrationShell(const AssetAdministrationShell &aas):
+      Identifiable(aas.getIdShort(), std::move(aas.getIdentification())),
+      assetInformation(aas.getAssetInformation()) {
+      this->submodels.append(aas.getSubmodels());
+   }
+
+   AssetAdministrationShell& operator=(const AssetAdministrationShell &aas) {
+      this->setIdentification(aas.getIdentification());
+      this->getIdShort() = aas.getIdShort();
+      this->submodels.append(aas.getSubmodels());
+      return *this;
+   }
 
 	AssetAdministrationShell(AssetAdministrationShell &&) = default;
 	AssetAdministrationShell& operator=(AssetAdministrationShell &&) = default;
 public:
 	const AssetInformation & getAssetInformation() const { return assetInformation; };
 	void setAssetInformation(AssetInformation assetInformation) { this->assetInformation = std::move(assetInformation); };
+
+   void setSubmodels(ElementContainer<Submodel> &smEc) { this->submodels = smEc; }
 
 	const util::optional<Security> & getSecurity() const { return security; };
 	void setSecurity(Security security) { this->security = std::move(security); };
