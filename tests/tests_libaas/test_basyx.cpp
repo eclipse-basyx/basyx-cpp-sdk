@@ -220,18 +220,18 @@ TEST_F(BaseTest, SubmodelElementCollection)
     Property<int> i { "i" };
     i.set_value(5);
 
-    col.add(i);
+    col.getSubmodelElements().add(i);
 
     i.set_value(6);
 
-    col.add(std::move(i));
-    col.add(mlp);
+    col.getSubmodelElements().add(std::move(i));
+    col.getSubmodelElements().add(mlp);
 
     mlp.get_value().add("en", "test");
 
-    col2.add(mlp);
+    col2.getSubmodelElements().add(mlp);
 
-    col.add(std::move(col2));
+    col.getSubmodelElements().add(std::move(col2));
 };
 
 TEST_F(BaseTest, SubmodelElementCollection_2)
@@ -241,16 +241,16 @@ TEST_F(BaseTest, SubmodelElementCollection_2)
     Property<int> i1 { "i1", 2 };
     Property<int> i2 { "i2", 5 };
 
-    col.add(i1);
-    col.add(i2);
+    col.getSubmodelElements().add(i1);
+    col.getSubmodelElements().add(i2);
 
-    auto r0 = col.get("none");
+    auto r0 = col.getSubmodelElements().get("none");
     ASSERT_EQ(r0, nullptr);
 
-    auto r1 = col.get("i1");
+    auto r1 = col.getSubmodelElements().get("i1");
     ASSERT_NE(r1, nullptr);
 
-    auto r2 = col.get<Property<int>>("i2");
+    auto r2 = col.getSubmodelElements().get<Property<int>>("i2");
     ASSERT_NE(r2, nullptr);
     ASSERT_EQ(*r2->get_value(), 5);
 };
@@ -290,7 +290,7 @@ TEST_F(BaseTest, SubmodelElementCollection_3)
     ASSERT_EQ(col1.size(), 3);
 
     // Check first property
-    auto prop1 = col1.get("i1");
+    auto prop1 = col1.getSubmodelElements().get("i1");
     ASSERT_EQ(prop1->get_model_type(), ModelTypes::Property);
 };
 

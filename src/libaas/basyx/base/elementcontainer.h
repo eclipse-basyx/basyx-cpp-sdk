@@ -41,7 +41,12 @@ public:
 	template<typename T> ElementContainer& operator=(ElementContainer<T>& other) { this->append(other); return *this; };
 
 	template<typename T> ElementContainer(const ElementContainer<T>& other) { this->append(other); };
-	template<typename T> ElementContainer& operator=(const ElementContainer<T>& other) { this->append(other); return *this; };
+	template<typename T> ElementContainer& operator=(const ElementContainer<T>& other) { 
+		this->owner = nullptr;
+		this->elementList.clear();
+		this->append(other); 
+		return *this; 
+	};
 
 	ElementContainer(ElementContainer&&) noexcept = default;
 	ElementContainer& operator=(ElementContainer&&) noexcept = default;
@@ -57,17 +62,23 @@ public:
 	std::size_t size() const { return elementList.size(); };
 	bool hasEntry(util::string_view idShort);
 public:
+	// Get element by idShort
 	ElementType* const get(util::string_view idShort);
-	ElementType* const get(std::size_t n);
-
 	const ElementType* const get(util::string_view idShort) const;
-	const ElementType* const get(std::size_t n) const;
-public:
-	template<typename T> T* const get(util::string_view idShort) { return dynamic_cast<T*>(get(idShort)); };
-	template<typename T> T* const get(std::size_t n) { return dynamic_cast<T*>(get(n)); };
 
+	// Get element by index
+	ElementType* const get(std::size_t index);
+	const ElementType* const get(std::size_t index) const;
+public:
+	// Get typed element by idShort
+	template<typename T> T* const get(util::string_view idShort) { return dynamic_cast<T*>(get(idShort)); };
 	template<typename T> const T* const get(util::string_view idShort) const { return dynamic_cast<T*>(get(idShort)); };
-	template<typename T> const T* const get(std::size_t n) const { return dynamic_cast<T*>(get(n)); };
+
+	// Get typed element by index
+	template<typename T> T* const get(std::size_t index) { return dynamic_cast<T*>(get(index)); };
+	template<typename T> const T* const get(std::size_t index) const { return dynamic_cast<T*>(get(index)); };
+public:
+	void setOwner(const Referable * owner) { this->owner = owner; }
 public:
 	template<typename T> T* const add(T & t) { return this->add(std::make_unique<T>(std::forward<T>(t))); };
 	template<typename T> T* const add(T && t) { return this->add(std::make_unique<T>(std::forward<T>(t))); };
@@ -87,6 +98,12 @@ public:
 			this->add(std::move(entry->template copy<ElementType>()));
 		};
 	}
+
+	template<typename T, typename... Args>
+	T * create(Args&&... args) {
+		auto element = std::make_unique<T>(std::forward(args)...);
+		this->add(std::move(element));
+	};
 public:
 	elementIterator_t begin() noexcept { return this->elementList.begin(); }
 	elementIterator_t end() noexcept { return this->elementList.end(); }

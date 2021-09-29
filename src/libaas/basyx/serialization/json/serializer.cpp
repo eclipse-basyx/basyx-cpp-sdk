@@ -260,7 +260,7 @@ void serialize_helper(json_t & json, const SubmodelElementCollection & collectio
 
 	json_t value = json_t::array();
 
-	for (const auto & element : collection) {
+	for (const auto & element : collection.getSubmodelElements()) {
 		value.emplace_back(serialize(*element));
 	};
 

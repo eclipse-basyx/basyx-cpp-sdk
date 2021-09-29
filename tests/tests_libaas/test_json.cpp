@@ -147,11 +147,11 @@ TEST_F(JsonTest, SubmodelElementCollection)
 			{"de", "beispiel"}
 			} };
 
-		col1.add(Property<int>("int_prop", 2));
-		col1.add(f);
-		col2.add(mlp);
-		col2.add(s);
-		col1.add(std::move(col2));
+		col1.getSubmodelElements().add(Property<int>("int_prop", 2));
+		col1.getSubmodelElements().add(f);
+		col2.getSubmodelElements().add(mlp);
+		col2.getSubmodelElements().add(s);
+		col1.getSubmodelElements().add(std::move(col2));
 	};
 
 	auto json = basyx::serialization::json::serialize(col1);
