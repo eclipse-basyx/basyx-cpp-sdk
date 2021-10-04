@@ -397,3 +397,13 @@ TEST_F(BaseTest, Environment)
 
 	env.getAssetInformations().emplace_back(AssetInformation{ AssetKind::Type });
 }
+
+TEST_F(BaseTest, AssetInfoInAas)
+{
+		Asset asset("cppTestAsset", basyx::Identifier::Custom("cppTestAsset"));
+		AssetInformation assetinfo(basyx::AssetKind::Instance);
+		assetinfo.setAsset(asset);
+
+		auto assetInfo2 = assetinfo;
+		AssetAdministrationShell aas("cppAas", "cppAas", assetinfo);
+}

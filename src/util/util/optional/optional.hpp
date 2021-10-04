@@ -53,16 +53,16 @@ private:
 	} _internals;
 private:
 	constexpr void _copy_internal(const optional& rhs) {
-		this->_internals._empty = rhs._internals._empty;
 		if (rhs.has_value()) {
 			this->emplace(rhs.value());
+			this->_internals._empty = false;
 		}
 	};
 
 	constexpr void _move_internal(optional && rhs) {
-		this->_internals._empty = rhs._internals._empty;
 		if (rhs.has_value()) {
 			this->emplace( std::move( rhs.value() ) );
+			this->_internals._empty = false;
 			rhs._internals._empty = true;
 		}
 	};

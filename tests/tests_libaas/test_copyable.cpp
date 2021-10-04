@@ -58,6 +58,16 @@ TEST_F(CopyableTest, TestBase)
 	ASSERT_EQ(copy_back->get_value().size(), 2);
 }
 
+TEST_F(CopyableTest, TestProperty)
+{
+	Property<std::string> stringProp("stringProp");
+	stringProp.set_value("test");
+
+	auto copy = stringProp.copy<Property<std::string>>();
+	ASSERT_EQ(copy->getIdShort(), stringProp.getIdShort());
+	ASSERT_EQ(copy->get_value(), stringProp.get_value());
+}
+
 TEST_F(CopyableTest, TestSameType)
 {
 	MultiLanguageProperty mlp{ "test", {{"en", "example"},{"de", "test"}} };

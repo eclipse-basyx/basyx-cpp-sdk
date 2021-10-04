@@ -15,7 +15,6 @@ class Asset :
 	public Identifiable, 
 	public ModelType<ModelTypes::Asset>
 {
-private:
 public:
 	Asset(util::string_view idShort, Identifier identifier) : Identifiable(idShort, std::move(identifier)) {};
 	Asset(util::string_view idShort, util::string_view id) : Identifiable(idShort, id) {};

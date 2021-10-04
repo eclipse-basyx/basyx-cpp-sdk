@@ -144,6 +144,17 @@ TEST_F(ElementContainerTest, GetElement_3)
 	ASSERT_EQ(wrong_prop, nullptr);
 }
 
+TEST_F(ElementContainerTest, GetElement_4)
+{
+	ElementContainer<SubmodelElement> container;
+	container.add(Property<std::string>("stringProp", "test"));
+
+	auto prop = container.get<Property<std::string>>("stringProp");
+	ASSERT_NE(prop, nullptr);
+	ASSERT_EQ(prop->get_value(), "test");
+	int j = 2;
+}
+
 TEST_F(ElementContainerTest, Iteration)
 {
 	ElementContainer<SubmodelElement> container;

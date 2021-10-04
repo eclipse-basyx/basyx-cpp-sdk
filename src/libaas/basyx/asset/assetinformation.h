@@ -1,6 +1,5 @@
 #pragma once
 
-#include <basyx/submodel.h>
 #include <basyx/submodelelement/file.h>
 #include <basyx/reference.h>
 #include <basyx/identifiable.h>
@@ -25,11 +24,20 @@ private:
 	util::optional<File> defaultThumbnail;
 public:
 	AssetInformation(AssetKind assetkind) : assetKind(assetkind) {};
+
+	AssetInformation(const AssetInformation & other) = default;
+	AssetInformation& operator=(const AssetInformation & other) = default;
+
+	AssetInformation(AssetInformation &&) noexcept = default;
+	AssetInformation& operator=(AssetInformation &&) noexcept = default;
 public:
 	AssetKind getAssetKind() const { return assetKind; };
 	void setAssetKind(AssetKind kind) { this->assetKind = kind; };
 
-	void setAsset(Asset asset) { this->asset.emplace(std::move(asset)); this->globalAssetIdRef = asset; };
+	void setAsset(Asset asset) { 
+		//this->globalAssetIdRef = asset;
+		this->asset.emplace(std::move(asset)); 
+	};
 	const util::optional<Asset> & getAsset() const { return asset; };
 
 	const util::optional<Reference> & getGlobalAssetId() const { return this->globalAssetIdRef; };
