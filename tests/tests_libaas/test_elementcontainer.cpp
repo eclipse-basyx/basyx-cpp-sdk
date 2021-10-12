@@ -106,6 +106,19 @@ TEST_F(ElementContainerTest, AddElement_2)
 	ASSERT_EQ(no_prop, nullptr);
 }
 
+TEST_F(ElementContainerTest, CreateElement_1)
+{
+	ElementContainer<SubmodelElement> container;
+	ASSERT_EQ(container.size(), 0);
+
+	container.create<Property<int>>("intProp", 2);
+	ASSERT_EQ(container.size(), 1);
+
+	auto no_prop = container.add(Property<int>("intProp", 5));
+	ASSERT_EQ(container.size(), 1);
+	ASSERT_EQ(no_prop, nullptr);
+}
+
 TEST_F(ElementContainerTest, HasEntry)
 {
 	ElementContainer<SubmodelElement> container;

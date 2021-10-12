@@ -100,9 +100,9 @@ public:
 	}
 
 	template<typename T, typename... Args>
-	T * create(Args&&... args) {
-		auto element = std::make_unique<T>(std::forward(args)...);
-		this->add(std::move(element));
+	T * const create(Args&&... args) {
+		auto element = std::make_unique<T>(std::forward<Args>(args)...);
+		return this->add(std::move(element));
 	};
 public:
 	elementIterator_t begin() noexcept { return this->elementList.begin(); }
