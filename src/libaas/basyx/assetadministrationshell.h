@@ -74,6 +74,33 @@ public:
 	const ElementContainer<View> & getViews() const { return this->views; };
 	ElementContainer<View> & getViews() { return this->views; };
 	void setViews(ElementContainer<View> views) { this->views = std::move(views); };
+
+
+   // Referable - special purpose
+   void setIdShort(Token<Deserializer> t, std::string idShort) {
+      this->Identifiable::setIdShort(idShort);
+   }
+   void setParent(Token<Deserializer> t, Referable * referable) {
+      this->Identifiable::setParent(referable);
+   }
+   void setCategory(Token<Deserializer> t, std::string category) {
+      this->Identifiable::setCategory(category);
+   }
+   void setDisplayname(Token<Deserializer> t, langstringset_t displayname) {
+      this->Identifiable::setDisplayname(displayname);
+   }
+   void setDescription(Token<Deserializer> t, langstringset_t description) {
+      this->Identifiable::setDescription(description);
+   }
+
+   // Identifiable - special purpose
+   void setIdentification(Token<Deserializer> t, Identifier identifier) {
+      this->Identifiable::setIdentification(identifier);
+   }
+   void setAdministration(Token<Deserializer> t,
+                          AdministrativeInformation administrativeInformation) {
+      this->Identifiable::setAdministration(administrativeInformation);
+   }
 };
 
 };
