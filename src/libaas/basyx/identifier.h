@@ -17,8 +17,8 @@ private:
 	KeyType idType;
 	std::string id;
 private:
-	Identifier(KeyType idType, util::string_view id);
 public:
+   Identifier(KeyType idType, util::string_view id);
 	Identifier(util::string_view id);
 
 	Identifier(const Identifier&) = default;
