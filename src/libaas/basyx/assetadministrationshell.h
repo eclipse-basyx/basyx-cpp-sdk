@@ -2,6 +2,10 @@
 
 #include <basyx/base/elementcontainer.h>
 #include <basyx/asset/assetinformation.h>
+#include <basyx/base/token.h>
+
+#include <basyx/serialization/base/serialization.h>
+
 #include <basyx/submodel.h>
 #include <basyx/reference.h>
 #include <basyx/identifiable.h>
@@ -11,6 +15,9 @@
 
 namespace basyx
 {
+
+using namespace basyx::base;
+using namespace basyx::serialization::priv;
 
 // ToDo: replace placeholders
 using Security = int;
@@ -42,7 +49,7 @@ public:
    }
 
    AssetAdministrationShell& operator=(const AssetAdministrationShell &aas) {
-      this->setIdentification(aas.getIdentification());
+      this->Identifiable::setIdentification(aas.getIdentification());
       this->getIdShort() = aas.getIdShort();
       this->submodels.append(aas.getSubmodels());
       return *this;
@@ -54,8 +61,6 @@ public:
 	const AssetInformation & getAssetInformation() const { return assetInformation; };
 	void setAssetInformation(AssetInformation assetInformation) { this->assetInformation = std::move(assetInformation); };
 
-   void setSubmodels(ElementContainer<Submodel> &smEc) { this->submodels = smEc; }
-
 	const util::optional<Security> & getSecurity() const { return security; };
 	void setSecurity(Security security) { this->security = std::move(security); };
 
@@ -64,7 +69,7 @@ public:
 
 	const ElementContainer<Submodel> & getSubmodels() const { return this->submodels; };
 	ElementContainer<Submodel> & getSubmodels() { return this->submodels; };
-	void setSubmodels(ElementContainer<Submodel> submodels) { this->submodels = std::move(submodels); };
+   void setSubmodels(ElementContainer<Submodel> submodels) { this->submodels = std::move(submodels); };
 
 	const ElementContainer<View> & getViews() const { return this->views; };
 	ElementContainer<View> & getViews() { return this->views; };
