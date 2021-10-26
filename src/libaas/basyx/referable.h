@@ -36,6 +36,7 @@ public:
 	virtual ~Referable() = default;
 public:
 	util::string_view getIdShort() const;
+   void setIdShort(util::string_view idShort);
 	
 	const util::optional<std::string> & getCategory() const;
 	void setCategory(util::string_view category);

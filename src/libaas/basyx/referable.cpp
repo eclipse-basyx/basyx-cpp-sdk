@@ -10,7 +10,12 @@ Referable::Referable(util::string_view idShort)
 
 util::string_view Referable::getIdShort() const
 {
-	return this->idShort;
+   return this->idShort;
+}
+
+void Referable::setIdShort(util::string_view idShort)
+{
+   this->idShort = idShort.to_string();
 }
 
 const util::optional<std::string>& Referable::getCategory() const
