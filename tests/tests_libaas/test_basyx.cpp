@@ -14,8 +14,6 @@
 #include <basyx/constraints/formula.h>
 
 #include <basyx/submodelelement/multilanguageproperty.h>
-#include <basyx/submodelelement/operation.h>
-#include <basyx/submodelelement/operationvariable.h>
 #include <basyx/submodelelement/property.h>
 #include <basyx/submodelelement/range.h>
 #include <basyx/submodelelement/submodelelementcollection.h>
@@ -185,24 +183,6 @@ TEST_F(BaseTest, PropertyType)
     ASSERT_EQ(Property<double> { "id" }.get_value_type(), "double");
     ASSERT_EQ(Property<float> { "id" }.get_value_type(), "float");
     ASSERT_EQ(Property<char> { "id" }.get_value_type(), "byte");
-};
-
-TEST_F(BaseTest, OperationVariable)
-{
-    auto var = OperationVariable::create<MultiLanguageProperty>("op_var", "mlp");
-};
-
-TEST_F(BaseTest, Operation)
-{
-    Operation op { "test" };
-
-    //	op.set_input_variables({ std::move(  OperationVariable::create<MultiLanguageProperty>("op_var", "mlp") ) });
-
-    auto mlp = std::make_unique<MultiLanguageProperty>("mlp");
-
-    op.set_input_variables(
-        OperationVariable::create<MultiLanguageProperty>("op_var", "mlp"),
-        OperationVariable::create<MultiLanguageProperty>("op_var2", "mlp"));
 };
 
 TEST_F(BaseTest, SubmodelElement)

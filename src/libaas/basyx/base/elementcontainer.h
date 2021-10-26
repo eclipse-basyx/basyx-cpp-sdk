@@ -72,7 +72,7 @@ public:
 public:
 	// Get typed element by idShort
 	template<typename T> T* const get(util::string_view idShort) { return dynamic_cast<T*>(get(idShort)); };
-	template<typename T> const T* const get(util::string_view idShort) const { return dynamic_cast<T*>(get(idShort)); };
+	template<typename T> const T* const get(util::string_view idShort) const { return dynamic_cast<const T*>(get(idShort)); };
 
 	// Get typed element by index
 	template<typename T> T* const get(std::size_t index) { return dynamic_cast<T*>(get(index)); };

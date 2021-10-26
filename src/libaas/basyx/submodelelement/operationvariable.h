@@ -14,18 +14,23 @@
 namespace basyx
 {
 
-class OperationVariable : public DataElement, private ModelType<ModelTypes::OperationVariable>
+class OperationVariable : private ModelType<ModelTypes::OperationVariable>
 {
 private:
 	std::unique_ptr<SubmodelElement> value;
 public:
-	OperationVariable(util::string_view idShort, std::unique_ptr<SubmodelElement> value)
-		: DataElement(idShort), value(std::move(value)) 
+	OperationVariable(std::unique_ptr<SubmodelElement> value)
+		: value(std::move(value)) 
 	{
 	};
 
-	OperationVariable(OperationVariable& rhs) = delete;
-	OperationVariable& operator=(OperationVariable&) = delete;
+	OperationVariable(const SubmodelElement & value)
+		: value(value.copy<SubmodelElement>())
+	{
+	};
+
+	OperationVariable(OperationVariable& rhs) = default;
+	OperationVariable& operator=(OperationVariable&) = default;
 
 	OperationVariable(OperationVariable&& rhs) noexcept = default;
 	OperationVariable& operator=(OperationVariable&&) noexcept = default;
@@ -38,9 +43,8 @@ public:
 	template<typename SubmodelElementType, typename... Args>
 	static OperationVariable create(util::string_view idShort, Args&&... args)
 	{
-		auto value = std::make_unique<SubmodelElementType>(std::forward<Args>(args)...);
-		value->kind = ModelingKind::Template;
-		return { idShort, std::move(value) };
+		auto value = std::make_unique<SubmodelElementType>(idShort, std::forward<Args>(args)...);
+		return { std::move(value) };
 	};
 };
 
