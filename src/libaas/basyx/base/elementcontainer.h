@@ -91,7 +91,7 @@ public:
 		if (this->hasEntry(element->getIdShort()))
 			return nullptr;
 		auto ptr = element.get();
-		ptr->setParent(this->owner);
+      ptr->Referable::setParent(this->owner);
 		this->elementList.emplace_back(std::move(element));
 		return ptr;
 	};
