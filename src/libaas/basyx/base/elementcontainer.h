@@ -31,6 +31,11 @@ private:
 		this->add(std::forward<First>(first));
 		_insert_variadic(std::forward<Tail>(tail)...);
 	};
+
+	void _reset_parents() {
+		for (auto & element : elementList)
+			element->setParent(this->owner);
+	}
 public:
 	ElementContainer(const Referable * owner = nullptr) : owner(owner) {};
 
@@ -38,22 +43,29 @@ public:
 	ElementContainer(T&&... t) { _insert_variadic(std::forward<T>(t)...); };
 
 	template<typename T> ElementContainer(ElementContainer<T>& other) { this->append(other); };
-   template<typename T> ElementContainer& operator=(ElementContainer<T>& other) {
+    template<typename T> ElementContainer& operator=(ElementContainer<T>& other) {
       this->elementList.clear();
       this->append(other);
       return *this;
-   };
+    };
 
 	template<typename T> ElementContainer(const ElementContainer<T>& other) { this->append(other); };
 	template<typename T> ElementContainer& operator=(const ElementContainer<T>& other) { 
-		this->owner = nullptr;
 		this->elementList.clear();
 		this->append(other); 
 		return *this; 
 	};
 
-	ElementContainer(ElementContainer&&) noexcept = default;
-	ElementContainer& operator=(ElementContainer&&) noexcept = default;
+	ElementContainer(ElementContainer&& other) noexcept {
+		this->elementList = std::move(other.elementList);
+		this->_reset_parents();
+	};
+
+	ElementContainer& operator=(ElementContainer&& other) noexcept {
+		this->elementList = std::move(other.elementList);
+		this->_reset_parents();
+		return *this;
+	};
 
 	~ElementContainer() = default;
 public:

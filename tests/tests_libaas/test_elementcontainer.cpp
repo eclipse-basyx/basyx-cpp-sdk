@@ -292,3 +292,67 @@ TEST_F(ElementContainerTest, Append_3)
 	ASSERT_NE(container.get(2), nullptr);
 	ASSERT_EQ(container.get(2)->getIdShort(), "intProp3");
 }
+
+TEST_F(ElementContainerTest, Owner_Default)
+{
+	ElementContainer<SubmodelElement> container;
+	auto prop = container.create<MultiLanguageProperty>("prop1");
+
+	ASSERT_EQ(prop->getParent(), nullptr);
+};
+
+TEST_F(ElementContainerTest, Owner_Set)
+{
+	MultiLanguageProperty owner_1{ "owner_1" };
+
+	ElementContainer<SubmodelElement> container;
+	container.setOwner(&owner_1);
+	auto prop = container.create<MultiLanguageProperty>("prop1");
+
+	ASSERT_EQ(prop->getParent(), &owner_1);
+};
+
+TEST_F(ElementContainerTest, Owner_Copy)
+{
+	MultiLanguageProperty owner_1{ "owner_1" };
+	MultiLanguageProperty owner_2{ "owner_2" };
+
+	ElementContainer<SubmodelElement> container1;
+	container1.setOwner(&owner_1);
+	ElementContainer<SubmodelElement> container2;
+	container2.setOwner(&owner_2);
+	container2.create<MultiLanguageProperty>("prop1");
+
+	ASSERT_EQ(container1.size(), 0);
+	ASSERT_EQ(container2.size(), 1);
+
+	container1 = container2;
+
+	ASSERT_EQ(container1.size(), 1);
+	ASSERT_EQ(container2.size(), 1);
+
+	ASSERT_EQ(container1.get(0)->getParent(), &owner_1);
+	ASSERT_EQ(container2.get(0)->getParent(), &owner_2);
+};
+
+TEST_F(ElementContainerTest, Owner_Move)
+{
+	MultiLanguageProperty owner_1{ "owner_1" };
+	MultiLanguageProperty owner_2{ "owner_2" };
+
+	ElementContainer<SubmodelElement> container1;
+	container1.setOwner(&owner_1);
+	ElementContainer<SubmodelElement> container2;
+	container2.setOwner(&owner_2);
+	container2.create<MultiLanguageProperty>("prop1");
+
+	ASSERT_EQ(container1.size(), 0);
+	ASSERT_EQ(container2.size(), 1);
+
+	container1 = std::move(container2);
+
+	ASSERT_EQ(container1.size(), 1);
+	ASSERT_EQ(container2.size(), 0);
+
+	ASSERT_EQ(container1.get(0)->getParent(), &owner_1);
+};
