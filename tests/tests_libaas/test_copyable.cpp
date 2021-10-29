@@ -8,7 +8,6 @@
 #include <basyx/asset/asset.h>
 #include <basyx/asset/assetinformation.h>
 #include <basyx/submodel.h>
-#include <basyx/views/view.h>
 
 #include <basyx/constraints/qualifier.h>
 #include <basyx/constraints/formula.h>

@@ -28,7 +28,6 @@ namespace basyx
 	class Submodel;
 	class File;
 	class Blob;
-	class View;
 	class Asset;
 	class AssetInformation;
 
@@ -64,7 +63,6 @@ namespace basyx::serialization::json
 	void serialize_helper(json_t & json, const File&);
 	void serialize_helper(json_t & json, const BasicEvent&);
 	void serialize_helper(json_t & json, const Blob&);
-	void serialize_helper(json_t & json, const View&);
 	void serialize_helper(json_t & json, const SubmodelElementCollection&);
 	void serialize_helper(json_t & json, const AssetAdministrationShell&);
 	

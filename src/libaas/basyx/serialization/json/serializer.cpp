@@ -144,13 +144,7 @@ void serialize_helper(json_t & json, const AssetAdministrationShell & aas)
 		submodels.emplace_back(serialize(*submodel));
 	};
 
-	auto views = json_t::array();
-	for (const auto & view : aas.getViews()) {
-		views.emplace_back(serialize(*view));
-	};
-
 	json["submodels"] = std::move(submodels);
-	json["views"] = std::move(views);
 
 	json["assetInformation"] = serialize(aas.getAssetInformation());
 
@@ -267,19 +261,6 @@ void serialize_helper(json_t & json, const SubmodelElementCollection & collectio
 	if (value.size() > 0)
 		json["value"] = std::move(value);
 };
-
-void serialize_helper(json_t & json, const View & view)
-{
-	serialize_helper_h<Referable>(json, view);
-	//serialize_helper_h<HasDataSpecification>(json, view);
-	//serialize_helper_h<modeltype_base>(json, view);
-
-	auto containedElements = json_t::array();
-	for (const auto & containedElement : view.getContainedElements()) {
-		containedElements.emplace_back(serialize(containedElement));
-	}
-};
-
 
 void serialize_helper(json_t & json, const Submodel & submodel)
 {

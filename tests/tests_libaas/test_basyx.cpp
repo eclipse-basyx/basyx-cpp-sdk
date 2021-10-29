@@ -8,7 +8,6 @@
 #include <basyx/asset/asset.h>
 #include <basyx/asset/assetinformation.h>
 #include <basyx/submodel.h>
-#include <basyx/views/view.h>
 
 #include <basyx/constraints/qualifier.h>
 #include <basyx/constraints/formula.h>
@@ -313,18 +312,6 @@ TEST_F(BaseTest, SubmodelAddElements)
 	spdlog::set_level(spdlog::level::info);
 }
 
-TEST_F(BaseTest, View)
-{
-	View view_1("view");
-	ASSERT_EQ(view_1.size(), 0);
-
-	View view_2("view", 
-		"0173-1#02-AAR972#002", 
-		"0173-1#02-AAR972#002"
-	);
-	ASSERT_EQ(view_2.size(), 2);
-}
-
 TEST_F(BaseTest, EntityTest)
 {
 	Entity entity{ "entity" };
@@ -363,7 +350,6 @@ TEST_F(BaseTest, AssetInfTest)
 TEST_F(BaseTest, AssetAdministrationShell)
 {
 	AssetAdministrationShell aas("aas", "https://admin-shell.io/aas", { AssetKind::Instance });
-	aas.getViews().add(View{ "view" });
 	aas.getSubmodels().add(Submodel("sm", "test/sm_1"));
 }
 

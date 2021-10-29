@@ -9,7 +9,6 @@
 #include <basyx/submodel.h>
 #include <basyx/reference.h>
 #include <basyx/identifiable.h>
-#include <basyx/views/view.h>
 
 #include <util/optional/optional.hpp>
 
@@ -33,7 +32,6 @@ private:
 	util::optional<Security> security;
 	util::optional<Reference> derivedFrom;
 	ElementContainer<Submodel> submodels;
-	ElementContainer<View> views;
 	AssetInformation assetInformation;
 public:
 	AssetAdministrationShell(util::string_view idShort, Identifier identifier, AssetInformation assetInformation)
@@ -70,10 +68,6 @@ public:
 	const ElementContainer<Submodel> & getSubmodels() const { return this->submodels; };
 	ElementContainer<Submodel> & getSubmodels() { return this->submodels; };
    void setSubmodels(ElementContainer<Submodel> submodels) { this->submodels = std::move(submodels); };
-
-	const ElementContainer<View> & getViews() const { return this->views; };
-	ElementContainer<View> & getViews() { return this->views; };
-	void setViews(ElementContainer<View> views) { this->views = std::move(views); };
 
 
    // Referable - special purpose

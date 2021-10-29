@@ -4,7 +4,6 @@
 #include <basyx/submodel.h>
 #include <basyx/reference.h>
 #include <basyx/identifiable.h>
-#include <basyx/views/view.h>
 
 #include <util/optional/optional.hpp>
 
