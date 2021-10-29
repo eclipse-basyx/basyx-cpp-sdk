@@ -34,7 +34,12 @@ private:
 
 	invokable_t invokable;
 public:
-	Operation(util::string_view idShort) : DataElement(idShort) {};
+	Operation(util::string_view idShort) : DataElement(idShort) {
+		inputVars.setOwner(this);
+		outputVars.setOwner(this);
+		inOutVars.setOwner(this);
+	};
+
 	Operation(util::string_view idShort,
 		opVarList_t inputVars,
 		opVarList_t outputVars,
@@ -42,7 +47,11 @@ public:
 	: DataElement(idShort)
 	, inputVars(std::move(inputVars))
 	, outputVars(std::move(outputVars))
-	, inOutVars(std::move(inOutVars)) {};
+	, inOutVars(std::move(inOutVars)) {
+		inputVars.setOwner(this);
+		outputVars.setOwner(this);
+		inOutVars.setOwner(this);
+	};
 
 	Operation(const Operation&) = default;
 	Operation& operator=(const Operation&) = default;

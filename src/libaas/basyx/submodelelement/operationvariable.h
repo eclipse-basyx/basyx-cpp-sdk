@@ -46,6 +46,15 @@ public:
 		auto value = std::make_unique<SubmodelElementType>(idShort, std::forward<Args>(args)...);
 		return { std::move(value) };
 	};
+
+	template<typename SubmodelElementType>
+	static SubmodelElementType Create(util::string_view idShort, basyx::langstringset_t description)
+	{
+		auto var = SubmodelElementType{ idShort };
+		var.setCategory("VARIABLE");
+		var.setDescription(std::move(description));
+		return var;
+	};
 };
 
 }

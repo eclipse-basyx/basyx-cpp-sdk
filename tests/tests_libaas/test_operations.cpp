@@ -29,50 +29,55 @@ TEST_F(OperationTest, OperationVariable)
 	//auto var = OperationVariable::create<MultiLanguageProperty>("op_var", "mlp");
 };
 
-int mult(int a, int b)
+int measure_rpm(int a, int b)
 {
 	return a * b;
 };
 
+float measure_angle(int a, int b)
+{
+	return 100.0f;
+};
+
 TEST_F(OperationTest, Operation)
 {
-	Operation op{ "test" };
-
-	auto mlp = std::make_unique<MultiLanguageProperty>("mlp");
+	Operation op{ "test_operation" };
 
 	op.inputVariables() = {
-		Property<int>("a"),
-		Property<int>("b")
+		OperationVariable::Create<Property<int>>("a", {"de", "Erste Eingangsbelegung für Umdrehungszahlmesser"}),
+		OperationVariable::Create<Property<int>>("b", {"de", "Zweite Eingangsbelegung für Umdrehungszahlmesser"}),
 	};
 
-	/*
-	SubmodelElement>(
-		const ElementContainer<SubmodelElement>&,
-		ElementContainer<SubmodelElement>&
-	)
-	*/
+	op.outputVariables() = {
+		OperationVariable::Create<Property<int>>("umdrehungszahl", {"de", "Gemessene Umdrehungszahl des Geräts"}),
+		OperationVariable::Create<Property<float>>("winkel", {"de", "Endwinkel des Geräts"}),
+	};
 
 	ASSERT_EQ(op.inputVariables().size(), 2);
+	ASSERT_EQ(op.inputVariables().get(0)->getParent(), &op);
 
+	// Assignment of the Operation's actual function through lambda
 	op.setInvokable([] (
 		const ElementContainer<SubmodelElement>& input, 
 		ElementContainer<SubmodelElement>& inout,
 		ElementContainer<SubmodelElement> & output) -> bool {
-			// Extract input variables from input list
+			// Extract input parameters from input list
 			int a = *input.get<Property<int>>("a")->get_value();
 			int b = *input.get<Property<int>>("b")->get_value();
 
 			// Call the actual function
-			auto c = mult(a, b);
+			auto rpm = measure_rpm(a, b);
+			auto angle = measure_angle(a, b);
 
 			// Set output variables
-			output.get<Property<int>>("umdrehungszahl")->set_value(c);
-			output.get<Property<int>>("winkel")->set_value(100);
+			output.get<Property<int>>("umdrehungszahl")->set_value(rpm);
+			output.get<Property<float>>("winkel")->set_value(angle);
 
 			// Return invokation result
 			return true;
 	});
 
+	// Invoke the operation
 	auto input = ElementContainer<SubmodelElement>{
 		Property<int>("a", 4), 
 		Property<int>("b", 2)
@@ -80,10 +85,7 @@ TEST_F(OperationTest, Operation)
 
 	auto inout = ElementContainer<SubmodelElement>{};
 
-	auto output = ElementContainer<SubmodelElement>{
-		Property<int>("umdrehungszahl"), 
-		Property<int>("winkel") 
-	};
+	auto output = op.outputVariables();
 
 	auto invoke_result = op.invoke(
 		input,
@@ -94,23 +96,5 @@ TEST_F(OperationTest, Operation)
 	ASSERT_EQ(invoke_result, true);
 
 	ASSERT_EQ(*output.get<Property<int>>("umdrehungszahl")->get_value(), 4*2);
-	ASSERT_EQ(*output.get<Property<int>>("winkel")->get_value(), 100);
-
-
-	//bool op.invoke(const input&, inout&, output&)
-	//{
-	//	auto output = op.outputVariables.copy();
-
-	//	auto ret = invokable(input, inout, outputs);
-	//};
-
-	//LambdaOperation l([](const int & a, const int & b, int & c) -> int {});
-	//typename ReturnType -> int
-	//typename... Inputs  -> int , int
-
-	//auto a = input.get<Property<int>>(Is<Inputs...>...)->get_value().value();
-
-	//ElementContainer<SubmodelElement> output;
-	//output.create<Property<int>>("result", mult(a, b));
-	//return output;
+	ASSERT_EQ(*output.get<Property<float>>("winkel")->get_value(), 100.0f);
 };
