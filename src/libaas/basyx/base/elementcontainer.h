@@ -34,7 +34,7 @@ private:
 
 	void _reset_parents() {
 		for (auto & element : elementList)
-			element->setParent(this->owner);
+         element->Referable::setParent(this->owner);
 	}
 public:
 	ElementContainer(const Referable * owner = nullptr) : owner(owner) {};
