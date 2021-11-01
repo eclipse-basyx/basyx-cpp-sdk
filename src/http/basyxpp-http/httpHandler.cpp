@@ -182,7 +182,7 @@ SubmodelElement * httpHandler::getSubmodelElementByPathList(httpHandler::pathLis
 			return nullptr;
 
 		auto collection = static_cast<SubmodelElementCollection*>(element);
-		element = collection->get(*path);
+      element = collection->getSubmodelElements().get(*path);
 
 		if (element == nullptr)
 			return nullptr;
