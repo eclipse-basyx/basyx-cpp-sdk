@@ -13,7 +13,7 @@ namespace basyx
 template<typename ElementType>
 class ElementContainer
 {
-static_assert(std::is_convertible<ElementType*, Referable*>::value, "Only Referables supported by ElementContainer!");
+	static_assert(std::is_convertible<ElementType*, Referable*>::value, "Only Referables supported by ElementContainer!");
 public:
 	using element_t = ElementType;
 	using elementEntry_t = std::unique_ptr<element_t>;
@@ -22,7 +22,7 @@ public:
 	using elementConstIterator_t = typename elementList_t::const_iterator;
 private:
 	elementList_t elementList;
-	const Referable * owner;
+	Referable * owner;
 private:
 	void _insert_variadic() { };
 
@@ -37,23 +37,24 @@ private:
          element->Referable::setParent(this->owner);
 	}
 public:
-	ElementContainer(const Referable * owner = nullptr) : owner(owner) {};
+	template<typename ReferableT>
+	ElementContainer(ReferableT * const owner = nullptr) : owner(owner) {};
 
 	template<typename... T>
-	ElementContainer(T&&... t) { _insert_variadic(std::forward<T>(t)...); };
+	ElementContainer(T&&... t) : owner(nullptr) { _insert_variadic(std::forward<T>(t)...); };
 
 	template<typename T> ElementContainer(ElementContainer<T>& other) { this->append(other); };
-    template<typename T> ElementContainer& operator=(ElementContainer<T>& other) {
-      this->elementList.clear();
-      this->append(other);
-      return *this;
-    };
+	template<typename T> ElementContainer& operator=(ElementContainer<T>& other) {
+		this->elementList.clear();
+		this->append(other);
+		return *this;
+	};
 
 	template<typename T> ElementContainer(const ElementContainer<T>& other) { this->append(other); };
-	template<typename T> ElementContainer& operator=(const ElementContainer<T>& other) { 
+	template<typename T> ElementContainer& operator=(const ElementContainer<T>& other) {
 		this->elementList.clear();
-		this->append(other); 
-		return *this; 
+		this->append(other);
+		return *this;
 	};
 
 	ElementContainer(ElementContainer&& other) noexcept {
@@ -94,7 +95,7 @@ public:
 	template<typename T> T* const get(std::size_t index) { return dynamic_cast<T*>(get(index)); };
 	template<typename T> const T* const get(std::size_t index) const { return dynamic_cast<T*>(get(index)); };
 public:
-	void setOwner(const Referable * owner) { this->owner = owner; }
+	//void setOwner(const Referable * owner) { this->owner = owner; }
 public:
 	template<typename T> T* const add(T & t) { return this->add(std::make_unique<T>(std::forward<T>(t))); };
 	template<typename T> T* const add(T && t) { return this->add(std::make_unique<T>(std::forward<T>(t))); };
@@ -103,7 +104,7 @@ public:
 		if (this->hasEntry(element->getIdShort()))
 			return nullptr;
 		auto ptr = element.get();
-      ptr->Referable::setParent(this->owner);
+		ptr->Referable::setParent(this->owner);
 		this->elementList.emplace_back(std::move(element));
 		return ptr;
 	};
