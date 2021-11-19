@@ -6,6 +6,9 @@
 
 #include <basyx/referable.h>
 
+#include <basyx/base/token.h>
+#include <basyx/serialization/base/serialization.h>
+
 #include <initializer_list>
 #include <vector>
 #include <string>
@@ -20,6 +23,7 @@ public:
 private:
 	keyList_t keys;
 public:
+	Reference(basyx::base::Token<basyx::serialization::priv::Deserializer> t);
 	Reference(const Key & key) : keys{ key } {};
 	Reference(Key && key) : keys{ std::move(key) } {};
 	Reference(util::string_view from_string);
@@ -33,6 +37,8 @@ public:
 
 	Reference(Reference &&) noexcept = default;
 	Reference& operator=(Reference &&) noexcept = default;
+public:
+   void add(Key & k) { keys.emplace_back(std::move(k)); }
 public:
 	const Key & get_key(std::size_t index) const { return keys[index]; };
 	const std::size_t size() const { return keys.size(); };
