@@ -4,23 +4,20 @@
 #include <basyx/base/elementcontainer.h>
 #include <basyx/base/elementvector.h>
 #include <basyx/assetadministrationshell.h>
-#include <basyx/asset/assetinformation.h>
+#include <basyx/asset/asset.h>
 
 namespace basyx
 {
 
 // ToDo: replace placeholders
 using ConceptDescription = int;
-//using AssetInformation = int;
 // --------------------------
 
 class Environment
 {
-public:
-   using assetInformationList_t = ElementVector<AssetInformation>;
 private:
    ElementContainer<AssetAdministrationShell> aass;
-   assetInformationList_t assetInformations;
+   ElementVector<Asset> assets;
 public:
    Environment() = default;
 public:
@@ -34,9 +31,9 @@ public:
    ElementContainer<AssetAdministrationShell> & getAssetAdministrationShells() { return this->aass; };
    void setAssetAdministrationShells(ElementContainer<AssetAdministrationShell> aass) { this->aass = aass; };
 
-   const assetInformationList_t & getAssetInformations() const { return this->assetInformations; };
-   assetInformationList_t & getAssetInformations() { return this->assetInformations; };
-   void setViews(assetInformationList_t assetInformations) { this->assetInformations = std::move(assetInformations); };
+   const ElementVector<Asset> & getAssets() const { return this->assets; };
+   ElementVector<Asset> & getAssets() { return this->assets; };
+   void setAssets(ElementVector<Asset> assets) { this->assets = std::move(assets); };
 };
 
 };

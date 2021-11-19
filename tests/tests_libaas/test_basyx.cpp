@@ -376,7 +376,7 @@ TEST_F(BaseTest, Environment)
 		AssetAdministrationShell("aas", "https://admin-shell.io/aas", AssetInformation{ AssetKind::Instance })
 	);
 
-	env.getAssetInformations().emplace_back(AssetInformation{ AssetKind::Type });
+	env.getAssets().emplace_back(Asset("cppTestAsset", basyx::Identifier::Custom("cppTestAsset")));
 }
 
 TEST_F(BaseTest, AssetInfoInAas)
