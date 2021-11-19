@@ -44,12 +44,25 @@ public:
       Identifiable(aas.getIdShort(), std::move(aas.getIdentification())),
       assetInformation(aas.getAssetInformation()) {
       this->submodels.append(aas.getSubmodels());
+
+      if (aas.getSecurity().has_value())
+         this->security = aas.getSecurity().value();
+
+      if (aas.getDerivedFrom().has_value())
+         this->derivedFrom = aas.getDerivedFrom();
    }
 
    AssetAdministrationShell& operator=(const AssetAdministrationShell &aas) {
       this->Identifiable::setIdentification(aas.getIdentification());
       this->getIdShort() = aas.getIdShort();
       this->submodels.append(aas.getSubmodels());
+
+      if (aas.getSecurity().has_value())
+         this->security = aas.getSecurity().value();
+
+      if (aas.getDerivedFrom().has_value())
+         this->derivedFrom = aas.getDerivedFrom();
+
       return *this;
    }
 
