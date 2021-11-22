@@ -39,9 +39,16 @@ private:
 public:
 	template<typename ReferableT>
 	ElementContainer(ReferableT * const owner = nullptr) : owner(owner) {};
-
+	
 	template<typename... T>
 	ElementContainer(T&&... t) : owner(nullptr) { _insert_variadic(std::forward<T>(t)...); };
+
+	ElementContainer(const ElementContainer& other) { this->append(other); };
+	ElementContainer& operator=(const ElementContainer& other) {
+		this->elementList.clear();
+		this->append(other);
+		return *this;
+	};
 
 	template<typename T> ElementContainer(ElementContainer<T>& other) { this->append(other); };
 	template<typename T> ElementContainer& operator=(ElementContainer<T>& other) {
