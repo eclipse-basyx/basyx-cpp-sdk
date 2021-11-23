@@ -7,6 +7,10 @@
 #include <basyx/hassemantics.h>
 #include <basyx/submodelelement/submodelelement.h>
 
+#include <basyx/base/token.h>
+
+#include <basyx/serialization/base/serialization.h>
+
 #include <basyx/serialization/serializable.h>
 
 #include <basyx/base/elementcontainer.h>
@@ -17,6 +21,9 @@
 
 namespace basyx
 {
+
+using namespace basyx::base;
+using namespace basyx::serialization::priv;
 	
 class Submodel : 
    public Identifiable,
@@ -36,7 +43,7 @@ public:
    };
 
    Submodel& operator=(const Submodel &sm) {
-      this->setIdentification(sm.getIdentification());
+      this->Identifiable::setIdentification(sm.getIdentification());
       this->getIdShort() = sm.getIdShort();
       this->submodelElements.append(sm.getSubmodelElements());
       return *this;
@@ -52,6 +59,11 @@ public:
 	const ElementContainer<SubmodelElement> & getSubmodelElements() const { return this->submodelElements; };
 	ElementContainer<SubmodelElement> & getSubmodelElements() { return this->submodelElements; };
 	void setSubmodelElements(ElementContainer<SubmodelElement> elements) { this->submodelElements = std::move(elements); };
+
+   // Identifiable - special purpose
+   void setIdentification(Token<Deserializer> t, Identifier identifier) {
+      this->Identifiable::setIdentification(identifier);
+   }
 };
 
 };
