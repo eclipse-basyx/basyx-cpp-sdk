@@ -9,7 +9,7 @@ using namespace basyx;
 
 using enum_pair_t = std::pair<const char*, ModelTypes>;
 
-static const std::array<enum_pair_t, 29> string_to_enum = 
+static const std::array<enum_pair_t, 31> string_to_enum = 
 {
     std::make_pair("Asset",  ModelTypes::Asset),
     std::make_pair("AssetAdministrationShell", ModelTypes::AssetAdministrationShell),
@@ -34,6 +34,8 @@ static const std::array<enum_pair_t, 29> string_to_enum =
     std::make_pair("RelationshipElement", ModelTypes::RelationshipElement),
     std::make_pair("SubmodelElement", ModelTypes::SubmodelElement),
     std::make_pair("SubmodelElementCollection", ModelTypes::SubmodelElementCollection),
+    std::make_pair("SubmodelElementList", ModelTypes::SubmodelElement),
+    std::make_pair("SubmodelElementStruct", ModelTypes::SubmodelElement),
     std::make_pair("View", ModelTypes::View),
     std::make_pair("GlobalReference", ModelTypes::GlobalReference),
     std::make_pair("FragmentReference", ModelTypes::FragmentReference),

@@ -1,27 +1,19 @@
 #ifndef BASYX_SUBMODEL_ENUMERATIONS_IDENTIFIABLEELEMENTS_H
 #define BASYX_SUBMODEL_ENUMERATIONS_IDENTIFIABLEELEMENTS_H
 
-#include <string>
+#include <basyx/base/basyx_enum_base.h>
 
 namespace basyx {
-namespace submodel {
 
 enum class IdentifiableElements {
     Asset,
     AssetAdministrationShell,
     ConceptDescription,
-    Submodel,
+    Submodel
 };
 
-class IdentifiableElements_
-{
-public:
-    static IdentifiableElements from_string(const std::string & name);
-    static const char * to_string(IdentifiableElements value);
-};
+using IdentifiableElements_ = basyx::basyx_enum_base<IdentifiableElements, 4>;
 
-
-}
 }
 
 #endif /* BASYX_SUBMODEL_ENUMERATIONS_IDENTIFIABLEELEMENTS_H */

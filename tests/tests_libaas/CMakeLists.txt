@@ -18,4 +18,6 @@ target_link_libraries(${PROJECT_NAME}
 	gtest_main
 )
 
+build_source_group()
+
 gtest_discover_tests(${PROJECT_NAME})

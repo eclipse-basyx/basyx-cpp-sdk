@@ -9,6 +9,8 @@
 #include <basyx/asset/assetinformation.h>
 #include <basyx/submodel.h>
 
+#include <basyx/enums/IdentifiableElements.h>
+
 #include <basyx/constraints/qualifier.h>
 #include <basyx/constraints/formula.h>
 
@@ -120,6 +122,19 @@ TEST_F(BaseTest, MultiLangProp)
     ASSERT_EQ(*ls2, "beispiel");
 
     mlp.kind = basyx::ModelingKind::Instance;
+};
+
+TEST_F(BaseTest, Enum)
+{
+	auto none = IdentifiableElements_::from_string("NONE");
+	ASSERT_FALSE(none);
+
+	auto asset = IdentifiableElements_::from_string("Asset");
+	ASSERT_TRUE(asset);
+	ASSERT_EQ(*asset, IdentifiableElements::Asset);
+
+	std::string str = IdentifiableElements_::to_string(IdentifiableElements::AssetAdministrationShell);
+	ASSERT_EQ(str, "AssetAdministrationShell");
 };
 
 TEST_F(BaseTest, HasKind)

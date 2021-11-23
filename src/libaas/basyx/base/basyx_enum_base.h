@@ -1,36 +1,45 @@
 #pragma once
 
-#include <cstdint>
+#include <util/optional/optional.hpp>
+#include <util/string_view/string_view.hpp>
 
 namespace basyx
 {
 
+template<typename EnumType, std::size_t N>
 struct basyx_enum_base
 {
+private:
+	using enum_pair_t = std::pair<const char*, EnumType>;
+	using enum_array_t = std::array<enum_pair_t, N>;
+private:
+	static const enum_array_t string_to_enum;
 public:
-	using val_t = uint32_t;
-	constexpr static val_t uninitialized = -1;
-protected:
-	val_t _val = 0;
-public:
-	constexpr basyx_enum_base() : _val(uninitialized) {};
-	constexpr basyx_enum_base(const val_t _val) : _val(_val) {};
-	constexpr basyx_enum_base(const int _val) : _val(_val) {};
-public:
-	basyx_enum_base(const basyx_enum_base &) = default;
-	constexpr basyx_enum_base& operator=(const basyx_enum_base &) = default;
+	static util::optional<EnumType> from_string(util::string_view name)
+	{
+		auto pair = std::find_if(string_to_enum.begin(), string_to_enum.end(),
+			[&name](const enum_pair_t & pair) {
+			return !name.compare(pair.first);
+		});
 
-	basyx_enum_base(basyx_enum_base &&) = default;
-	constexpr basyx_enum_base& operator=(basyx_enum_base &&) = default;
+		if (pair == string_to_enum.end())
+			return {};
 
-	~basyx_enum_base() = default;
-public:
-	constexpr basyx_enum_base& operator=(val_t val) { this->_val = val; return *this; };
+		return pair->second;
+	};
 
-	template<typename T>
-	constexpr bool operator==(const T t) { return static_cast<const val_t>(t) == this->_val; }
+	static const char * to_string(EnumType value)
+	{
+		auto pair = std::find_if(string_to_enum.begin(), string_to_enum.end(),
+			[value](const enum_pair_t & pair) {
+			return value == pair.second;
+		});
 
-	operator const val_t() const { return this->_val; };
+		if (pair == string_to_enum.end())
+			return nullptr;
+
+		return pair->first;
+	};
 };
 
 };

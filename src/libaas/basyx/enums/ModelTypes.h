@@ -29,6 +29,8 @@ enum class ModelTypes {
     RelationshipElement,
     SubmodelElement,
     SubmodelElementCollection,
+    SubmodelElementList,
+    SubmodelElementStruct,
     View,
     GlobalReference,
     FragmentReference,
