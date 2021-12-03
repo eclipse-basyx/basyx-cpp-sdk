@@ -53,41 +53,47 @@ set(CMAKE_CXX_STANDARD 17)
 ### Detect OS threading library ###
 find_package(Threads)
 
-### spdlog ###
-FetchContent_Declare(
-        spdlog
-        GIT_REPOSITORY https://github.com/gabime/spdlog.git
-        GIT_TAG        v1.x
-)
+if (${FETCHCONTENT_FULLY_DISCONNECTED})
+   find_package(spdlog REQUIRED)
+   find_package(nlohmann_json REQUIRED)
+   find_package(pugixml REQUIRED)
+else()
+   ### spdlog ###
+   FetchContent_Declare(
+           spdlog
+           GIT_REPOSITORY https://github.com/gabime/spdlog.git
+           GIT_TAG        v1.x
+   )
 
-FetchContent_GetProperties(spdlog)
-if (NOT spdlog_POPULATED)
-    FetchContent_Populate(spdlog)
-    add_subdirectory(${spdlog_SOURCE_DIR} ${spdlog_BINARY_DIR})
-endif()
+   FetchContent_GetProperties(spdlog)
+   if (NOT spdlog_POPULATED)
+       FetchContent_Populate(spdlog)
+       add_subdirectory(${spdlog_SOURCE_DIR} ${spdlog_BINARY_DIR})
+   endif()
 
-### nlohmann-json ###
-FetchContent_Declare(
-  json
-  GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
-  GIT_TAG v3.9.1)
+   ### nlohmann-json ###
+   FetchContent_Declare(
+     json
+     GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
+     GIT_TAG v3.9.1)
 
-FetchContent_GetProperties(json)
-if(NOT json_POPULATED)
-  FetchContent_Populate(json)
-  add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
-endif()
+   FetchContent_GetProperties(json)
+   if(NOT json_POPULATED)
+      FetchContent_Populate(json)
+      add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
+   endif()
 
-### pugixml
-FetchContent_Declare(
-  pugixml
-  GIT_REPOSITORY https://github.com/zeux/pugixml
-)
+   ### pugixml
+   FetchContent_Declare(
+      pugixml
+      GIT_REPOSITORY https://github.com/zeux/pugixml
+      )
 
-FetchContent_GetProperties(pugixml)
-if(NOT pugixml_POPULATED)
-  FetchContent_Populate(pugixml)
-  add_subdirectory(${pugixml_SOURCE_DIR} ${pugixml_BINARY_DIR} EXCLUDE_FROM_ALL)
+   FetchContent_GetProperties(pugixml)
+   if(NOT pugixml_POPULATED)
+     FetchContent_Populate(pugixml)
+     add_subdirectory(${pugixml_SOURCE_DIR} ${pugixml_BINARY_DIR} EXCLUDE_FROM_ALL)
+   endif()
 endif()
 
 ### GoogleTest ###
