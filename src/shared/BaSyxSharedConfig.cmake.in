@@ -1,0 +1,11 @@
+include(CMakeFindDependencyMacro)
+
+set(BASYX_SHARED_VERSION_STRING "@PROJECT_VERSION@")
+
+find_dependency(BaSyxUtil)
+find_dependency(BaSyxLog)
+find_dependency(nlohmann_json)
+
+include("${CMAKE_CURRENT_LIST_DIR}/@BASYX_SHARED_LIBRARY_NAME@Targets.cmake")
+
+@PACKAGE_INIT@

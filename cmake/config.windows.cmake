@@ -1,0 +1,3 @@
+add_compile_definitions(WIN32_LEAN_AND_MEAN)
+add_compile_definitions(_CRT_SECURE_NO_WARNINGS)
+add_compile_options(/wd4250)

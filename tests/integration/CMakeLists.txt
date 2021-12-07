@@ -1,0 +1,2 @@
+add_subdirectory(cpp_test_connector)
+add_subdirectory(cpp_test_server)

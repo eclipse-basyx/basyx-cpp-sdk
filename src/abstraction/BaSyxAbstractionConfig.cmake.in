@@ -1,0 +1,11 @@
+include(CMakeFindDependencyMacro)
+
+set(BASYX_ABSTRACTION_VERSION_STRING "@PROJECT_VERSION@")
+
+find_dependency(BaSyxUtil)
+find_dependency(BaSyxLog)
+find_dependency(Threads)
+
+include("${CMAKE_CURRENT_LIST_DIR}/@BASYX_ABSTRACTION_LIBRARY_NAME@Targets.cmake")
+
+@PACKAGE_INIT@

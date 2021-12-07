@@ -1,0 +1,10 @@
+include(CMakeFindDependencyMacro)
+
+set(BASYX_VAB_VERSION_STRING "@PROJECT_VERSION@")
+
+find_dependency(BaSyxShared)
+find_dependency(BaSyxAbstraction)
+
+include("${CMAKE_CURRENT_LIST_DIR}/@BASYX_VAB_LIBRARY_NAME@Targets.cmake")
+
+@PACKAGE_INIT@

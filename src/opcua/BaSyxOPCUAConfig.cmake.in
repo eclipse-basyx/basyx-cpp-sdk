@@ -1,0 +1,12 @@
+include(CMakeFindDependencyMacro)
+
+set(BASYX_AAS_VERSION_STRING "@PROJECT_VERSION@")
+
+find_dependency(BaSyxShared)
+find_dependency(BaSyxAbstraction)
+find_dependency(BaSyxVAB)
+find_dependency(BaSyxSubmodel)
+
+include("${CMAKE_CURRENT_LIST_DIR}/@BASYX_AAS_LIBRARY_NAME@Targets.cmake")
+
+@PACKAGE_INIT@
