@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.13.0)
 
 set(PROJECT_NAME "BaSyx C++ SDK 2.0")
-set(PROJECT_SHORTNAME "BaSyxCpp")
+set(PROJECT_SHORTNAME "BaSyx")
 
 project(${PROJECT_NAME} VERSION "2.0")
 
