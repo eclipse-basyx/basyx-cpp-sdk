@@ -260,7 +260,6 @@ TEST_F(BaseTest, IntPropertyCopy)
 
 TEST_F(BaseTest, StringProperty)
 {
-    spdlog::set_level(spdlog::level::debug);
     Property<std::string> s { "string_prop", "test" };
     auto s2 = s;
 
@@ -272,7 +271,6 @@ TEST_F(BaseTest, StringProperty)
 
 TEST_F(BaseTest, SubmodelElementCollection_3)
 {
-    spdlog::set_level(spdlog::level::info);
     SubmodelElementCollection col1("col1",
         Property<int>("i1", 2),
         Property<float>("f2", 5.0f),
@@ -300,8 +298,6 @@ TEST_F(BaseTest, Submodel)
 
 TEST_F(BaseTest, SubmodelAddElements)
 {
-	spdlog::set_level(spdlog::level::debug);
-
 	using stringProp_t = Property<std::string>;
 
 	Submodel sm("sm1", Identifier::IRI("https://admin-shell.io/cpp#sm1"));
@@ -323,8 +319,6 @@ TEST_F(BaseTest, SubmodelAddElements)
 	auto * elem_2 = sm.getSubmodelElements().get<stringProp_t>("testProperty2");
 	ASSERT_TRUE(elem_2 != nullptr);
 	ASSERT_EQ(*elem_2->get_value(), "Values and values! :O");
-
-	spdlog::set_level(spdlog::level::info);
 }
 
 TEST_F(BaseTest, EntityTest)

@@ -1,10 +1,9 @@
 #ifndef UTIL_OPTIONAL_HPP_
 #define UTIL_OPTIONAL_HPP_
 
+#include <cstdint>
 #include <array>
 #include <exception>
-
-#include <spdlog/spdlog.h>
 
 namespace basyx::util {
 

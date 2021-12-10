@@ -54,23 +54,9 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(Threads)
 
 if (${FETCHCONTENT_FULLY_DISCONNECTED})
-   find_package(spdlog REQUIRED)
    find_package(nlohmann_json REQUIRED)
    find_package(pugixml REQUIRED)
 else()
-   ### spdlog ###
-   FetchContent_Declare(
-           spdlog
-           GIT_REPOSITORY https://github.com/gabime/spdlog.git
-           GIT_TAG        v1.x
-   )
-
-   FetchContent_GetProperties(spdlog)
-   if (NOT spdlog_POPULATED)
-       FetchContent_Populate(spdlog)
-       add_subdirectory(${spdlog_SOURCE_DIR} ${spdlog_BINARY_DIR})
-   endif()
-
    ### nlohmann-json ###
    FetchContent_Declare(
      json
@@ -120,8 +106,6 @@ endif()
 
 add_subdirectory(src/util)
 add_subdirectory(src/libaas)
-add_subdirectory(src/http)
-add_subdirectory(src/cli)
 
 ###############################################
 ###           Test Directory                ###
@@ -130,8 +114,6 @@ add_subdirectory(src/cli)
 if(${BASYX_BUILD_TESTS})
     include( CTest )
     add_subdirectory(tests/tests_libaas)
-    add_subdirectory(tests/tests_misc)
-    add_subdirectory(tests/tests_xml)
 endif()
 
 ###############################################

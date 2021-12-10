@@ -11,9 +11,8 @@ add_library(aas ${SOURCE_FILES} ${HEADER_FILES})
 target_include_directories(aas PUBLIC ${PROJECT_SOURCE_DIR})
 target_link_libraries(aas
 	PUBLIC 
-		nlohmann_json::nlohmann_json
-		spdlog::spdlog
 		BaSyx::util
+		nlohmann_json::nlohmann_json
 		pugixml::pugixml
 )
 
