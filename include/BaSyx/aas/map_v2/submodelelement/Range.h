@@ -36,6 +36,7 @@ public:
     : DataElement(idShort, kind)
   {
     this->map.insertKey("dataTypeDef", ValueDataType::getDataTypeDef());
+    this->map.insertKey("valueType", xsd_types::xsd_type<T>::getDataTypeDef());
   }
 
   Range(basyx::object obj)
