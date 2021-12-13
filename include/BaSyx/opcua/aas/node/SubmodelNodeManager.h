@@ -69,7 +69,7 @@ namespace basyx
                 // Prepare the attributes of the Node
                 auto nsIdx = m_services.getNameSpaceIndex(opcua::shared::Namespaces::BASYX_NS_URI);
 
-                auto smMetaName = aas::ModelTypes_::to_string(aas::ModelTypes::Submodel);
+                auto smMetaName = basyx::aas::ModelTypes_::to_string(basyx::aas::ModelTypes::Submodel);
 
                 auto smDisplayName = std::string(smMetaName) + ":" + t_identifier;
 

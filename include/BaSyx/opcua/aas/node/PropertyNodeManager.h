@@ -68,7 +68,7 @@ namespace basyx
                 // Prepare the attributes of the Node
                 auto nsIdx = m_services.getNameSpaceIndex(opcua::shared::Namespaces::BASYX_NS_URI);
 
-                auto propMetaName = aas::ModelTypes_::to_string(aas::ModelTypes::Property);
+                auto propMetaName = basyx::aas::ModelTypes_::to_string(basyx::aas::ModelTypes::Property);
 
                 auto propDisplayName = std::string(propMetaName) + ":" + t_idShort;
 
