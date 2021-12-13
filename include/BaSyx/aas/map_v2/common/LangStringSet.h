@@ -30,7 +30,7 @@ class LangStringSet :
 public:
 	struct Path {
 		static constexpr char Text[] = "text";
-		static constexpr char Language[] = "language;";
+		static constexpr char Language[] = "language";
 	};
 public:
 	using langStringMap_t = std::unordered_map<std::string, std::string>;
