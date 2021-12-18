@@ -14,7 +14,7 @@
 #include <BaSyx/aas/api_v2/submodelelement/IAnnotatedRelationshipElement.h>
 #include <BaSyx/aas/map_v2/submodelelement/RelationshipElement.h>
 #include <BaSyx/aas/map_v2/submodelelement/DataElement.h>
-#include <BaSyx/aas/map_v2/common/ElementContainer.h>
+#include <BaSyx/aas/map_v2/common/ElementListContainer.h>
 
 namespace basyx {
 namespace aas {
@@ -29,7 +29,7 @@ public:
     static constexpr char Annotation[] = "annotation";
   };
 private:
-  ElementContainer<IDataElement> annotations;
+  ElementListContainer<IDataElement> annotations;
   ModelType<ModelTypes::AnnotatedRelationshipElement> modelType;
 
 public:

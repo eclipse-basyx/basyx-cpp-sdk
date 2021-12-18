@@ -38,11 +38,11 @@ TEST_F(AnnotatedRelationshipElementTest, TestObjectConstructorWithStatements)
   object.insertKey(RelationshipElement::Path::First, TestingObjects::map::testingReference_1().getMap());
   object.insertKey(RelationshipElement::Path::Second, TestingObjects::map::testingReference_2().getMap());
 
-  ElementContainer<DataElement> elementContainer;
+  ElementListContainer<DataElement> elementContainer;
   elementContainer.addElement(util::make_unique<File>(TestingObjects::map::testingFile()));
   elementContainer.addElement(util::make_unique<File>(TestingObjects::map::testingFile(4)));
   elementContainer.addElement(util::make_unique<File>(TestingObjects::map::testingFile(8)));
-  object.insertKey(AnnotatedRelationshipElement::Path::Annotation, elementContainer.getMap());
+  object.insertKey(AnnotatedRelationshipElement::Path::Annotation, elementContainer.getList());
 
   // build from object
   AnnotatedRelationshipElement are{object};
@@ -88,11 +88,11 @@ TEST_F(AnnotatedRelationshipElementTest, TestSubmodelElementFactory)
   object.insertKey(RelationshipElement::Path::First, TestingObjects::map::testingReference_1().getMap());
   object.insertKey(RelationshipElement::Path::Second, TestingObjects::map::testingReference_2().getMap());
 
-  ElementContainer<DataElement> elementContainer;
+  ElementListContainer<DataElement> elementContainer;
   elementContainer.addElement(util::make_unique<File>(TestingObjects::map::testingFile()));
   elementContainer.addElement(util::make_unique<File>(TestingObjects::map::testingFile(4)));
   elementContainer.addElement(util::make_unique<File>(TestingObjects::map::testingFile(8)));
-  object.insertKey(AnnotatedRelationshipElement::Path::Annotation, elementContainer.getMap());
+  object.insertKey(AnnotatedRelationshipElement::Path::Annotation, elementContainer.getList());
 
   ModelType<ModelTypes::AnnotatedRelationshipElement> modelType;
   object.insert(modelType.getMap());

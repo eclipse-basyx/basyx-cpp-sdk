@@ -20,7 +20,7 @@ constexpr char AnnotatedRelationshipElement::Path::Annotation[];
 AnnotatedRelationshipElement::AnnotatedRelationshipElement(const Reference & first, const Reference & second, const std::string & idShort, ModelingKind kind)
   : RelationshipElement(first, second, idShort, kind)
 {
-  this->map.insertKey(Path::Annotation, this->annotations.getMap());
+  this->map.insertKey(Path::Annotation, this->annotations.getList());
   this->map.insert(this->modelType.getMap());
 }
 
@@ -29,13 +29,13 @@ AnnotatedRelationshipElement::AnnotatedRelationshipElement(basyx::object obj)
 {
   if ( not obj.getProperty(Path::Annotation).IsNull() )
   {
-    auto annotation_objects = obj.getProperty(Path::Annotation).Get<object::object_map_t>();
+    auto annotation_objects = obj.getProperty(Path::Annotation).Get<object::object_list_t>();
 
     for ( auto annotation : annotation_objects )
-      this->annotations.addElement(SubmodelElementFactory::CreateDataElement(annotation.second));
+      this->annotations.addElement(SubmodelElementFactory::CreateDataElement(annotation));
   }
 
-  this->map.insertKey(Path::Annotation, this->annotations.getMap());
+  this->map.insertKey(Path::Annotation, this->annotations.getList());
   this->map.insert(this->modelType.getMap());
 }
 

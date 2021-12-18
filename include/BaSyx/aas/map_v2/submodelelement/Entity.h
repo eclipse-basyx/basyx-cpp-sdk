@@ -13,7 +13,7 @@
 
 #include <BaSyx/aas/api_v2/submodelelement/IEntity.h>
 #include <BaSyx/aas/map_v2/submodelelement/SubmodelElement.h>
-#include <BaSyx/aas/map_v2/common/ElementContainer.h>
+#include <BaSyx/aas/map_v2/common/ElementListContainer.h>
 
 namespace basyx {
 namespace aas {
@@ -33,7 +33,7 @@ public:
   };
 
 private:
-  ElementContainer<api::ISubmodelElement> statements;
+  ElementListContainer<api::ISubmodelElement> statements;
   Reference asset;
 
 public:

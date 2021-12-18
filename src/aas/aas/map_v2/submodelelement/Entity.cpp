@@ -24,14 +24,14 @@ Entity::Entity(EntityType entityType, const std::string & idShort, ModelingKind 
   : SubmodelElement(idShort, kind)
 {
   this->map.insertKey(Path::EntityType, EntityType_::to_string(entityType));
-  this->map.insertKey(Path::Statement, statements.getMap());
+  this->map.insertKey(Path::Statement, statements.getList());
 }
 
 Entity::Entity(basyx::object obj)
   : SubmodelElement(obj)
 {
   this->map.insertKey(Path::EntityType, obj.getProperty(Path::EntityType).GetStringContent());
-  this->map.insertKey(Path::Statement, statements.getMap());
+  this->map.insertKey(Path::Statement, statements.getList());
 
   if ( not obj.getProperty(Path::Asset).IsNull() )
   {
@@ -41,10 +41,10 @@ Entity::Entity(basyx::object obj)
 
   if ( not obj.getProperty(Path::Statement).IsNull() )
   {
-    auto obj_statements = obj.getProperty(Path::Statement).Get<object::hash_map_t<object>>();
+    auto obj_statements = obj.getProperty(Path::Statement).Get<basyx::object::object_list_t>();
     for (auto statement : obj_statements)
     {
-      auto new_statement = SubmodelElementFactory::Create(statement.second);
+      auto new_statement = SubmodelElementFactory::Create(statement);
       this->addStatement(std::move(new_statement));
     }
   }
