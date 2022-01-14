@@ -13,6 +13,6 @@ target_sources(${BASYX_UTIL_LIB_SUFFIX}
 )
 
 target_sources(${BASYX_UTIL_LIB_SUFFIX}
-   INTERFACE
+   PRIVATE
    ${HEADER_FILES_ALGORITHM}
 )
