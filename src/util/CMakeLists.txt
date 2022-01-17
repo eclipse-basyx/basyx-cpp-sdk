@@ -8,7 +8,7 @@ set (BASYX_UTIL_LIB_SUFFIX "Util")
 
 set (BASYX_UTIL_LIBRARY_NAME "${PROJECT_SHORTNAME}${BASYX_UTIL_LIB_SUFFIX}")
 
-set (BASYX_UTIL_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
+set (BASYX_UTIL_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_INCLUDENAME}")
 
 add_library(${BASYX_UTIL_LIB_SUFFIX})
 
@@ -26,7 +26,7 @@ target_sources(${BASYX_UTIL_LIB_SUFFIX}
    PRIVATE
 )
 
-add_subdirectory(util)
+add_subdirectory(basyx/util)
 
 target_include_directories(${BASYX_UTIL_LIB_SUFFIX}
    PUBLIC
