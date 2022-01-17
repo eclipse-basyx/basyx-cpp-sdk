@@ -1,8 +1,6 @@
 ########################################
 ###             util                 ###
 ########################################
-include(GNUInstallDirs)
-include(CMakePackageConfigHelpers)
 
 set (BASYX_UTIL_LIB_SUFFIX "Util")
 
