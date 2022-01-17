@@ -193,6 +193,7 @@ target_sources(${BASYX_AAS_LIB_SUFFIX}
         ${BASYX_AAS_INCLUDE_DIR}/map_v2/aas/AssetAdministrationShell.h
         ${BASYX_AAS_INCLUDE_DIR}/map_v2/aas/Asset.h
         ${BASYX_AAS_INCLUDE_DIR}/map_v2/common/ElementContainer.h
+        ${BASYX_AAS_INCLUDE_DIR}/map_v2/common/ElementListContainer.h
         ${BASYX_AAS_INCLUDE_DIR}/map_v2/common/SubmodelContainer.h
         ${BASYX_AAS_INCLUDE_DIR}/map_v2/common/ElementFactory.h
         ${BASYX_AAS_INCLUDE_DIR}/map_v2/common/LangStringSet.h

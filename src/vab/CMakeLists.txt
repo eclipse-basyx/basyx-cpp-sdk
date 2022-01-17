@@ -35,6 +35,7 @@ target_sources(${BASYX_VAB_LIB_SUFFIX}
         ${CMAKE_CURRENT_SOURCE_DIR}/vab/provider/VABModelProvider.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/vab/provider/native/frame/BaSyxNativeFrameProcessor.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/vab/ElementMap.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/vab/ElementList.cpp
 )
 
 
@@ -51,6 +52,7 @@ target_sources(${BASYX_VAB_LIB_SUFFIX}
         ${BASYX_VAB_INCLUDE_DIR}/core/util/VABPath.h
         ${BASYX_VAB_INCLUDE_DIR}/core/VABConnectionManager.h
         ${BASYX_VAB_INCLUDE_DIR}/ElementMap.h
+        ${BASYX_VAB_INCLUDE_DIR}/ElementList.h
         ${BASYX_VAB_INCLUDE_DIR}/provider/hashmap/VABHashmapProvider.h
         ${BASYX_VAB_INCLUDE_DIR}/provider/IVABElementHandler.h
         ${BASYX_VAB_INCLUDE_DIR}/provider/native/frame/BaSyxNativeFrameHelper.h

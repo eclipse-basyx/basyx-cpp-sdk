@@ -11,6 +11,7 @@
 #include <gtest/gtest.h>
 
 #include <BaSyx/aas/map_v2/common/ElementContainer.h>
+#include <BaSyx/aas/map_v2/common/ElementListContainer.h>
 #include <BaSyx/aas/simple/common/ElementContainer.h>
 #include <BaSyx/aas/map_v2/submodelelement/SubmodelElement.h>
 #include <BaSyx/aas/map_v2/submodelelement/property/Property.h>
@@ -20,7 +21,11 @@ using namespace basyx::aas;
 using namespace basyx::aas::map;
 using namespace basyx::aas::api;
 
-using ImplTypes = ::testing::Types<map::ElementContainer<ISubmodelElement>, simple::ElementContainer<ISubmodelElement>>;
+using ImplTypes = ::testing::Types<
+    map::ElementContainer<ISubmodelElement>,
+    map::ElementListContainer<ISubmodelElement>,
+    simple::ElementContainer<ISubmodelElement>
+	>;
 
 template<class Impl>
 class ElementContainerTest : public ::testing::Test {

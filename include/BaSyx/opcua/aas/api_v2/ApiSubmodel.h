@@ -75,7 +75,7 @@ namespace basyx
                 std::string verVal = t_sm.getAdministrativeInformation().getVersion() ? *t_sm.getAdministrativeInformation().getVersion() : std::string();
                 std::string revVal = t_sm.getAdministrativeInformation().getRevision() ? *t_sm.getAdministrativeInformation().getRevision() : std::string();
                 std::string idVal = t_sm.getIdentification().getId();
-                std::string idTypeVal = aas::KeyType_::to_string(t_sm.getIdentification().getIdType());
+                std::string idTypeVal = basyx::aas::KeyType_::to_string(t_sm.getIdentification().getIdType());
 
                 /* Check if Submodel is already existing, if so delete it (UPDATE semantics) */
                 status = m_smNode->retrieve(t_sm.getIdShort(), smOutNode);
@@ -145,9 +145,9 @@ namespace basyx
 
                 CHECK_STATUS_AND_RETURN_NULL(status);
 
-                auto sm = util::make_unique<Submodel>(idShort, Identifier_t(aas::KeyType_::from_string(idTypeVal), idVal));
+                auto sm = util::make_unique<Submodel>(idShort, Identifier_t(basyx::aas::KeyType_::from_string(idTypeVal), idVal));
 
-                sm->setAdministrativeInformation(aas::map::AdministrativeInformation(admVer, admRev));
+                sm->setAdministrativeInformation(basyx::aas::map::AdministrativeInformation(admVer, admRev));
 
                 // Add SubmodelElements
                 addPropertiesFromOpcua(*sm.get());

@@ -37,10 +37,10 @@ TEST_F(EntityTest, TestObjectConstructorWithStatements)
   auto object = TestingObjects::object::testingSubmodelElement();
   object.insertKey(Entity::Path::EntityType, EntityType_::to_string(EntityType::SelfManagedEntity));
 
-  ElementContainer<api::ISubmodelElement> statements;
+  ElementListContainer<api::ISubmodelElement> statements;
   statements.addElement(util::make_unique<File>(TestingObjects::map::testingFile()));
   statements.addElement(util::make_unique<File>(TestingObjects::map::testingFile(1)));
-  object.insertKey(Entity::Path::Statement, statements.getMap());
+  object.insertKey(Entity::Path::Statement, statements.getList());
 
   object.insertKey(Entity::Path::Asset, TestingObjects::map::testingReference_1().getMap());
 
@@ -87,10 +87,10 @@ TEST_F(EntityTest, TestSubmodelElementFactory)
   ModelType<ModelTypes::Entity> modelType;
   object.insert(modelType.getMap());
 
-  ElementContainer<api::ISubmodelElement> statements;
+  ElementListContainer<api::ISubmodelElement> statements;
   statements.addElement(util::make_unique<File>(TestingObjects::map::testingFile()));
   statements.addElement(util::make_unique<File>(TestingObjects::map::testingFile(1)));
-  object.insertKey(Entity::Path::Statement, statements.getMap());
+  object.insertKey(Entity::Path::Statement, statements.getList());
 
   object.insertKey(Entity::Path::Asset, TestingObjects::map::testingReference_1().getMap());
 

@@ -75,7 +75,7 @@ namespace basyx
                 std::string verVal = t_aas.getAdministrativeInformation().getVersion() ? *t_aas.getAdministrativeInformation().getVersion() : std::string();
                 std::string revVal = t_aas.getAdministrativeInformation().getRevision() ? *t_aas.getAdministrativeInformation().getRevision() : std::string();
                 std::string idVal = t_aas.getIdentification().getId();
-                std::string idTypeVal = aas::KeyType_::to_string(t_aas.getIdentification().getIdType());
+                std::string idTypeVal = basyx::aas::KeyType_::to_string(t_aas.getIdentification().getIdType());
 
 
                 //Check if AAS is already existing, if so delete it (UPDATE semantics)
@@ -168,11 +168,11 @@ namespace basyx
 
                 // TODO : Asset has to be handled
                 auto aas = util::make_unique<AssetAdministrationShell_t>(
-                    aasIdShort, Identifier_t(aas::KeyType_::from_string(idTypeVal), idVal),
+                    aasIdShort, Identifier_t(basyx::aas::KeyType_::from_string(idTypeVal), idVal),
                     Asset_t(std::string(), Identifier_t::Custom(std::string()))
                 );
 
-                aas->setAdministrativeInformation(aas::map::AdministrativeInformation(admVer, admRev));
+                aas->setAdministrativeInformation(basyx::aas::map::AdministrativeInformation(admVer, admRev));
 
                 auto submodels = getAllSubmodels(idVal);
 
