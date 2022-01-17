@@ -1,7 +1,7 @@
 #pragma once
 
-#include <util/string_view/basic_string_view.hpp>
-#include <util/optional/optional.hpp>
+#include <basyx/util/string_view/basic_string_view.hpp>
+#include <basyx/util/optional/optional.hpp>
 
 
 namespace basyx::util::algorithm

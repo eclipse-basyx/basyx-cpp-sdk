@@ -2,9 +2,9 @@
 
 #include <basyx/reference.h>
 
-#include <util/optional/optional.hpp>
-#include <util/string_view/string_view.hpp>
-#include <util/container/container.hpp>
+#include <basyx/util/optional/optional.hpp>
+#include <basyx/util/string_view/string_view.hpp>
+#include <basyx/util/container/container.hpp>
 
 #include <basyx/referable.h>
 #include <basyx/hassemantics.h>

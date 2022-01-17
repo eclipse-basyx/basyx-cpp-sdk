@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
-#include <util/string_view/string_view.hpp>
-#include <util/algorithm/string.hpp>
+#include <basyx/util/string_view/string_view.hpp>
+#include <basyx/util/algorithm/string.hpp>
 
 using namespace basyx;
 

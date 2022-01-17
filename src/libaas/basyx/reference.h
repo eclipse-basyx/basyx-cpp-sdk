@@ -2,7 +2,7 @@
 
 #include <basyx/key.h>
 
-#include <util/optional/optional.hpp>
+#include <basyx/util/optional/optional.hpp>
 
 #include <basyx/referable.h>
 

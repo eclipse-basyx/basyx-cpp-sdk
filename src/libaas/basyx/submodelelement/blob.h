@@ -4,7 +4,7 @@
 #include <basyx/modeltype.h>
 #include <basyx/submodelelement/dataelement.h>
 
-#include <util/string_view/string_view.hpp>
+#include <basyx/util/string_view/string_view.hpp>
 
 #include <basyx/serialization/serializable.h>
 

@@ -6,7 +6,7 @@
 
 #include <algorithm>
 
-#include <util/string_view/basic_string_view.hpp>
+#include <basyx/util/string_view/basic_string_view.hpp>
 
 namespace basyx::util {
 

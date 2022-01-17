@@ -8,7 +8,7 @@
 
 #include <basyx/enums/AssetKind.h>
 
-#include <util/optional/optional.hpp>
+#include <basyx/util/optional/optional.hpp>
 
 namespace basyx
 {

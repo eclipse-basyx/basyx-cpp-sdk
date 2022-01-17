@@ -8,7 +8,7 @@
 #include <basyx/hassemantics.h>
 #include <basyx/reference.h>
 
-#include <util/optional/optional.hpp>
+#include <basyx/util/optional/optional.hpp>
 
 namespace basyx
 {

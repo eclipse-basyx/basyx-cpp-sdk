@@ -7,7 +7,7 @@
 
 #include <basyx/modeltype.h>
 
-#include <util/string_view/string_view.hpp>
+#include <basyx/util/string_view/string_view.hpp>
 
 #include <string>
 
