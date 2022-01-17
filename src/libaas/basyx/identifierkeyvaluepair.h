@@ -3,8 +3,8 @@
 #include <basyx/reference.h>
 #include <basyx/hassemantics.h>
 
-#include <util/optional/optional.hpp>
-#include <util/string_view/string_view.hpp>
+#include <basyx/util/optional/optional.hpp>
+#include <basyx/util/string_view/string_view.hpp>
 
 #include <string>
 

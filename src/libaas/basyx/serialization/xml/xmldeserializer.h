@@ -4,7 +4,7 @@
 #include <string>
 #include <functional>
 
-#include <util/string_view/string_view.hpp>
+#include <basyx/util/string_view/string_view.hpp>
 
 #include <basyx/serialization/base/serialization.h>
 

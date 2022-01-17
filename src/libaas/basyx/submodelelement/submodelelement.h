@@ -8,7 +8,7 @@
 #include <basyx/modeltype.h>
 #include <basyx/serialization/serializable_base.h>
 
-#include <util/string_view/string_view.hpp>
+#include <basyx/util/string_view/string_view.hpp>
 
 #include <string>
 

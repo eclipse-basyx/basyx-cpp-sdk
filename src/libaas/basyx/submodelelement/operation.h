@@ -8,8 +8,8 @@
 
 #include <basyx/modeltype.h>
 
-#include <util/string_view/string_view.hpp>
-#include <util/container/container.hpp>
+#include <basyx/util/string_view/string_view.hpp>
+#include <basyx/util/container/container.hpp>
 
 #include <functional>
 #include <string>
