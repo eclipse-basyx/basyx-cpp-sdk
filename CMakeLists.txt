@@ -11,6 +11,8 @@ project(${PROJECT_NAME} VERSION "2.0")
 
 ### CMake settings ###
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
 include(build_source_group)
 include(diagnostics_print)
 include(enable_clang_format)
