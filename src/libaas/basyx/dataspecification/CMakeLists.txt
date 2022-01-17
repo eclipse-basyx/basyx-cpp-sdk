@@ -1,0 +1,28 @@
+
+SET(SOURCE_FILES_DATASPECIFICATION
+   ${CMAKE_CURRENT_SOURCE_DIR}/DataSpecificationContent.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/DataSpecification.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/DataSpecificationIEC61360.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/DataSpecificationPhysicalUnit.cpp
+   ${CMAKE_CURRENT_SOURCE_DIR}/ValueList.cpp
+)
+
+SET(HEADER_FILES_DATASPECIFICATION
+   ${CMAKE_CURRENT_SOURCE_DIR}/DataSpecificationContent.h
+   ${CMAKE_CURRENT_SOURCE_DIR}/DataSpecification.h
+   ${CMAKE_CURRENT_SOURCE_DIR}/DataSpecificationIEC61360.h
+   ${CMAKE_CURRENT_SOURCE_DIR}/DataSpecificationPhysicalUnit.h
+   ${CMAKE_CURRENT_SOURCE_DIR}/ValueList.h
+   ${CMAKE_CURRENT_SOURCE_DIR}/ValueReferencePair.h
+)
+
+###
+target_sources(${BASYX_AAS_LIB_SUFFIX}
+   PRIVATE
+   ${SOURCE_FILES_DATASPECIFICATION}
+)
+
+target_sources(${BASYX_AAS_LIB_SUFFIX}
+   INTERFACE
+   ${HEADER_FILES_DATASPECIFICATION}
+)

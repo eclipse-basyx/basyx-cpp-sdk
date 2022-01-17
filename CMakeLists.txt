@@ -4,7 +4,8 @@
 cmake_minimum_required(VERSION 3.13.0)
 
 set(PROJECT_NAME "BaSyx C++ SDK 2.0")
-set(PROJECT_SHORTNAME "BaSyxCpp")
+set(PROJECT_SHORTNAME "BaSyx")
+set(PROJECT_INCLUDENAME "basyx")
 
 project(${PROJECT_NAME} VERSION "2.0")
 
@@ -32,6 +33,10 @@ if(NOT BASYX_IS_SUBMODULE)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+set(BASYX_INSTALL_SDK_DEFAULT ON)
+else()
+set(BASYX_INSTALL_SDK_DEFAULT OFF)
 endif()
 
 ### BaSyx directories ###
@@ -42,6 +47,7 @@ set(BASYX_TEST_DIR    "${CMAKE_CURRENT_SOURCE_DIR}/tests")
 ### Build options ###
 set(BASYX_BUILD_TESTS ${BASYX_BUILD_TESTS_DEFAULT} CACHE BOOL "Build unit tests")
 option(BASYX_VERBOSE_CMAKE_OUTPUT "Show detailed CMake output" ON)
+set(BASYX_INSTALL_SDK ${BASYX_INSTALL_SDK_DEFAULT} CACHE BOOL "Create install instructions for BaSyx SDK")
 
 ### Compiler settings ###
 set(CMAKE_CXX_STANDARD 17)
