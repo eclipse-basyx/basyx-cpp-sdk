@@ -45,6 +45,6 @@ target_sources(${BASYX_AAS_LIB_SUFFIX}
 )
 
 target_sources(${BASYX_AAS_LIB_SUFFIX}
-   INTERFACE
+   PRIVATE
    ${HEADER_FILES_SUBMODELELEMENT}
 )
