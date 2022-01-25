@@ -1,4 +1,4 @@
-# Eclipse BaSyx Java SDK
+# Eclipse BaSyx C++ SDK
 [![BaSyx Logo](https://www.eclipse.org/basyx/img/basyxlogo.png)](https://www.eclipse.org/basyx/)
 
 The Eclipse BaSyx C++ SDK is part of the [Eclipse BaSyx middleware](https://www.eclipse.org/basyx/). The SDK has been created within the [BaSys](https://www.basys40.de/) project.
