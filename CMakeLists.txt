@@ -86,7 +86,7 @@ else()
    FetchContent_GetProperties(pugixml)
    if(NOT pugixml_POPULATED)
      FetchContent_Populate(pugixml)
-     add_subdirectory(${pugixml_SOURCE_DIR} ${pugixml_BINARY_DIR} EXCLUDE_FROM_ALL)
+     add_subdirectory(${pugixml_SOURCE_DIR} ${pugixml_BINARY_DIR})
    endif()
 endif()
 
