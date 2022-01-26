@@ -67,15 +67,21 @@ if (${FETCHCONTENT_FULLY_DISCONNECTED})
 else()
    ### nlohmann-json ###
    FetchContent_Declare(
-     json
-     GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
-     GIT_TAG v3.9.1)
+     nlohmann_json
+     GIT_REPOSITORY https://github.com/nlohmann/json
+     GIT_TAG v3.10.5
+     GIT_SHALLOW TRUE)
 
-   FetchContent_GetProperties(json)
-   if(NOT json_POPULATED)
-      FetchContent_Populate(json)
-      add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
+   if(${BASYX_INSTALL_SDK})
+     set(JSON_Install ON)
    endif()
+
+   FetchContent_GetProperties(nlohmann_json)
+   if(NOT nlohmann_json_POPULATED)
+      FetchContent_Populate(nlohmann_json)
+      add_subdirectory(${nlohmann_json_SOURCE_DIR} ${nlohmann_json_BINARY_DIR})
+   endif()
+
 
    ### pugixml
    FetchContent_Declare(
