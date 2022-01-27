@@ -10,12 +10,12 @@ SET(HEADER_FILES_ASSET
 )
 
 ###
-target_sources(${BASYX_AAS_LIB_SUFFIX}
+target_sources(${BASYX_AAS_LIB_SHORTNAME}
    PRIVATE
    ${SOURCE_FILES_ASSET}
 )
 
-target_sources(${BASYX_AAS_LIB_SUFFIX}
+target_sources(${BASYX_AAS_LIB_SHORTNAME}
    PRIVATE
    ${HEADER_FILES_ASSET}
 )
