@@ -2,45 +2,45 @@
 ###               AAS                ###
 ########################################
 
-set (BASYX_AAS_LIB_SUFFIX "AAS")
+set (BASYX_AAS_LIB_SHORTNAME "AAS")
 
-set (BASYX_AAS_LIBRARY_NAME "${PROJECT_SHORTNAME}${BASYX_AAS_LIB_SUFFIX}")
+set (BASYX_AAS_LIBRARY_NAME "${PROJECT_SHORTNAME}${BASYX_AAS_LIB_SHORTNAME}")
 
 set (BASYX_AAS_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
-add_library(${BASYX_AAS_LIB_SUFFIX})
+add_library(${BASYX_AAS_LIB_SHORTNAME})
 
-set_target_properties(${BASYX_AAS_LIB_SUFFIX}
+set_target_properties(${BASYX_AAS_LIB_SHORTNAME}
    PROPERTIES VERSION ${PROJECT_VERSION}
 )
-#set_target_properties(${BASYX_AAS_LIB_SUFFIX}
+#set_target_properties(${BASYX_AAS_LIB_SHORTNAME}
 #   PROPERTIES SOVERSION ${BASYX_PACKAGE_VERSION_MAJOR}
 #)
-set_target_properties(${BASYX_AAS_LIB_SUFFIX}
+set_target_properties(${BASYX_AAS_LIB_SHORTNAME}
    PROPERTIES PREFIX "${CMAKE_STATIC_LIBRARY_PREFIX}${PROJECT_SHORTNAME}"
 )
 
-target_sources(${BASYX_AAS_LIB_SUFFIX}
+target_sources(${BASYX_AAS_LIB_SHORTNAME}
    PRIVATE
 )
 
 add_subdirectory(basyx)
 
-target_include_directories(${BASYX_AAS_LIB_SUFFIX}
+target_include_directories(${BASYX_AAS_LIB_SHORTNAME}
    PUBLIC
    $<BUILD_INTERFACE:${BASYX_AAS_INCLUDE_DIR}>
    $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include>
 )
 
-target_link_libraries(${BASYX_AAS_LIB_SUFFIX}
+target_link_libraries(${BASYX_AAS_LIB_SHORTNAME}
    PUBLIC
    BaSyx::libutil
    nlohmann_json::nlohmann_json
    pugixml::pugixml
 )
 
-add_library(BaSyx::libaas ALIAS ${BASYX_AAS_LIB_SUFFIX})
-add_library(${PROJECT_SHORTNAME}::${BASYX_AAS_LIB_SUFFIX} ALIAS ${BASYX_AAS_LIB_SUFFIX})
+add_library(BaSyx::libaas ALIAS ${BASYX_AAS_LIB_SHORTNAME})
+add_library(${PROJECT_SHORTNAME}::${BASYX_AAS_LIB_SHORTNAME} ALIAS ${BASYX_AAS_LIB_SHORTNAME})
 
 build_source_group()
 
@@ -58,14 +58,14 @@ install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${BASYX_AAS_LIBRARY_NAME}Config.cmake
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${BASYX_AAS_LIBRARY_NAME}
 )
 
-install(EXPORT ${BASYX_AAS_LIB_SUFFIX}Targets
+install(EXPORT ${BASYX_AAS_LIB_SHORTNAME}Targets
         NAMESPACE ${PROJECT_SHORTNAME}::
         FILE ${BASYX_AAS_LIBRARY_NAME}Targets.cmake
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${BASYX_AAS_LIBRARY_NAME}
 )
 
-install(TARGETS ${BASYX_AAS_LIB_SUFFIX}
-        EXPORT ${BASYX_AAS_LIB_SUFFIX}Targets
+install(TARGETS ${BASYX_AAS_LIB_SHORTNAME}
+        EXPORT ${BASYX_AAS_LIB_SHORTNAME}Targets
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
@@ -78,4 +78,4 @@ install(DIRECTORY "${BASYX_AAS_INCLUDE_DIR}/${PROJECT_INCLUDENAME}"
 )
 endif()
 
-diagnostics_print(${BASYX_AAS_LIB_SUFFIX})
+diagnostics_print(${BASYX_AAS_LIB_SHORTNAME})

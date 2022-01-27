@@ -35,12 +35,12 @@ SET(HEADER_FILES_BASYX
    ${CMAKE_CURRENT_SOURCE_DIR}/submodel.h
 )
 
-target_sources(${BASYX_AAS_LIB_SUFFIX}
+target_sources(${BASYX_AAS_LIB_SHORTNAME}
    PRIVATE
    ${SOURCE_FILES_BASYX}
 )
 
-target_sources(${BASYX_AAS_LIB_SUFFIX}
+target_sources(${BASYX_AAS_LIB_SHORTNAME}
    PRIVATE
    ${HEADER_FILES_BASYX}
 )
