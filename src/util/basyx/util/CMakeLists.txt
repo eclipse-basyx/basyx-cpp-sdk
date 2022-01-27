@@ -11,12 +11,12 @@ SET(HEADER_FILES_UTIL
    ${CMAKE_CURRENT_SOURCE_DIR}/string_view/string_view.hpp
 )
 
-target_sources(${BASYX_UTIL_LIB_SUFFIX}
+target_sources(${BASYX_UTIL_LIB_SHORTNAME}
    PRIVATE
    ${SOURCE_FILES_UTIL}
 )
 
-target_sources(${BASYX_UTIL_LIB_SUFFIX}
+target_sources(${BASYX_UTIL_LIB_SHORTNAME}
    PRIVATE
    ${HEADER_FILES_UTIL}
 )
