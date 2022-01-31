@@ -23,33 +23,37 @@ Blob::Blob(const std::string & idShort, const std::string & mimeType)
   , DataElement(idShort)
 {
 	this->map.insertKey(Path::mimeType, mimeType);
-	this->map.insertKey(Path::value, basyx::object::make_list<char>());
+	this->map.insertKey(Path::value, std::string());
 }
 
 Blob::Blob(basyx::object obj)
   : vab::ElementMap{}
   , DataElement{obj}
 {
-  this->map.insertKey(Path::value, obj.getProperty(Path::value).Get<object::list_t<char>&>());
+  auto valueb64 = obj.getProperty(Path::value).Get<std::string&>();
+  auto valueRaw = base64_decode(std::string(valueb64.begin(), valueb64.end()));
+  this->rawData = BlobType(valueRaw.begin(), valueRaw.end());
+  this->map.insertKey(Path::value, std::move(valueb64));
   this->map.insertKey(Path::mimeType, obj.getProperty(Path::mimeType).GetStringContent());
 }
 
 const Blob::BlobType & Blob::getValue() const
 {
-	auto & value = this->map.getProperty(Path::value).Get<std::vector<char>&>();
-	return value;
+	return this->rawData;
 }
 
 void Blob::setValue(const Blob::BlobType & value)
 {
-	auto & blob = this->map.getProperty(Path::value).Get<std::vector<char>&>();
-	blob = value;
+	auto & blob = this->map.getProperty(Path::value).Get<std::string&>();
+  this->rawData = value;
+	blob = base64_encode(std::string(this->rawData.begin(), this->rawData.end()));
 }
 
 void Blob::setValue(Blob::BlobType && value)
 {
-	auto & blob = this->map.getProperty(Path::value).Get<std::vector<char>&>();
-	blob = std::move(value);
+	auto & blob = this->map.getProperty(Path::value).Get<std::string&>();
+  this->rawData = std::move(value);
+	blob = base64_encode(std::string(this->rawData.begin(), this->rawData.end()));
 }
 
 const std::string Blob::getMimeType() const

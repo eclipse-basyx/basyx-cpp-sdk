@@ -13,6 +13,7 @@
 #include <BaSyx/aas/map_v2/submodelelement/SubmodelElement.h>
 #include <BaSyx/aas/map_v2/submodelelement/file/Blob.h>
 #include "support/TestingObjects.h"
+#include <base64.h>
 
 using namespace basyx::aas;
 using namespace basyx::aas::map;
@@ -29,7 +30,8 @@ TEST_F(BlobTest, TestObjectConstructor)
 
   object.insertKey(Blob::Path::mimeType, "Mime type");
   object::list_t<char> blobtype{'a', 'b', 'c', 'd', 'e'};
-  object.insertKey(Blob::Path::value, blobtype);
+  std::string blobBase64 = base64_encode(std::string(blobtype.begin(), blobtype.end()));
+  object.insertKey(Blob::Path::value, blobBase64);
 
   // build from object
   Blob blob{object};

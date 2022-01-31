@@ -290,6 +290,7 @@ target_link_libraries(${BASYX_AAS_LIB_SUFFIX}
     PUBLIC
         BaSyx::Shared
         BaSyx::VAB
+        cppbase64::cppbase64
 )
 
 add_library(basyx::aas ALIAS ${BASYX_AAS_LIB_SUFFIX})
