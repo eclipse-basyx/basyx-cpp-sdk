@@ -15,6 +15,8 @@
 #include <BaSyx/aas/map_v2/submodelelement/DataElement.h>
 #include <BaSyx/aas/map_v2/common/ModelType.h>
 
+#include <base64.h>
+
 #include <vector>
 #include <cstdint>
 
@@ -36,7 +38,7 @@ public:
 
 private:
 	MimeType mimeType;
-
+    BlobType rawData;
 public:
 	Blob(const std::string & idShort, const std::string & mimeType);
 	Blob(basyx::object);
