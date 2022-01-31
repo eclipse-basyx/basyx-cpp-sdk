@@ -137,6 +137,7 @@ if(${BASYX_MODULE_OPCUA})
 	add_library(lib::open62541 ALIAS open62541)
 endif()
 
+add_subdirectory(lib/cppbase64)
 ###############################################
 ###           Source Directory              ###
 ###############################################
