@@ -17,65 +17,83 @@
 namespace tests_opcua_api_property
 {
     using namespace basyx::opcua;
-    using namespace tests_opcua_setup;
     using namespace basyx::aas;
+    using namespace test_opcua_setup;
 
     class ApiProperty_test : public ::testing::Test
     {
-
-    public:
+    protected:
         std::unique_ptr<OPCUATestSetup> m_opcuaSetup;
-        const int serverPort = 6006;
+        std::thread m_serverThread;
+        std::unique_ptr<map::Property<int32_t>> prop_int32 = PROPI32();
+        std::unique_ptr<basyx::opcua::aas::ApiProperty<Client>> api;
     public:
         virtual void SetUp()
         {
-            m_opcuaSetup = util::make_unique<OPCUATestSetup>(serverPort);
+            using namespace basyx::opcua;
+            m_opcuaSetup = util::make_unique<OPCUATestSetup>();
+            m_serverThread = std::thread{ [this]() {m_opcuaSetup->getServer().run(); } };
+            auto nsIdx = m_opcuaSetup->getServer().getNamespaceIndex(shared::Namespaces::BASYX_NS_URI);
+            aas::metamodel::AASMetamodel::define(nsIdx, m_opcuaSetup->getServer());
+            m_opcuaSetup->getClient().connect();
+
+            api = util::make_unique<aas::ApiProperty<Client>>(m_opcuaSetup->getClient(), NodeId::numeric(UA_NS0ID_OBJECTSFOLDER));
         }
+
         virtual void TearDown()
         {
+            m_opcuaSetup->getClient().disconnect();
             m_opcuaSetup->getServer().abort();
+            m_serverThread.join();
         }
 
-        std::unique_ptr<map::Property<int32_t>> PROPI32()
-        {
-            auto prop_int32 = util::make_unique<map::Property<int32_t>>("foo_prop_i32");
-
-            std::string some_catogory("some_category");
-
-            prop_int32->setCategory("some_category");
-            prop_int32->setValue(33);
-
-            return std::move(prop_int32);
-        }
+        std::unique_ptr<map::Property<int32_t>> PROPI32();
     };
 
-    TEST_F(ApiProperty_test, api)
+    TEST_F(ApiProperty_test, apiGetSetValue)
     {
-        using namespace basyx::opcua::aas;
-
-        auto prop_int32 = PROPI32();
-
-        ApiProperty<Client> api(m_opcuaSetup->getClient(), NodeId::numeric(UA_NS0ID_OBJECTSFOLDER));
-        ASSERT_EQ(UA_STATUSCODE_GOOD, api.createProperty(*prop_int32.get()));
-        // Get and Set Value
         int32_t vali32;
-        ASSERT_EQ(api.getValue("foo_prop_i32", vali32), UA_STATUSCODE_GOOD);
+        ASSERT_EQ(UA_STATUSCODE_GOOD, api->createProperty(*prop_int32.get()));
+        ASSERT_EQ(api->getValue("foo_prop_i32", vali32), UA_STATUSCODE_GOOD);
         ASSERT_EQ(vali32, 33);
-        ASSERT_EQ(api.setValue("foo_prop_i32", 3142), UA_STATUSCODE_GOOD);
-        ASSERT_EQ(api.getValue("foo_prop_i32", vali32), UA_STATUSCODE_GOOD);
+        ASSERT_EQ(api->setValue("foo_prop_i32", 3142), UA_STATUSCODE_GOOD);
+        ASSERT_EQ(api->getValue("foo_prop_i32", vali32), UA_STATUSCODE_GOOD);
         ASSERT_EQ(vali32, 3142);
-        // Get and Set ValueType
+        ASSERT_EQ(UA_STATUSCODE_GOOD, api->deleteProperty("foo_prop_i32"));
+    }
+
+    TEST_F(ApiProperty_test, apiGetSetValueType)
+    {
         std::string otherAttr;
-        ASSERT_EQ(api.getValueType("foo_prop_i32", otherAttr), UA_STATUSCODE_GOOD);
+        ASSERT_EQ(UA_STATUSCODE_GOOD, api->createProperty(*prop_int32.get()));
+        ASSERT_EQ(api->getValueType("foo_prop_i32", otherAttr), UA_STATUSCODE_GOOD);
         ASSERT_EQ(otherAttr, "int");
-        ASSERT_EQ(api.setValueType("foo_prop_i32", "integer"), UA_STATUSCODE_GOOD);
-        ASSERT_EQ(api.getValueType("foo_prop_i32", otherAttr), UA_STATUSCODE_GOOD);
+        ASSERT_EQ(api->setValueType("foo_prop_i32", "integer"), UA_STATUSCODE_GOOD);
+        ASSERT_EQ(api->getValueType("foo_prop_i32", otherAttr), UA_STATUSCODE_GOOD);
         ASSERT_EQ(otherAttr, "integer");
-        // Get and Set Category
-        ASSERT_EQ(api.getCategory("foo_prop_i32", otherAttr), UA_STATUSCODE_GOOD);
-        ASSERT_EQ(otherAttr, "some_category");
-        ASSERT_EQ(api.setCategory("foo_prop_i32", "some category 2"), UA_STATUSCODE_GOOD);
-        ASSERT_EQ(api.getCategory("foo_prop_i32", otherAttr), UA_STATUSCODE_GOOD);
-        ASSERT_EQ(otherAttr, "some category 2");
+        ASSERT_EQ(UA_STATUSCODE_GOOD, api->deleteProperty("foo_prop_i32"));
+    }
+
+    TEST_F(ApiProperty_test, apiGetSetCategory)
+    {
+        std::string category;
+        ASSERT_EQ(UA_STATUSCODE_GOOD, api->createProperty(*prop_int32.get()));
+        ASSERT_EQ(api->getCategory("foo_prop_i32", category), UA_STATUSCODE_GOOD);
+        ASSERT_EQ(category, "some_category");
+        ASSERT_EQ(api->setCategory("foo_prop_i32", "some category 2"), UA_STATUSCODE_GOOD);
+        ASSERT_EQ(api->getCategory("foo_prop_i32", category), UA_STATUSCODE_GOOD);
+        ASSERT_EQ(category, "some category 2");
+        ASSERT_EQ(UA_STATUSCODE_GOOD, api->deleteProperty("foo_prop_i32"));
+    }
+
+    std::unique_ptr<map::Property<int32_t>> ApiProperty_test::PROPI32()
+    {
+        auto prop_int32 = util::make_unique<map::Property<int32_t>>("foo_prop_i32");
+
+        std::string some_catogory("some_category");
+        prop_int32->setCategory("some_category");
+        prop_int32->setValue(33);
+
+        return std::move(prop_int32);
     }
 }

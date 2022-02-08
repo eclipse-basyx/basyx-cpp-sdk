@@ -36,37 +36,32 @@ namespace tests_opcua_model_provider_leg
     using namespace basyx::aas;
     using namespace basyx::opcua::provider;
 
-    void createCNCMachineInstance();
-
     class OPCUAModelProviderLegacyModel : public ::testing::Test
     {
-    public:
+    protected:
+        const char* endpoint = "opc.tcp://localhost:4842";
         std::shared_ptr<OPCUAModelProvider<>> providerWithMeta;
         std::shared_ptr<OPCUAModelProvider<>> providerRaw;
-
-        std::unique_ptr<basyx::opcua::Server> server;
+        std::unique_ptr<basyx::opcua::Server> m_server;
+        std::thread m_serverThread;
     public:
-
-        virtual void SetUp() {
-
-            server = util::make_unique<basyx::opcua::Server>(5010, shared::Namespaces::BASYX_NS_URI);
-
-            server->initialize();
-            server->runInBackground();
-
-            while (!server->isServerUp());
+        virtual void SetUp()
+        {
+            m_server = util::make_unique<basyx::opcua::Server>(4842, shared::Namespaces::BASYX_NS_URI);
+            m_server->initialize();
+            m_serverThread = std::thread{ [this]() {m_server->run(); } };
 
             createCNCMachineInstance();
 
             providerWithMeta = std::make_shared<OPCUAModelProvider<>>(
-                "opc.tcp://localhost:5010",
+                endpoint,
                 shared::Namespaces::BASYX_NS_URI,
                 NodeId::numeric(UA_NS0ID_OBJECTSFOLDER),
                 true
                 );
 
             providerRaw = std::make_shared<OPCUAModelProvider<>>(
-                "opc.tcp://localhost:5010",
+                endpoint,
                 shared::Namespaces::BASYX_NS_URI,
                 NodeId::numeric(UA_NS0ID_OBJECTSFOLDER),
                 false
@@ -75,40 +70,42 @@ namespace tests_opcua_model_provider_leg
 
         virtual void TearDown()
         {
-            server->abort();
+            m_server->abort();
+            m_serverThread.join();
         }
+
+        void createCNCMachineInstance();
     };
 
-    TEST_F(OPCUAModelProviderLegacyModel, ModelProviderLegacyModels)
+    TEST_F(OPCUAModelProviderLegacyModel, ModelProviderWithMetaData)
     {
-
         providerWithMeta->setModelPropertyValue(
             "EmcoCNC/CuttingTool/CuttingForces/Force_X/Engineering_Unit", TypesTransformer::objectWithMeta<std::string>("Some string value with meta")
         );
 
         auto val_Engineering_Unit_With_Meta = providerWithMeta->getModelPropertyValue("EmcoCNC/CuttingTool/CuttingForces/Force_X/Engineering_Unit");
-
         ASSERT_EQ(TypesTransformer::objectWithMeta<std::string>("Some string value with meta"), val_Engineering_Unit_With_Meta);
 
+    }
+
+    TEST_F(OPCUAModelProviderLegacyModel, ModelProviderWithoutMetaData)
+    {
         providerRaw->setModelPropertyValue("EmcoCNC/CuttingTool/CuttingForces/Force_X/Engineering_Unit", "Some string value without meta");
 
         auto val_Engineering_Unit_With_Raw = providerRaw->getModelPropertyValue(
             "EmcoCNC/CuttingTool/CuttingForces/Force_X/Engineering_Unit"
         );
-
         ASSERT_EQ(basyx::object("Some string value without meta"), val_Engineering_Unit_With_Raw);
     }
 
-
-    void createCNCMachineInstance()
+    void OPCUAModelProviderLegacyModel::createCNCMachineInstance()
     {
         auto client = util::make_unique<basyx::opcua::Client>(
-            "opc.tcp://localhost:5010",
+            endpoint,
             shared::Namespaces::BASYX_NS_URI
             );
 
         client->connect();
-
         /* Define types */
         EmcoCNC::defineMachineToolType(client.get());
         EmcoCNC::defineCuttingToolType(client.get());
