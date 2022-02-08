@@ -142,8 +142,6 @@ namespace basyx
                 m_submodelProvider = util::make_unique<AASSubmodelProvider<Server>>(*m_connector.get(), t_rootNode);
 
                 metamodel::AASMetamodel::define<Server>(m_connector->getNamespaceIndexDefault(), *m_connector.get());
-
-                m_connector->runInBackground();
             }
 
             template<>
