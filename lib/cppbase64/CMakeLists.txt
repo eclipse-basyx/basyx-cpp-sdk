@@ -8,7 +8,7 @@ project(cppbase64 VERSION ${CPPBASE64_VERSION_MAJOR}.${CPPBASE64_VERSION_MAJOR})
 file(GLOB_RECURSE SOURCE_FILES *.cpp)
 file(GLOB_RECURSE HEADER_FILES *.h)
 
-add_library(cppbase64 STATIC ${SOURCE_FILES})
+add_library(cppbase64 ${SOURCE_FILES})
 
 target_include_directories(cppbase64
                            PUBLIC
