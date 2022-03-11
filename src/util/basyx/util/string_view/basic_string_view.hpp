@@ -30,6 +30,15 @@ public:
 		: _data(s), _sz(count)
 	{};
 
+	constexpr basic_string_view(const std::basic_string<CharT>& str)
+		: _data(str.data()), _sz(str.size())
+	{};
+
+	template<typename It>
+	constexpr basic_string_view(It begin, It end)
+		: _data(&(*begin)), _sz(end - begin)
+	{};
+
 	template<typename buffer_t>
 	constexpr basic_string_view(const buffer_t & buf)
 		: _data(buf.data()) , _sz(buf.size())
