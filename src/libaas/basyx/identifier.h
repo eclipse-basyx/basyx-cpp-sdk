@@ -30,10 +30,9 @@ public:
 	~Identifier() = default;
 public:
 	const std::string & getId() const { return id; };
-	//void set_id(const std::string & value) { this->id = id; };
-
 	KeyType getIdType() const { return idType; };
-	//void set_id_type(IdentifierType idType) { this->idType = idType; };
+public:
+	bool operator==(const Identifier & other) const;
 public:
 	static Identifier Custom(util::string_view id) { return Identifier(KeyType::Custom, id); }
 	static Identifier IRDI(util::string_view id) { return Identifier(KeyType::IRDI, id); }
