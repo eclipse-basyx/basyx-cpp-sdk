@@ -3,28 +3,23 @@
 ########################################
 
 set (BASYX_AAS_LIB_SHORTNAME "AAS")
-
 set (BASYX_AAS_LIBRARY_NAME "${PROJECT_SHORTNAME}${BASYX_AAS_LIB_SHORTNAME}")
-
 set (BASYX_AAS_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 
-add_library(${BASYX_AAS_LIB_SHORTNAME})
+include(sources.cmake)
+
+add_library(${BASYX_AAS_LIB_SHORTNAME} ${SOURCE_FILES_BASYX} ${HEADER_FILES_BASYX})
 
 set_target_properties(${BASYX_AAS_LIB_SHORTNAME}
    PROPERTIES VERSION ${PROJECT_VERSION}
 )
+
 #set_target_properties(${BASYX_AAS_LIB_SHORTNAME}
 #   PROPERTIES SOVERSION ${BASYX_PACKAGE_VERSION_MAJOR}
 #)
 set_target_properties(${BASYX_AAS_LIB_SHORTNAME}
    PROPERTIES PREFIX "${CMAKE_STATIC_LIBRARY_PREFIX}${PROJECT_SHORTNAME}"
 )
-
-target_sources(${BASYX_AAS_LIB_SHORTNAME}
-   PRIVATE
-)
-
-add_subdirectory(basyx)
 
 target_include_directories(${BASYX_AAS_LIB_SHORTNAME}
    PUBLIC
@@ -34,12 +29,13 @@ target_include_directories(${BASYX_AAS_LIB_SHORTNAME}
 
 target_link_libraries(${BASYX_AAS_LIB_SHORTNAME}
    PUBLIC
-   BaSyx::libutil
-   nlohmann_json::nlohmann_json
-   pugixml::pugixml
+       BaSyx::libutil
+       nlohmann_json::nlohmann_json
+       pugixml::pugixml
 )
 
 add_library(BaSyx::libaas ALIAS ${BASYX_AAS_LIB_SHORTNAME})
+add_library(basyx::libaas ALIAS ${BASYX_AAS_LIB_SHORTNAME})
 add_library(${PROJECT_SHORTNAME}::${BASYX_AAS_LIB_SHORTNAME} ALIAS ${BASYX_AAS_LIB_SHORTNAME})
 
 build_source_group()

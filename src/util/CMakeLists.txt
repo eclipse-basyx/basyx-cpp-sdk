@@ -13,6 +13,7 @@ add_library(${BASYX_UTIL_LIB_SHORTNAME})
 set_target_properties(${BASYX_UTIL_LIB_SHORTNAME}
    PROPERTIES VERSION ${PROJECT_VERSION}
 )
+
 #set_target_properties(${BASYX_UTIL_LIB_SHORTNAME}
 #   PROPERTIES SOVERSION ${BASYX_PACKAGE_VERSION_MAJOR}
 #)
@@ -37,6 +38,8 @@ target_link_libraries(${BASYX_UTIL_LIB_SHORTNAME}
 )
 
 add_library(BaSyx::libutil ALIAS ${BASYX_UTIL_LIB_SHORTNAME})
+add_library(BaSyx::util ALIAS ${BASYX_UTIL_LIB_SHORTNAME})
+add_library(basyx::util ALIAS ${BASYX_UTIL_LIB_SHORTNAME})
 add_library(${PROJECT_SHORTNAME}::${BASYX_UTIL_LIB_SHORTNAME} ALIAS ${BASYX_UTIL_LIB_SHORTNAME})
 
 build_source_group()
