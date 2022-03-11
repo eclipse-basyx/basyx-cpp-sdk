@@ -14,4 +14,9 @@ Identifier::Identifier(util::string_view id)
 {};
 
 
+bool Identifier::operator==(const Identifier & other) const
+{
+	return (this->getIdType() == other.getIdType()) && (this->getId() == other.getId());
+};
+
 };
