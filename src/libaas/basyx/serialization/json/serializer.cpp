@@ -50,7 +50,7 @@ void serialize_helper(json_t & json, const HasKind & hasKind)
 
 void serialize_helper(json_t & json, const modeltype_base & modelType)
 {
-	json["modeltype"] = json_t{ {"name", ModelTypes_::to_string(modelType.get_model_type()) } };
+	json["modelType"] = json_t{ {"name", ModelTypes_::to_string(modelType.get_model_type()) } };
 };
 
 void serialize_helper(json_t & json, const Key & key)

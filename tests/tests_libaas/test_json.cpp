@@ -127,7 +127,7 @@ TEST_F(JsonTest, SubmodelElementProperty)
 	
 	ASSERT_EQ(json["idShort"], "prop");
 	ASSERT_EQ(json["value"], 5);
-	ASSERT_EQ(json["modeltype"]["name"], "Property");
+	ASSERT_EQ(json["modelType"]["name"], "Property");
 	ASSERT_EQ(json["valueType"], "int");
 };
 
@@ -157,7 +157,7 @@ TEST_F(JsonTest, SubmodelElementCollection)
 	auto json = basyx::serialization::json::serialize(col1);
 
 	ASSERT_EQ(json["value"].size(), 3);
-	ASSERT_EQ(json["modeltype"]["name"], "SubmodelElementCollection" );
+	ASSERT_EQ(json["modelType"]["name"], "SubmodelElementCollection" );
 	ASSERT_EQ(json["category"], "test");
 
 	bool found_int_prop = false;
