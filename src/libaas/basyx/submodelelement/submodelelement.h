@@ -31,6 +31,12 @@ public:
 	SubmodelElement& operator=(SubmodelElement&&) noexcept = default;
 
 	virtual ~SubmodelElement() = default;
+public:
+	template<typename submodel_element_t>
+	static bool is_element_type(SubmodelElement* sel) { return dynamic_cast<submodel_element_t*>(sel) != nullptr; }
+
+	template<typename submodel_element_t>
+	static submodel_element_t* element_cast(SubmodelElement* sel) { return dynamic_cast<submodel_element_t*>(sel); }
 };
 
 }
