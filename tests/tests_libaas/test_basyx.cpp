@@ -44,7 +44,6 @@ protected:
 TEST_F(BaseTest, LangStringSet)
 {
     basyx::langstring_t l { "de", "test" };
-
     basyx::langstringset_t ls;
 
     ASSERT_EQ(ls.size(), 0);
@@ -249,6 +248,48 @@ TEST_F(BaseTest, SubmodelElementCollection_2)
     ASSERT_EQ(*r2->get_value(), 5);
 };
 
+TEST_F(BaseTest, SubmodelElementCollection_3)
+{
+    SubmodelElementCollection col1("col1",
+        Property<int>("i1", 2),
+        Property<float>("f2", 5.0f),
+        MultiLanguageProperty("mlp", {
+            { "de", "beispiel" },
+            { "en", "example" },
+            }));
+
+    ASSERT_EQ(col1.size(), 3);
+
+    // Check first property
+    auto prop1 = col1.getSubmodelElements().get("i1");
+    ASSERT_EQ(prop1->get_model_type(), ModelTypes::Property);
+};
+
+TEST_F(BaseTest, SubmodelElementCollection_CopyConstructor)
+{
+    SubmodelElementCollection col1("col1",
+        Property<int>("i1", 2),
+        Property<float>("f2", 5.0f),
+        MultiLanguageProperty("mlp", {
+            { "de", "beispiel" },
+            { "en", "example" },
+    }));
+
+    SubmodelElementCollection col2 = col1;
+    SubmodelElementCollection col3(col1);
+    auto col4 = std::make_unique<SubmodelElementCollection>(col1);
+
+    ASSERT_EQ(col1.size(), 3);
+    ASSERT_EQ(col2.size(), 3);
+    ASSERT_EQ(col3.size(), 3);
+    ASSERT_EQ(col4->size(), 3);
+
+    ASSERT_EQ(col1.getIdShort(), "col1");
+    ASSERT_EQ(col2.getIdShort(), "col1");
+    ASSERT_EQ(col3.getIdShort(), "col1");
+    ASSERT_EQ(col4->getIdShort(), "col1");
+};
+
 TEST_F(BaseTest, IntPropertyCopy)
 {
     Property<int> i { "i", 1 };
@@ -268,23 +309,6 @@ TEST_F(BaseTest, StringProperty)
     s.~Property();
     s2.~Property();
 }
-
-TEST_F(BaseTest, SubmodelElementCollection_3)
-{
-    SubmodelElementCollection col1("col1",
-        Property<int>("i1", 2),
-        Property<float>("f2", 5.0f),
-        MultiLanguageProperty("mlp", {
-            { "de", "beispiel" },
-            { "en", "example" },
-        }));
-
-    ASSERT_EQ(col1.size(), 3);
-
-    // Check first property
-    auto prop1 = col1.getSubmodelElements().get("i1");
-    ASSERT_EQ(prop1->get_model_type(), ModelTypes::Property);
-};
 
 TEST_F(BaseTest, Submodel)
 {
