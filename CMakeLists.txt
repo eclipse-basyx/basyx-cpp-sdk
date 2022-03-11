@@ -69,7 +69,7 @@ else()
    FetchContent_Declare(
      nlohmann_json
      GIT_REPOSITORY https://github.com/nlohmann/json
-     GIT_TAG v3.10.5
+     GIT_TAG v3.10.4
      GIT_SHALLOW TRUE)
 
    if(${BASYX_INSTALL_SDK})
@@ -87,6 +87,7 @@ else()
    FetchContent_Declare(
       pugixml
       GIT_REPOSITORY https://github.com/zeux/pugixml
+      GIT_TAG v1.12
       )
 
    FetchContent_GetProperties(pugixml)
