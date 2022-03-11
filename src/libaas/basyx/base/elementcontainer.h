@@ -104,10 +104,13 @@ public:
 public:
 	//void setOwner(const Referable * owner) { this->owner = owner; }
 public:
-	template<typename T> T* const add(T & t) { return this->add(std::make_unique<T>(std::forward<T>(t))); };
+	template<typename T> T* const add(const T & t) { return this->add(std::make_unique<T>(t)); };
 	template<typename T> T* const add(T && t) { return this->add(std::make_unique<T>(std::forward<T>(t))); };
 
 	template<typename T> T* const add(std::unique_ptr<T> element) {
+		if (!element)
+			return nullptr;
+
 		if (this->hasEntry(element->getIdShort()))
 			return nullptr;
 		auto ptr = element.get();
