@@ -145,38 +145,6 @@ TEST_F(BaseTest, HasKind)
     has_kind->kind = ModelingKind::Instance;
 };
 
-TEST_F(BaseTest, PropertyTest1)
-{
-    Property<int> p1 { "int_prop" };
-    p1.set_value(5);
-
-    ASSERT_EQ(*p1.get_value(), 5);
-    ASSERT_EQ(p1.get_value_type(), "int");
-
-    Property<float> p2 { "float_prop" };
-    ASSERT_EQ(p2.get_value_type(), "float");
-    ASSERT_FALSE(p2.get_value());
-
-    p2.set_value(5.0f);
-    ASSERT_TRUE(p2.get_value());
-    ASSERT_EQ(*p2.get_value(), 5.0f);
-};
-
-TEST_F(BaseTest, PropertyTest2)
-{
-    Property<int> p1 { "int_prop", 5 };
-    ASSERT_EQ(*p1.get_value(), 5);
-    ASSERT_EQ(p1.get_value_type(), "int");
-
-    Property<float> p2 { "float_prop", 5.0f };
-    ASSERT_TRUE(p2.get_value());
-    ASSERT_EQ(*p2.get_value(), 5.0f);
-
-    Property<std::string> p3 { "string_prop", "test" };
-    ASSERT_TRUE(p3.get_value());
-    ASSERT_EQ(*p3.get_value(), "test");
-};
-
 TEST_F(BaseTest, RangeTest)
 {
     Range<uint32_t> p1 { "int_prop" };
@@ -186,16 +154,6 @@ TEST_F(BaseTest, RangeTest)
     ASSERT_EQ(*p1.get_min(), 1);
     ASSERT_EQ(*p1.get_max(), 5);
     ASSERT_EQ(p1.get_value_type(), "unsignedInt");
-};
-
-TEST_F(BaseTest, PropertyType)
-{
-    ASSERT_EQ(Property<uint8_t> { "id" }.get_value_type(), "unsignedByte");
-    ASSERT_EQ(Property<int8_t> { "id" }.get_value_type(), "byte");
-    ASSERT_EQ(Property<std::string> { "id" }.get_value_type(), "string");
-    ASSERT_EQ(Property<double> { "id" }.get_value_type(), "double");
-    ASSERT_EQ(Property<float> { "id" }.get_value_type(), "float");
-    ASSERT_EQ(Property<char> { "id" }.get_value_type(), "byte");
 };
 
 TEST_F(BaseTest, SubmodelElement)
@@ -290,25 +248,6 @@ TEST_F(BaseTest, SubmodelElementCollection_CopyConstructor)
     ASSERT_EQ(col4->getIdShort(), "col1");
 };
 
-TEST_F(BaseTest, IntPropertyCopy)
-{
-    Property<int> i { "i", 1 };
-    auto i2 = i;
-
-    i2.~Property();
-    i.~Property();
-}
-
-TEST_F(BaseTest, StringProperty)
-{
-    Property<std::string> s { "string_prop", "test" };
-    auto s2 = s;
-
-    s.set_value("test");
-
-    s.~Property();
-    s2.~Property();
-}
 
 TEST_F(BaseTest, Submodel)
 {

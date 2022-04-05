@@ -33,10 +33,18 @@ public:
 	virtual ~SubmodelElement() = default;
 public:
 	template<typename submodel_element_t>
-	static bool is_element_type(SubmodelElement* sel) { return dynamic_cast<submodel_element_t*>(sel) != nullptr; }
+	static bool is_element_type(const SubmodelElement* sel) { return dynamic_cast<const submodel_element_t*>(sel) != nullptr; }
 
 	template<typename submodel_element_t>
 	static submodel_element_t* element_cast(SubmodelElement* sel) { return dynamic_cast<submodel_element_t*>(sel); }
+};
+
+class SubmodelElementHelper
+{
+public:
+	static bool IsProperty(const SubmodelElement& ele);
+	static bool IsMultiLanguageProperty(const SubmodelElement& ele);
+	static bool IsSubmodelElementCollection(const SubmodelElement& ele);
 };
 
 }
