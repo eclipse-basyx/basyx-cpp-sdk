@@ -33,6 +33,9 @@ namespace basyx
 
 	template<typename T>
 	class Property;
+
+   template<typename T>
+   class Qualifier;
 };
 
 
@@ -65,7 +68,7 @@ namespace basyx::serialization::json
 	void serialize_helper(json_t & json, const Blob&);
 	void serialize_helper(json_t & json, const SubmodelElementCollection&);
 	void serialize_helper(json_t & json, const AssetAdministrationShell&);
-	
+
 	template<typename T>
 	void serialize_helper(json_t & json, const Property<T>& prop);
 };
