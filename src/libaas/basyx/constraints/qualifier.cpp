@@ -2,8 +2,4 @@
 
 namespace basyx
 {
-
-qualifier_base::~qualifier_base() {};
-
-
 };
