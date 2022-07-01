@@ -37,7 +37,8 @@ public:
 	const util::optional<DataType> & get_max() const { return this->max; };
 	util::optional<DataType> & get_max() { return this->max; };
 
-	util::string_view get_value_type() const { return detail::data_type_def<DataType>::value_type; };
+   util::string_view get_value_type() const {
+      return detail::toString(detail::data_type_def<DataType>::value_type); };
 
 	template<typename U = DataType>
 	void set_min(U && value) {
