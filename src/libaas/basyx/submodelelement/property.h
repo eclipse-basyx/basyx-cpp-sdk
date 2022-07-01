@@ -70,7 +70,10 @@ public:
     const util::optional<Reference>& get_value_id() const override { return this->valueId; }
     void set_value_id(const Reference& reference) override { this->valueId = reference; };
 
-    util::string_view get_value_type() const override { return detail::data_type_def<DataType>::value_type; };
+    util::string_view get_value_type() const override {
+       util::string_view typeStr = detail::toString(detail::data_type_def<DataType>::value_type);
+       return typeStr;
+    };
 
     const util::optional<DataType>& get_value() const { return this->value; };
 
