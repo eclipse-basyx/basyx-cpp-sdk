@@ -5,6 +5,7 @@ SET(SOURCE_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/assetadministrationshell.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/basyx_enums.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/token.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/valuetypedefs.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/constraints/constraint.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/constraints/formula.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/constraints/qualifier.cpp
