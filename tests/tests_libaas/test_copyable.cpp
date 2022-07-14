@@ -9,8 +9,7 @@
 #include <basyx/asset/assetinformation.h>
 #include <basyx/submodel.h>
 
-#include <basyx/constraints/qualifier.h>
-#include <basyx/constraints/formula.h>
+#include <basyx/qualifiable/qualifier.h>
 
 #include <basyx/submodelelement/multilanguageproperty.h>
 #include <basyx/submodelelement/operation.h>

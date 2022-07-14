@@ -11,8 +11,7 @@
 
 #include <basyx/enums/IdentifiableElements.h>
 
-#include <basyx/constraints/qualifier.h>
-#include <basyx/constraints/formula.h>
+#include <basyx/qualifiable/qualifier.h>
 
 #include <basyx/submodelelement/multilanguageproperty.h>
 #include <basyx/submodelelement/property.h>

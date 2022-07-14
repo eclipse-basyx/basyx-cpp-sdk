@@ -11,8 +11,7 @@
 
 #include <basyx/enums/IdentifiableElements.h>
 
-#include <basyx/constraints/qualifier.h>
-#include <basyx/constraints/formula.h>
+#include <basyx/qualifiable/qualifier.h>
 
 #include <basyx/submodelelement/multilanguageproperty.h>
 #include <basyx/submodelelement/property.h>
@@ -291,10 +290,8 @@ TEST_F(BaseTest, EntityTest)
 
 TEST_F(BaseTest, QualifierTest)
 {
-	std::unique_ptr<Constraint> constraint_formula = std::make_unique<Formula>();
-	std::unique_ptr<Constraint> constraint_qualifier = std::make_unique<Qualifier<int>>("test", 5);
+	std::unique_ptr<QualifierBase> constraint_qualifier = std::make_unique<Qualifier<int>>("test", 5);
 
-	ASSERT_EQ(constraint_formula->get_model_type(), ModelTypes::Formula);
 	ASSERT_EQ(constraint_qualifier->get_model_type(), ModelTypes::Qualifier);
 }
 

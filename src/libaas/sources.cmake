@@ -6,9 +6,6 @@ SET(SOURCE_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/basyx_enums.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/token.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/valuetypedefs.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/constraints/constraint.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/constraints/formula.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/constraints/qualifier.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/dataspecification/DataSpecification.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/dataspecification/DataSpecificationContent.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/dataspecification/DataSpecificationIEC61360.cpp
@@ -34,7 +31,8 @@ SET(SOURCE_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/key.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/langstringset.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/modeltype.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/qualifiable.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/qualifiable/qualifiable.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/qualifiable/qualifier.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/referable.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/reference.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/semantics/conceptdescription.cpp
@@ -75,9 +73,6 @@ SET(HEADER_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/elementvector.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/token.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/valuetypedefs.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/constraints/constraint.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/constraints/formula.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/constraints/qualifier.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/dataspecification/DataSpecification.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/dataspecification/DataSpecificationContent.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/dataspecification/DataSpecificationIEC61360.h
@@ -109,7 +104,10 @@ SET(HEADER_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/key.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/langstringset.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/modeltype.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/qualifiable.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/qualifiable/qualifiable.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/qualifiable/qualifiable_fwd.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/qualifiable/qualifierbase.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/qualifiable/qualifier.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/referable.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/reference.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/semantics/conceptdescription.h
