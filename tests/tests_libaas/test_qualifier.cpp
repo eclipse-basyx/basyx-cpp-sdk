@@ -11,8 +11,7 @@
 
 #include <basyx/enums/IdentifiableElements.h>
 
-#include <basyx/constraints/qualifier.h>
-#include <basyx/constraints/formula.h>
+#include <basyx/qualifiable/qualifier.h>
 
 #include <basyx/base/basyx_enum_base.h>
 
@@ -148,6 +147,45 @@ TEST_F(QualifierTest, QualifierTypeInfo)
     default:
        break;
     }
+}
+
+TEST_F(QualifierTest, QualifiableVectorTest)
+{
+   Qualifier<float> q("floatQ", float(1.43));
+   Qualifier<int> int_q("intQ", 5);
+   Qualifier<std::string> str_q("strQ", "testStr");
+
+   Qualifier<int> *qp  = q.addQualifier(int_q);
+   ASSERT_EQ(qp->getValueType(), "int");
+   ASSERT_EQ(qp->getValue(), 5);
+
+   Qualifier<std::string> *qp2  = q.addQualifier(str_q);
+   ASSERT_EQ(qp2->getValueType(), "string");
+   ASSERT_EQ(qp2->getValue(), "testStr");
+
+   auto qi = q.getQualifiers().begin();
+   // Counter to check if elements are actually found
+   int counter = 0;
+   while (qi != q.getQualifiers().end()) {
+      switch (qi->get()->getValueTypeEnum()) {
+      case basyx::detail::Integer: {
+         counter++;
+         Qualifier<int> *iq = qi->get()->cast<int>();
+         ASSERT_EQ(iq->getValue(), 5);
+         break;
+      }
+      case basyx::detail::String: {
+         counter++;
+         Qualifier<std::string> *sq = qi->get()->cast<std::string>();
+         ASSERT_EQ(sq->getValue(), "testStr");
+         break;
+      }
+      default:
+         break;
+      }
+      qi++;
+   }
+   ASSERT_EQ(counter, 2);
 }
 
 

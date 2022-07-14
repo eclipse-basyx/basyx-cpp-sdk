@@ -5,45 +5,21 @@
 
 #include <basyx/base/valuetypedefs.h>
 
-#include <basyx/constraints/constraint.h>
-
 #include <basyx/modeltype.h>
 #include <basyx/hassemantics.h>
 #include <basyx/reference.h>
 
 #include <basyx/util/optional/optional.hpp>
 
-#include <basyx/serialization/serializable.h>
+#include <basyx/qualifiable/qualifierbase.h>
+#include <basyx/qualifiable/qualifiable.h>
+
 
 namespace basyx
 {
 
-class qualifier_base : 
-	public Constraint,
-	private ModelType<ModelTypes::Qualifier>
-{
-public:
-	qualifier_base() = default;
-   virtual ~qualifier_base() = default;
-public:
-	virtual util::string_view getValueType() const = 0;
-};
-
-class QualifierBase: public qualifier_base {
-   basyx::detail::datatypes type;
-public:
-   QualifierBase(basyx::detail::datatypes type): type(type) {}
-   ~QualifierBase() = default;
-
-   util::string_view getValueType() const override { return basyx::detail::toString(type); }
-   basyx::detail::datatypes getValueTypeEnum() { return type; }
-
-   template <typename DataType>
-   Qualifier<DataType>* cast() { return dynamic_cast<Qualifier<DataType>*>(this); };
-};
-
 template<typename ValueType>
-class Qualifier : public QualifierBase {
+class Qualifier : public QualifierBase, public Qualifiable {
 public:
 	using modeltype_base::get_model_type;
 private:
