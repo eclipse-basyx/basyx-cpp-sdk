@@ -20,6 +20,7 @@ SET(SOURCE_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/enums/LevelType.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/enums/ModelTypes.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/enums/ModelingKind.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/enums/QualifierKind.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/enums/ReferableElements.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/enums/SubmodelElements.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/environment.cpp
@@ -92,6 +93,7 @@ SET(HEADER_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/enums/LocalKeyType.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/enums/ModelTypes.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/enums/ModelingKind.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/enums/QualifierKind.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/enums/ReferableElements.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/enums/SubmodelElements.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/enums/XsdTypes.h

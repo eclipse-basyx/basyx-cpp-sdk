@@ -10,6 +10,7 @@
 #include <basyx/submodel.h>
 
 #include <basyx/enums/IdentifiableElements.h>
+#include <basyx/enums/QualifierKind.h>
 
 #include <basyx/qualifiable/qualifier.h>
 
@@ -115,6 +116,16 @@ TEST_F(QualifierTest, StringQualifierInitializerListCopy)
     auto s2 = s;
 
     s.setValue("test");
+}
+
+TEST_F(QualifierTest, QualifierKindTest)
+{
+    Qualifier<std::string> s{ "string_qualifier", "testStart" };
+    ASSERT_EQ(s.getQualifierKind(), "ConceptQualifier");
+
+    Qualifier<int> i("intQ", 6);
+    i.setQualifierKind("ValueQualifier");
+    ASSERT_EQ(i.getQualifierKind(), "ValueQualifier");
 }
 
 TEST_F(QualifierTest, QualifierCast)
