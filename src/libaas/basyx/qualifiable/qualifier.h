@@ -5,6 +5,8 @@
 
 #include <basyx/base/valuetypedefs.h>
 
+#include <basyx/enums/QualifierKind.h>
+
 #include <basyx/modeltype.h>
 #include <basyx/hassemantics.h>
 #include <basyx/reference.h>
@@ -23,20 +25,23 @@ class Qualifier : public QualifierBase, public Qualifiable {
 public:
 	using modeltype_base::get_model_type;
 private:
+   QualifierKind qualifierKind;
    std::string qualifierType;
 	util::optional<Reference> valueId;
 	util::optional<ValueType> value;
 public:
    Qualifier(util::string_view qualifierType) :
       QualifierBase(detail::data_type_def<ValueType>::value_type),
-      qualifierType(qualifierType.to_string()) {
+      qualifierType(qualifierType.to_string()),
+      qualifierKind(QualifierKind::ConceptQualifier) {
    }
 
 	template<typename U = ValueType>
    Qualifier(util::string_view qualifierType, U && u) :
       QualifierBase(detail::data_type_def<ValueType>::value_type),
       qualifierType(qualifierType.to_string()),
-      value(std::forward<U>(u)) {
+      value(std::forward<U>(u)),
+      qualifierKind(QualifierKind::ConceptQualifier) {
    }
 
    Qualifier(const Qualifier&) = default;
@@ -52,9 +57,15 @@ public:
       this->qualifierType = qualifierType.to_string();
    };
 
-   /*util::string_view getValueType() const override {
-      return basyx::detail::toString(detail::data_type_def<ValueType>::value_type);
-   }*/
+   void setQualifierKind(std::string qualifierKind) {
+      this->qualifierKind = QualifierKind_::from_string(qualifierKind);
+   }
+   void setQualifierKindEnum(QualifierKind k) { qualifierKind = k; }
+
+   const std::string getQualifierKind() const {
+      return QualifierKind_::to_string(this->qualifierKind);
+   }
+   const QualifierKind getQualifierKindEnum() { return qualifierKind; }
 
 	const util::optional<ValueType> & getValue() const { return this->value; };
 
