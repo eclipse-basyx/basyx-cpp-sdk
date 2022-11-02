@@ -2,7 +2,7 @@
 ###              Tests                      ###
 ###############################################
 
-cmake_minimum_required(VERSION 2.8.4)
+cmake_minimum_required(VERSION 2.8.4...3.13)
 
 # Allow versioning the subproject
 if(POLICY CMP0048)
