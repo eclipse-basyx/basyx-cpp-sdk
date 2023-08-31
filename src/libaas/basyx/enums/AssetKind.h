@@ -8,6 +8,7 @@ namespace basyx {
 enum class AssetKind {
     Type,
     Instance,
+    NotApplicable,
 };
 
 class AssetKind_
