@@ -234,8 +234,7 @@ void serialize_helper(json_t & json, const File & file)
 
 void serialize_helper(json_t & json, const Identifier & identifier)
 {
-	json["id"] = identifier.getId();
-	json["idType"] =  KeyType_::to_string( identifier.getIdType() );
+   json = identifier.getId();
 };
 
 void serialize_helper(json_t & json, const Identifiable & identifiable)
@@ -295,11 +294,6 @@ void serialize_helper(json_t & json, const AssetInformation & assetInf)
 	for (const auto & assetId : assetInf.getSpecificAssetIds())
 		specificAssetIds.emplace_back(serialize(assetId));
 	json["specificAssetIds"] = specificAssetIds;
-
-	auto billOfMaterial = json_t::array();
-	for (const auto & bom : assetInf.getBillOfMaterials())
-		billOfMaterial.emplace_back(serialize(bom));
-	json["billOfMaterial"] = billOfMaterial;
 
 	if(assetInf.getDefaultThumbnail())
 		json["thumbnail"] = serialize(*assetInf.getDefaultThumbnail());
