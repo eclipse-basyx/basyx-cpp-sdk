@@ -18,7 +18,7 @@ class AssetInformation
 private:
 	AssetKind assetKind;
 	util::optional<Asset> asset;
-	util::optional<Reference> globalAssetIdRef;
+   util::optional<Identifier> globalAssetIdRef;
 	std::vector<IdentifierKeyValuePair> specificAssetId;
 	std::vector<Reference> billOfMaterial;
 	util::optional<File> defaultThumbnail;
@@ -40,8 +40,8 @@ public:
 	};
 	const util::optional<Asset> & getAsset() const { return asset; };
 
-	const util::optional<Reference> & getGlobalAssetId() const { return this->globalAssetIdRef; };
-	void setGlobalAssetId(Reference globalAssetId) { this->globalAssetIdRef.emplace(std::move(globalAssetId)); };
+   const util::optional<Identifier> & getGlobalAssetId() const { return this->globalAssetIdRef; };
+   void setGlobalAssetId(Identifier globalAssetId) { this->globalAssetIdRef.emplace(std::move(globalAssetId)); };
 
 	const util::optional<File> & getDefaultThumbnail() const { return defaultThumbnail; };
 	void setDefaultThumbnail(File file) { this->defaultThumbnail.emplace(std::move(file)); };
