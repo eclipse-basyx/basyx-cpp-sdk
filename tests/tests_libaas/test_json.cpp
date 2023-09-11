@@ -199,11 +199,10 @@ TEST_F(JsonTest, Submodel)
 
 TEST_F(JsonTest, AssetInfTest)
 {
-	Asset asset{ "testAsset", Identifier::Custom("test") };
+   Identifier id("test");
 
 	AssetInformation assetInf{ AssetKind::Instance };
-	assetInf.setAsset(asset);
+   assetInf.setGlobalAssetId(id);
 
-	auto asset_j = basyx::serialization::json::serialize(asset);
 	auto assetInf_j = basyx::serialization::json::serialize(assetInf);
 };
