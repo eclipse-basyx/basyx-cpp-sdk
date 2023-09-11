@@ -1,22 +1,25 @@
-#include "identifier.h"
 
-namespace basyx
-{
+#include <basyx/identifier.h>
 
-Identifier::Identifier(KeyType idType, util::string_view id)
-	: idType(idType)
-	, id(id.to_string())
-{};
+namespace basyx {
 
-Identifier::Identifier(util::string_view id)
-	: idType(KeyType_::from_id(id))
-	, id(id.to_string())
-{};
+Identifier &Identifier::operator=(const Identifier &id) noexcept {
+   std::string::operator=(id);
+   return *this;
+}
 
+Identifier &Identifier::operator=(const basyx::util::string_view& id) noexcept {
+   std::string::operator=(id.to_string());
+   return *this;
+}
 
-bool Identifier::operator==(const Identifier & other) const
-{
-	return (this->getIdType() == other.getIdType()) && (this->getId() == other.getId());
-};
+Identifier &Identifier::operator=(const std::string& id) noexcept {
+   std::string::operator=(id);
+   return *this;
+}
+
+std::string Identifier::getId() const {
+   return static_cast<std::string>(*this);
+}
 
 };
