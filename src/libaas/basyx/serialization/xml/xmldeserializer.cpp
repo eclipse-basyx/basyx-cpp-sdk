@@ -102,6 +102,8 @@ Environment XMLDeSerializer::deSerializeEnvNode(xml_node node) {
    return env;
 }
 
+/* TODO: Convert legacy V2 -> V3 (asset -> assetInformation)
+/*
 ElementVector<AssetInformation> XMLDeSerializer::convertAssetToAssetInformation(
       ElementVector<Asset> assets) {
    ElementVector<AssetInformation> aiC;
@@ -129,6 +131,7 @@ ElementVector<AssetInformation> XMLDeSerializer::convertAssetToAssetInformation(
    }
    return aiC;
 }
+*/
 
 ElementVector<Asset> XMLDeSerializer::deSerializeAssets(
       xml_node node) {
@@ -149,7 +152,7 @@ ElementVector<Asset> XMLDeSerializer::deSerializeAssets(
 
 Asset XMLDeSerializer::deSerializeAssetMetamodel_V2(xml_node node) {
 
-   Asset a("", Identifier(KeyType::Custom, ""));
+   Asset a("", Identifier(""));
 
    deSerializeIdentifiable(node, a);
    deSerializeHasDataSpecification(node, a);
@@ -296,8 +299,7 @@ AdministrativeInformation XMLDeSerializer::deSerializeAdministrativeInformation(
 
 Identifier XMLDeSerializer::deSerializeIdentifier(xml_node node) {
    xml_attribute idType_attr = findAttributeByName(node, XML_ATTR_idType);
-   KeyType kt = KeyType_::from_string(idType_attr.as_string());
-   Identifier ident(kt, deSerializeString(node));
+   Identifier ident(deSerializeString(node));
    return ident;
 }
 
