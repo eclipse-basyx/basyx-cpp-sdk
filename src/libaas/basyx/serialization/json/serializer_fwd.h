@@ -28,7 +28,6 @@ namespace basyx
 	class Submodel;
 	class File;
 	class Blob;
-	class Asset;
 	class AssetInformation;
 
 	template<typename T>
@@ -49,7 +48,6 @@ namespace basyx::serialization::json
 	void serialize_helper(json_t & json, const HasSemantics &);
 	void serialize_helper(json_t & json, const HasKind &);
 	void serialize_helper(json_t & json, const modeltype_base &);
-	void serialize_helper(json_t & json, const Asset &);
 	void serialize_helper(json_t & json, const AssetInformation &);
 	void serialize_helper(json_t & json, const Identifier &);
 	void serialize_helper(json_t & json, const IdentifierKeyValuePair &);

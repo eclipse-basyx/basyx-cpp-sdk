@@ -278,11 +278,6 @@ void serialize_helper(json_t & json, const Submodel & submodel)
 };
 
 
-void serialize_helper(json_t & json, const Asset & asset)
-{
-	serialize_helper_h<Identifiable>(json, asset);
-}
-
 void serialize_helper(json_t & json, const AssetInformation & assetInf)
 {
 	json["assetKind"] = AssetKind_::to_string(assetInf.getAssetKind());

@@ -12,9 +12,7 @@ using namespace pugi;
 
 // Environment
 #define XML_ENV "aas:aasenv"
-// Asset
-#define XML_assets "aas:assets"
-#define XML_asset "aas:asset"
+
 #define XML_assetKind "aas:kind"
 #define XML_billOfMaterialRef "aas:billOfMaterialRef"
 #define XML_assetIdentificationModelRef "aas:assetIdentificationModelRef"
@@ -58,6 +56,11 @@ using namespace pugi;
 #define XML_ATTR_idType "idType"
 #define XML_ATTR_type "type"
 
+// Legacy V2
+// Asset
+#define XML_assets "aas:assets"
+#define XML_asset "aas:asset"
+
 XMLDeSerializer::XMLDeSerializer() {
    ds = new Deserializer();
 }
@@ -78,12 +81,14 @@ Environment XMLDeSerializer::deSerializeEnvNode(xml_node node) {
    Environment env;
 
    // Legacy AAS Part 1 - V2
+   /*
    xml_node asset_container_node = findChildByName(node, XML_assets);
    ElementVector<Asset> assets;
    if (asset_container_node.root()) {
       assets = deSerializeAssets(asset_container_node);
       env.setAssets(assets);
    }
+   */
 
    xml_node submodel_container_node = findChildByName(node, XML_submodels);
    ElementVector<Submodel> submodels;
@@ -102,7 +107,7 @@ Environment XMLDeSerializer::deSerializeEnvNode(xml_node node) {
    return env;
 }
 
-/* TODO: Convert legacy V2 -> V3 (asset -> assetInformation)
+/* TODO: Convert legacy V2 -> V3 (asset -> assetInformation) */
 /*
 ElementVector<AssetInformation> XMLDeSerializer::convertAssetToAssetInformation(
       ElementVector<Asset> assets) {
@@ -133,6 +138,7 @@ ElementVector<AssetInformation> XMLDeSerializer::convertAssetToAssetInformation(
 }
 */
 
+/*
 ElementVector<Asset> XMLDeSerializer::deSerializeAssets(
       xml_node node) {
 
@@ -181,6 +187,7 @@ Asset XMLDeSerializer::deSerializeAssetMetamodel_V2(xml_node node) {
    }
    return a;
 }
+*/
 
 AssetKind XMLDeSerializer::deSerializeAssetKind(xml_node node) {
    std::string kind = deSerializeString(node);

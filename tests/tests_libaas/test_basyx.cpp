@@ -5,7 +5,6 @@
 #include <basyx/reference.h>
 #include <basyx/environment.h>
 #include <basyx/assetadministrationshell.h>
-#include <basyx/asset/asset.h>
 #include <basyx/asset/assetinformation.h>
 #include <basyx/submodel.h>
 
@@ -313,8 +312,6 @@ TEST_F(BaseTest, QualifierTest)
 
 TEST_F(BaseTest, AutoIdentifierTest)
 {
-	Asset asset{ "testAsset", "0173-1#02-AAR972#002" };
-
 	AssetAdministrationShell aas{ "aas", "https://admin-shell.io/aas", { AssetKind::Instance } };
 
 	Submodel sm{ "sm", "test/sm1" };
@@ -341,8 +338,6 @@ TEST_F(BaseTest, Environment)
 	env.getAssetAdministrationShells().add(
 		AssetAdministrationShell("aas", "https://admin-shell.io/aas", AssetInformation{ AssetKind::Instance })
 	);
-
-   env.getAssets().emplace_back(Asset("cppTestAsset", basyx::Identifier("cppTestAsset")));
 }
 
 TEST_F(BaseTest, AssetInfoInAas)

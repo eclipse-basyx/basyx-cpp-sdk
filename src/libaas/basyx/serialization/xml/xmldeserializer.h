@@ -30,12 +30,17 @@ public:
    Environment deSerializeEnv(util::string_view node);
    Environment deSerializeEnvNode(pugi::xml_node node);
 
+   /* V2 Legacy */
+   /*
    ElementVector<Asset> deSerializeAssets(
          pugi::xml_node node);
+
 
    ElementVector<AssetInformation> convertAssetToAssetInformation(
          ElementVector<Asset> assets);
    Asset deSerializeAssetMetamodel_V2(pugi::xml_node node);
+   */
+
    AssetKind deSerializeAssetKind(pugi::xml_node node);
 
    ElementContainer<AssetAdministrationShell> deSerializeAASs(
