@@ -115,15 +115,13 @@ void serialize_helper(json_t & json, const langstringset_t & langstrings)
 	}
 };
 
-void serialize_helper(json_t & json, const IdentifierKeyValuePair & kvPair)
+void serialize_helper(json_t & json, const SpecificAssetId & kvPair)
 {
 	serialize_helper_h<HasSemantics>(json, kvPair);
 
-	json["key"] = kvPair.getKey();
+   json["key"] = kvPair.getName();
 
-	json["value"] = json_t();
-	if(kvPair.getValue())
-		json["value"] = *kvPair.getValue();
+   json["value"] = kvPair.getValue().getId();
 
 	json["subjectId"] = json_t();
 	if(kvPair.getExternalSubjectId())

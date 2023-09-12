@@ -28,7 +28,6 @@ SET(SOURCE_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/hassemantics.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/identifiable.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/identifier.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/identifierkeyvaluepair.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/key.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/labelType.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/langstringset.cpp
@@ -44,6 +43,7 @@ SET(SOURCE_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/private/deserializer_priv.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/xml/deserializer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/xml/xmldeserializer.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/specificAssetId.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodelelement/annotatedrelationshipelement.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodelelement/basicevent.cpp
@@ -103,7 +103,6 @@ SET(HEADER_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/hassemantics.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/identifiable.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/identifier.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/identifierkeyvaluepair.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/key.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/labelType.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/langstringset.h
@@ -127,6 +126,7 @@ SET(HEADER_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/serializer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/xml/deserializer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/xml/xmldeserializer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/specificAssetId.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodel.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodelelement/annotatedrelationshipelement.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodelelement/basicevent.h

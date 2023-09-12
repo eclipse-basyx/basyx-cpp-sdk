@@ -3,7 +3,7 @@
 #include <basyx/submodelelement/file.h>
 #include <basyx/reference.h>
 #include <basyx/identifiable.h>
-#include <basyx/identifierkeyvaluepair.h>
+#include <basyx/specificAssetId.h>
 
 #include <basyx/enums/AssetKind.h>
 
@@ -17,7 +17,7 @@ class AssetInformation
 private:
 	AssetKind assetKind;
    util::optional<Identifier> globalAssetId;
-	std::vector<IdentifierKeyValuePair> specificAssetId;
+   std::vector<SpecificAssetId> specificAssetId;
    util::optional<Identifier> assetType;
 	util::optional<File> defaultThumbnail;
 public:
@@ -35,9 +35,9 @@ public:
    const util::optional<Identifier> & getGlobalAssetId() const { return this->globalAssetId; };
    void setGlobalAssetId(Identifier globalAssetId) { this->globalAssetId.emplace(std::move(globalAssetId)); };
 
-	void addSpecificAssetId(IdentifierKeyValuePair specificAssetId) { this->specificAssetId.emplace_back(std::move(specificAssetId)); };
-	const std::vector<IdentifierKeyValuePair> & getSpecificAssetIds() const { return this->specificAssetId; };
-	std::vector<IdentifierKeyValuePair> & getSpecificAssetIds() { return this->specificAssetId; };
+   void addSpecificAssetId(SpecificAssetId specificAssetId) { this->specificAssetId.emplace_back(std::move(specificAssetId)); };
+   const std::vector<SpecificAssetId> & getSpecificAssetIds() const { return this->specificAssetId; };
+   std::vector<SpecificAssetId> & getSpecificAssetIds() { return this->specificAssetId; };
 
    const util::optional<Identifier> & getAssetType() const { return this->assetType; };
    void setAssetType(Identifier assetType) { this->assetType.emplace(std::move(assetType)); };
