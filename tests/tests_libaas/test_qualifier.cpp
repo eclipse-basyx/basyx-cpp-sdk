@@ -5,7 +5,6 @@
 #include <basyx/reference.h>
 #include <basyx/environment.h>
 #include <basyx/assetadministrationshell.h>
-#include <basyx/asset/asset.h>
 #include <basyx/asset/assetinformation.h>
 #include <basyx/submodel.h>
 

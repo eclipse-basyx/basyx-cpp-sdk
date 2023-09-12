@@ -102,10 +102,7 @@ protected:
 	// Submodel
 	const json_t json_submodel = json_t{
 		{ "idShort", "sm_1" },
-		{ "identification", {
-			{"id", "submodel" },
-			{ "idType", "Custom"}
-		}},
+      { "identification", "submodel" },
 		{"kind", "Instance"},
 		{"modelType", { {"name" , "Submodel"} } },
 		{ "submodelElements" , {
@@ -118,10 +115,7 @@ protected:
 	// AAS
 	const json_t json_aas = json_t{
 		{ "idShort", "aas_1" },
-		{ "identification", {
-			{"id", "asset_admin_shell_1" },
-			{ "idType", "Custom"}
-		}},
+      { "identification", "asset_admin_shell_1" },
 		{"kind", "Instance"},
 		{"modelType", { {"name" , "AssetAdministrationShell"} } },
 		{ "submodels" , json_t::array({json_submodel}) }
@@ -211,14 +205,13 @@ TEST_F(JsonDeserializerTest, Submodel)
 
 	ASSERT_EQ(sm.getIdShort(), "sm_1");
 	ASSERT_EQ(sm.getIdentification().getId(), "submodel");
-	ASSERT_EQ(sm.getIdentification().getIdType(), KeyType::Custom);
 
 	ASSERT_EQ(sm.getSubmodelElements().size(), 2);
 };
 
 TEST_F(JsonDeserializerTest, RoundTripSubmodel)
 {
-	Submodel sm_in{ "sm", Identifier::Custom("submodel")};
+   Submodel sm_in{ "sm", Identifier("submodel")};
 	sm_in.getSubmodelElements().create<Property<int>>("intProp", 5000);
 	sm_in.getSubmodelElements().create<MultiLanguageProperty>("multiLangProp", langstringset_t{ {"EN", "example"}, {"DE", "beispiel"} });
 
@@ -234,8 +227,7 @@ TEST_F(JsonDeserializerTest, AssetAdministrationShell)
 	auto aas = basyx::serialization::json::deserialize_aas(json_aas);
 
 	ASSERT_EQ(aas.getIdShort(), "aas_1");
-	ASSERT_EQ(aas.getIdentification().getId(), "asset_admin_shell_1");
-	ASSERT_EQ(aas.getIdentification().getIdType(), KeyType::Custom);
+   ASSERT_EQ(aas.getIdentification().getId(), "asset_admin_shell_1");
 
 	ASSERT_EQ(aas.getSubmodels().size(), 1);
 };

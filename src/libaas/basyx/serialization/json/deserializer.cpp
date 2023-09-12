@@ -41,14 +41,6 @@ namespace basyx::serialization::json
 		return langstrings;
 	};
 
-	Identifier deserialize_identifier(const json_t & json)
-	{
-		std::string identifier = json["id"];
-		std::string idType = json["idType"];
-
-		return Identifier{KeyType_::from_string(idType), identifier};
-	};
-
 	template<typename Obj>
 	void deserialize_referable(const json_t & json, Obj & obj)
 	{
@@ -154,7 +146,7 @@ namespace basyx::serialization::json
 	Submodel deserialize_submodel(const json_t & json)
 	{
 		std::string idShort = json["idShort"];
-		auto identifier = deserialize_identifier(json["identification"]);
+      Identifier identifier = json["identification"];
 
 		Submodel submodel(std::move(idShort), std::move(identifier));
 
@@ -170,9 +162,9 @@ namespace basyx::serialization::json
 	AssetAdministrationShell deserialize_aas(const json_t & json)
 	{
 		std::string idShort = json["idShort"];
-		auto identifier = deserialize_identifier(json["identification"]);
+      Identifier identifier = json["identification"];
 
-		AssetAdministrationShell aas(idShort, identifier, basyx::AssetInformation(AssetKind::Instance));
+      AssetAdministrationShell aas(idShort, identifier, basyx::AssetInformation(AssetKind::Instance));
 
 		deserialize_referable(json, aas);
 

@@ -5,7 +5,6 @@
 #include <basyx/reference.h>
 #include <basyx/environment.h>
 #include <basyx/assetadministrationshell.h>
-#include <basyx/asset/asset.h>
 #include <basyx/asset/assetinformation.h>
 #include <basyx/submodel.h>
 
@@ -62,6 +61,22 @@ TEST_F(BaseTest, LangStringSet)
 
     ASSERT_EQ(*en, "test");
     ASSERT_EQ(*de, "test");
+}
+
+TEST_F(BaseTest, IdentifierTest)
+{
+   Identifier id("test");
+   ASSERT_EQ("test", id);
+
+   Identifier id2 = id;
+   ASSERT_EQ("test", id2);
+
+   Identifier id3 { "test3" };
+   ASSERT_EQ("test3", id3);
+
+   Identifier id4("test_bad");
+   id4.assign("test_good");
+   ASSERT_EQ("test_good", id4);
 }
 
 TEST_F(BaseTest, AutoKeyType)
@@ -262,12 +277,12 @@ TEST_F(BaseTest, SubmodelAddElements)
 {
 	using stringProp_t = Property<std::string>;
 
-	Submodel sm("sm1", Identifier::IRI("https://admin-shell.io/cpp#sm1"));
+   Submodel sm("sm1", Identifier("https://admin-shell.io/cpp#sm1"));
 	sm.setCategory("test");
 	sm.setSemanticId("0173-1#02-AAR972#002");
 	sm.setAdministration({ "1.0", "v2" });
 
-	Submodel sm2("sm2", Identifier::IRI("https://admin-shell.io/cpp#sm2"));
+   Submodel sm2("sm2", Identifier("https://admin-shell.io/cpp#sm2"));
 
 	sm.getSubmodelElements().add(Property<std::string>("testProperty1", "Yay a value!"));
 	sm.getSubmodelElements().add(Property<std::string>("testProperty2", "Values and values! :O"));
@@ -297,23 +312,17 @@ TEST_F(BaseTest, QualifierTest)
 
 TEST_F(BaseTest, AutoIdentifierTest)
 {
-	Asset asset{ "testAsset", "0173-1#02-AAR972#002" };
-	ASSERT_EQ(asset.getIdentification().getIdType(), KeyType::IRDI);
-
 	AssetAdministrationShell aas{ "aas", "https://admin-shell.io/aas", { AssetKind::Instance } };
-	ASSERT_EQ(aas.getIdentification().getIdType(), KeyType::IRI);
 
 	Submodel sm{ "sm", "test/sm1" };
-	ASSERT_EQ(sm.getIdentification().getIdType(), KeyType::Custom);
 }
 
 TEST_F(BaseTest, AssetInfTest)
 {
-	Asset asset{ "testAsset", Identifier::Custom("test") };
-
+   Identifier id("test");
 	AssetInformation assetInf{ AssetKind::Instance };
 
-	assetInf.setAsset(asset);
+   assetInf.setGlobalAssetId(id);
 };
 
 TEST_F(BaseTest, AssetAdministrationShell)
@@ -329,15 +338,13 @@ TEST_F(BaseTest, Environment)
 	env.getAssetAdministrationShells().add(
 		AssetAdministrationShell("aas", "https://admin-shell.io/aas", AssetInformation{ AssetKind::Instance })
 	);
-
-	env.getAssets().emplace_back(Asset("cppTestAsset", basyx::Identifier::Custom("cppTestAsset")));
 }
 
 TEST_F(BaseTest, AssetInfoInAas)
 {
-		Asset asset("cppTestAsset", basyx::Identifier::Custom("cppTestAsset"));
+      Identifier id("cppTestAsset");
 		AssetInformation assetinfo(basyx::AssetKind::Instance);
-		assetinfo.setAsset(asset);
+      assetinfo.setGlobalAssetId(id);
 
 		auto assetInfo2 = assetinfo;
 		AssetAdministrationShell aas("cppAas", "cppAas", assetinfo);

@@ -12,6 +12,7 @@ static const std::array<enum_pair_t, 3> string_to_enum =
 {
     std::make_pair("Type",  AssetKind::Type),
     std::make_pair("Instance", AssetKind::Instance),
+    std::make_pair("NotApplicable", AssetKind::NotApplicable),
 };
 
 AssetKind AssetKind_::from_string(util::string_view name)

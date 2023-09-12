@@ -216,7 +216,7 @@ TEST_F(ElementContainerTest, Submodel)
 	ElementContainer<Submodel> container;
 	ASSERT_EQ(container.size(), 0);
 
-	container.add(Submodel("sm", Identifier::Custom("test")));
+   container.add(Submodel("sm", Identifier("test")));
 	ASSERT_EQ(container.size(), 1);
 }
 
