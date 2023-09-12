@@ -103,17 +103,17 @@ TEST_F(BaseTest, LangStringSet)
 TEST_F(BaseTest, IdentifierTest)
 {
    Identifier id("test");
-   ASSERT_EQ("test", id);
+   ASSERT_EQ("test", id.getId());
 
    Identifier id2 = id;
-   ASSERT_EQ("test", id2);
+   ASSERT_EQ("test", id2.getId());
 
    Identifier id3 { "test3" };
-   ASSERT_EQ("test3", id3);
+   ASSERT_EQ("test3", id3.getId());
 
    Identifier id4("test_bad");
    id4.assign("test_good");
-   ASSERT_EQ("test_good", id4);
+   ASSERT_EQ("test_good", id4.getId());
 }
 
 TEST_F(BaseTest, AutoKeyType)
