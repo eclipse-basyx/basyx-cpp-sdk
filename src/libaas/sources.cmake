@@ -30,6 +30,7 @@ SET(SOURCE_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/identifier.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/identifierkeyvaluepair.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/key.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/labelType.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/langstringset.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/modeltype.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/qualifiable/qualifiable.cpp
@@ -104,6 +105,7 @@ SET(HEADER_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/identifier.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/identifierkeyvaluepair.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/key.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/labelType.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/langstringset.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/modeltype.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/qualifiable/qualifiable.h
