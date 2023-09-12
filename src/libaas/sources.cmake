@@ -3,6 +3,7 @@ SET(SOURCE_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/asset/assetinformation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/assetadministrationshell.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/basyx_enums.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/minMaxString.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/token.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/valuetypedefs.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/dataspecification/DataSpecification.cpp
@@ -70,6 +71,7 @@ SET(HEADER_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/copyable_base.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/elementcontainer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/elementvector.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/minMaxString.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/token.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/valuetypedefs.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/dataspecification/DataSpecification.h

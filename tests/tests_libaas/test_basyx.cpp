@@ -39,6 +39,43 @@ protected:
     }
 };
 
+TEST_F(BaseTest, MinMaxString) {
+   unsigned int min = 1;
+   unsigned int max = 3;
+
+   // Check if min size and content is honored
+   base::MinMaxString mmStr(min, max);
+   std::string s = "";
+   mmStr = s;
+   ASSERT_EQ(min, mmStr.length());
+   std::string cmp;
+   cmp+= base::STRING_PADDING;
+   ASSERT_STREQ(cmp.data(), mmStr.str().data());
+
+   // Check if max size is honored
+   base::MinMaxString mmStr2(min, max);
+   std::string s2;
+   s2.resize(max + 10);
+   mmStr2 = s2;
+   ASSERT_EQ(max, mmStr2.length());
+
+   // check if resizes does the right thing
+   base::MinMaxString mmStr3(min, max);
+   mmStr3.resize(3000);
+   ASSERT_EQ(max, mmStr3.length());
+
+   base::MinMaxString mmStr4(min, max);
+   mmStr4.resize(3000, ' ');
+   ASSERT_EQ(max, mmStr4.length());
+
+   // Lets assign a string and see if it is set correct
+   base::MinMaxString mmStr5(min, max);
+   std::string ste = "te";
+   mmStr5.assign(ste);
+   ASSERT_STREQ(ste.data(), mmStr5.str().data());
+
+}
+
 TEST_F(BaseTest, LangStringSet)
 {
     basyx::langstring_t l { "de", "test" };
