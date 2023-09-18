@@ -45,7 +45,7 @@ void serialize_helper(json_t & json, const HasSemantics & hasSemantics)
 
 void serialize_helper(json_t & json, const HasKind & hasKind)
 {
-	json["kind"] = ModelingKind_::to_string(hasKind.kind);
+   json["kind"] = ModelingKind_::to_string(hasKind.getKind());
 };
 
 void serialize_helper(json_t & json, const modeltype_base & modelType)

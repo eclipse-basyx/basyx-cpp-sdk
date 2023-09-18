@@ -345,13 +345,13 @@ void XMLDeSerializer::deSerializeHasKind(pugi::xml_node node,
    xml_node mk_node = findChildByName(node, XML_modelingKind);
    if (mk_node.root()) {
       std::string mk_str = deSerializeString(mk_node);
-      metamodelElement.kind = ModelingKind_::from_string(mk_str);
+      metamodelElement.setKind(ModelingKind_::from_string(mk_str));
    }
    /* As per spec:
     * "Default for an element is that it is representing an instance."
     */
    else
-      metamodelElement.kind = ModelingKind::Instance;
+      metamodelElement.setKind(ModelingKind::Instance);
 }
 
 template <typename X>
