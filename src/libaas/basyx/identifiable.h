@@ -15,10 +15,10 @@ class Identifiable : public Referable
 {
 private:
 	util::optional<AdministrativeInformation> administration;
-	Identifier identification;
+   Identifier id;
 public:
-	Identifiable(util::string_view idShort, util::string_view id) : Referable(idShort), identification(id) {};
-	Identifiable(util::string_view idShort, Identifier identification) : Referable(idShort), identification(std::move(identification)) {};
+   Identifiable(util::string_view idShort, util::string_view id) : Referable(idShort), id(id) {};
+   Identifiable(util::string_view idShort, Identifier id) : Referable(idShort), id(std::move(id)) {};
 
 	Identifiable(const Identifiable&) = default;
 	Identifiable(Identifiable&&) = default;
@@ -32,8 +32,8 @@ public:
 	util::optional<AdministrativeInformation> & getAdministration() { return administration; };
 	void setAdministration(AdministrativeInformation administrativeInformation) { this->administration = std::move(administrativeInformation); }
 
-	const Identifier & getIdentification() const { return identification; };
-	void setIdentification(Identifier identifier) { this->identification = std::move(identifier); };
+   const Identifier & getId() const { return id; };
+   void setId(Identifier id) { this->id = std::move(id); };
 };
 
 };

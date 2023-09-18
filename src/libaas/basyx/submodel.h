@@ -38,12 +38,12 @@ public:
 	Submodel(util::string_view idShort, util::string_view identifier) : Identifiable(idShort, Identifier(identifier)) {};
 	Submodel(util::string_view idShort, Identifier identifier) : Identifiable(idShort, std::move(identifier)) {};
 public:
-   Submodel(const Submodel &sm) : Identifiable(sm.getIdShort(), std::move(sm.getIdentification().getId())) {
+   Submodel(const Submodel &sm) : Identifiable(sm.getIdShort(), std::move(sm.getId().getId())) {
       this->submodelElements.append(sm.getSubmodelElements());
    };
 
    Submodel& operator=(const Submodel &sm) {
-      this->Identifiable::setIdentification(sm.getIdentification());
+      this->Identifiable::setId(sm.getId());
       this->getIdShort() = sm.getIdShort();
       this->submodelElements.append(sm.getSubmodelElements());
       return *this;
@@ -61,8 +61,8 @@ public:
 	void setSubmodelElements(ElementContainer<SubmodelElement> elements) { this->submodelElements = std::move(elements); };
 
    // Identifiable - special purpose
-   void setIdentification(Token<Deserializer> t, Identifier identifier) {
-      this->Identifiable::setIdentification(identifier);
+   void setId(Token<Deserializer> t, Identifier id) {
+      this->Identifiable::setId(id);
    }
 };
 

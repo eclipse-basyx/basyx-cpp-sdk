@@ -283,7 +283,7 @@ void XMLDeSerializer::deSerializeIdentifiable(xml_node node,
    xml_node ident_node = findChildByName(node, XML_identification);
    if (ident_node.root()) {
       Identifier ident = deSerializeIdentifier(ident_node);
-      metamodelElement.setIdentification(ds->getToken(), ident);
+      metamodelElement.setId(ds->getToken(), ident);
    }
 }
 

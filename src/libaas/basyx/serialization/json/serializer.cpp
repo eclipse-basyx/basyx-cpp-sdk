@@ -239,7 +239,7 @@ void serialize_helper(json_t & json, const Identifiable & identifiable)
 {
 	serialize_helper_h<Referable>(json, identifiable);
 
-	json["identification"] = serialize(identifiable.getIdentification());
+   json["identification"] = serialize(identifiable.getId());
 
 	if (identifiable.getAdministration())
 		json["administration"] = serialize(*identifiable.getAdministration());
