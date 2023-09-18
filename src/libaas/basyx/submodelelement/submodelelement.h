@@ -20,7 +20,6 @@ namespace basyx
 
 class SubmodelElement :
    public Referable,
-   public HasKind,
    public HasSemantics,
    public Qualifiable,
    public HasDataSpecification,
