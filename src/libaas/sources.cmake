@@ -37,7 +37,7 @@ SET(SOURCE_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/referable.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/reference.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/semantics/conceptdescription.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/semantics/hasdataspecification.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/semantics/hasDataSpecification.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/json/deserializer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/json/serializer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/private/deserializer_priv.cpp
@@ -115,7 +115,7 @@ SET(HEADER_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/referable.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/reference.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/semantics/conceptdescription.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/semantics/hasdataspecification.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/semantics/hasDataSpecification.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/base/serialization.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/json/deserializer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/json/serializer.h
