@@ -9,6 +9,7 @@
 #include <basyx/submodel.h>
 #include <basyx/reference.h>
 #include <basyx/identifiable.h>
+#include <basyx/semantics/hasDataSpecification.h>
 
 #include <basyx/util/optional/optional.hpp>
 
@@ -23,8 +24,9 @@ using Security = int;
 //using AssetInformation = int;
 // --------------------------
 
-class AssetAdministrationShell : 
-	public Identifiable, 
+class AssetAdministrationShell :
+   public Identifiable,
+   public HasDataSpecification,
    public ModelType<ModelTypes::AssetAdministrationShell>,
    private Identifiable::Copyable<AssetAdministrationShell>
 {
