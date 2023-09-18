@@ -1,6 +1,6 @@
 #pragma once
 
-#include <basyx/administrative_information.h>
+#include <basyx/administrativeInformation.h>
 #include <basyx/identifier.h>
 #include <basyx/referable.h>
 

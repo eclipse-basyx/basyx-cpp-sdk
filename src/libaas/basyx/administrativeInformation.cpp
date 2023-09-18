@@ -1,4 +1,4 @@
-#include "administrative_information.h"
+#include <basyx/administrativeInformation.h>
 
 namespace basyx
 {

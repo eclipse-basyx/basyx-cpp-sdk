@@ -1,5 +1,5 @@
 SET(SOURCE_FILES_BASYX_AAS
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/administrative_information.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/administrativeInformation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/asset/assetinformation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/assetadministrationshell.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/basyx_enums.cpp
@@ -65,7 +65,7 @@ SET(SOURCE_FILES_BASYX_AAS
 )
 
 SET(HEADER_FILES_BASYX_AAS
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/administrative_information.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/administrativeInformation.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/asset/assetinformation.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/assetadministrationshell.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/basyx_enum_base.h

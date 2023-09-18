@@ -159,14 +159,22 @@ void serialize_helper(json_t & json, const Capability & capability)
 
 void serialize_helper(json_t & json, const AdministrativeInformation & administrativeInformation)
 {
-	auto & version = administrativeInformation.get_version();
-	auto & revision = administrativeInformation.get_revision();
+   auto & version = administrativeInformation.getVersion();
+   auto & revision = administrativeInformation.getRevision();
+   auto & creator = administrativeInformation.getCreator();
+   auto & templateId = administrativeInformation.getTemplateId();
 
-	if(version)
-		json["version"] = *version;
+   if(version)
+      json["version"] = version->get();
 
-	if(revision)
-		json["revision"] = *revision;
+   if(revision)
+      json["revision"] = revision->get();
+
+   if (creator)
+      json["creator"] = serialize(creator.value());
+
+   if (templateId)
+      json["templateId"] = serialize(templateId.value());
 };
 
 void serialize_helper(json_t & json, const ReferenceElement & ref_element)
