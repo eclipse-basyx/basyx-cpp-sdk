@@ -15,6 +15,8 @@
 
 #include <basyx/base/elementcontainer.h>
 
+#include <basyx/semantics/hasDataSpecification.h>
+
 #include <initializer_list>
 #include <vector>
 #include <string>
@@ -27,8 +29,9 @@ using namespace basyx::serialization::priv;
 	
 class Submodel : 
    public Identifiable,
-	public HasKind, 
+   public HasKind,
 	public HasSemantics,
+   public HasDataSpecification,
    public ModelType<ModelTypes::Submodel>,
    private Identifiable::Copyable<Submodel>
 {
