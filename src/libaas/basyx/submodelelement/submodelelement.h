@@ -11,6 +11,7 @@
 #include <basyx/util/string_view/string_view.hpp>
 
 #include <basyx/semantics/hasDataSpecification.h>
+#include <basyx/qualifiable/qualifiable.h>
 
 #include <string>
 
@@ -21,6 +22,7 @@ class SubmodelElement :
    public Referable,
    public HasKind,
    public HasSemantics,
+   public Qualifiable,
    public HasDataSpecification,
    public virtual serialization::serializable_base
 {
