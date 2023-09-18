@@ -61,6 +61,7 @@ SET(SOURCE_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodelelement/relationshipelement.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodelelement/submodelelement.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodelelement/submodelelementcollection.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/versionRevisionType.cpp
 )
 
 SET(HEADER_FILES_BASYX_AAS
@@ -145,4 +146,5 @@ SET(HEADER_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodelelement/relationshipelement.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodelelement/submodelelement.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodelelement/submodelelementcollection.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/versionRevisionType.h
 )

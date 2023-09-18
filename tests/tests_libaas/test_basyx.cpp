@@ -18,6 +18,8 @@
 #include <basyx/submodelelement/submodelelementcollection.h>
 #include <basyx/submodelelement/entity.h>
 
+#include <basyx/versionRevisionType.h>
+
 #include <type_traits>
 
 #include <basyx/base/basyx_enum_base.h>
@@ -74,6 +76,18 @@ TEST_F(BaseTest, MinMaxString) {
    mmStr5.assign(ste);
    ASSERT_STREQ(ste.data(), mmStr5.str().data());
 
+}
+
+TEST_F(BaseTest, VersionRevisionType)
+{
+   VersionRevisionType vrt1("22");
+   ASSERT_STREQ("22", vrt1.str().data());
+
+   VersionRevisionType vrt2("Bad");
+   ASSERT_STREQ("0", vrt2.str().data());
+
+   VersionRevisionType vrt3("1234567890");
+   ASSERT_STREQ("1234", vrt3.str().data());
 }
 
 TEST_F(BaseTest, LangStringSet)
