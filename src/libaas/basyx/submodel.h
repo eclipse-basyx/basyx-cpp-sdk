@@ -16,6 +16,7 @@
 #include <basyx/base/elementcontainer.h>
 
 #include <basyx/semantics/hasDataSpecification.h>
+#include <basyx/qualifiable/qualifiable.h>
 
 #include <initializer_list>
 #include <vector>
@@ -30,7 +31,8 @@ using namespace basyx::serialization::priv;
 class Submodel : 
    public Identifiable,
    public HasKind,
-	public HasSemantics,
+   public HasSemantics,
+   public Qualifiable,
    public HasDataSpecification,
    public ModelType<ModelTypes::Submodel>,
    private Identifiable::Copyable<Submodel>
