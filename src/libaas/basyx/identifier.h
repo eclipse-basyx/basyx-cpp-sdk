@@ -1,18 +1,21 @@
 #ifndef IDENTIFIER_H
 #define IDENTIFIER_H
 
-#include <string>
+#include <basyx/base/minMaxString.h>
 #include <basyx/util/string_view/string_view.hpp>
 
 namespace basyx
 {
 
-class Identifier: public std::string {
+class Identifier: public base::MinMaxString {
+   static const unsigned int minLenght = 1;
+   static const unsigned int maxLenght = 2000;
 public:
-   Identifier() = default;
+   Identifier() : base::MinMaxString(minLenght, maxLenght) {}
    Identifier(const Identifier&) = default;
-   Identifier(const basyx::util::string_view &v) {
-      std::string::operator=(v.to_string());
+   Identifier(const basyx::util::string_view &v):
+      base::MinMaxString(minLenght, maxLenght) {
+      base::MinMaxString::operator=(v.to_string());
    }
    Identifier(Identifier&&) = default;
 

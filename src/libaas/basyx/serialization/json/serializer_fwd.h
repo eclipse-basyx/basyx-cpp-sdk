@@ -12,7 +12,7 @@ namespace basyx
 	class Referable;
 	class Identifiable;
 	class Identifier;
-	class IdentifierKeyValuePair;
+   class SpecificAssetId;
 	class modeltype_base;
 	class AssetAdministrationShell;
 	class MultiLanguageProperty;
@@ -50,7 +50,7 @@ namespace basyx::serialization::json
 	void serialize_helper(json_t & json, const modeltype_base &);
 	void serialize_helper(json_t & json, const AssetInformation &);
 	void serialize_helper(json_t & json, const Identifier &);
-	void serialize_helper(json_t & json, const IdentifierKeyValuePair &);
+   void serialize_helper(json_t & json, const SpecificAssetId &);
 	void serialize_helper(json_t & json, const AdministrativeInformation&);
 	void serialize_helper(json_t & json, const Referable&);
 	void serialize_helper(json_t & json, const Identifiable&);

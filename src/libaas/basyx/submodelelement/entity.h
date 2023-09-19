@@ -4,7 +4,7 @@
 #include <basyx/enums/EntityType.h>
 #include <basyx/submodelelement/submodelelement.h>
 #include <basyx/serialization/serializable.h>
-#include <basyx/identifierkeyvaluepair.h>
+#include <basyx/specificAssetId.h>
 #include <basyx/modeltype.h>
 
 namespace basyx
@@ -21,7 +21,7 @@ private:
 	statementList_t statement;
 	EntityType entityType;
 	util::optional<Reference> globalAssetId;
-	util::optional<IdentifierKeyValuePair> specificAssetId;
+   util::optional<SpecificAssetId> specificAssetId;
 public:
 	Entity(util::string_view idShort) : DataElement(idShort) {};
 
@@ -43,8 +43,8 @@ public:
 	statementList_t & getStatement() { return this->statement; };
 	void setStatement(statementList_t statement) { this->statement = std::move(statement); };
 
-	const util::optional<IdentifierKeyValuePair> & getSpecificAssetId() const { return this->specificAssetId; };
-	void setSpecificAssetId(IdentifierKeyValuePair specificAssetId) { this->specificAssetId = std::move(specificAssetId); };
+   const util::optional<SpecificAssetId> & getSpecificAssetId() const { return this->specificAssetId; };
+   void setSpecificAssetId(SpecificAssetId specificAssetId) { this->specificAssetId = std::move(specificAssetId); };
 };
 
 }
