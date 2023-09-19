@@ -17,6 +17,9 @@
 #include <basyx/submodelelement/range.h>
 #include <basyx/submodelelement/submodelelementcollection.h>
 #include <basyx/submodelelement/entity.h>
+#include <basyx/submodel.h>
+
+#include <basyx/versionRevisionType.h>
 
 #include <type_traits>
 
@@ -74,6 +77,18 @@ TEST_F(BaseTest, MinMaxString) {
    mmStr5.assign(ste);
    ASSERT_STREQ(ste.data(), mmStr5.str().data());
 
+}
+
+TEST_F(BaseTest, VersionRevisionType)
+{
+   VersionRevisionType vrt1("22");
+   ASSERT_STREQ("22", vrt1.str().data());
+
+   VersionRevisionType vrt2("Bad");
+   ASSERT_STREQ("0", vrt2.str().data());
+
+   VersionRevisionType vrt3("1234567890");
+   ASSERT_STREQ("1234", vrt3.str().data());
 }
 
 TEST_F(BaseTest, LangStringSet)
@@ -171,7 +186,6 @@ TEST_F(BaseTest, MultiLangProp)
     ASSERT_EQ(*ls1, "example");
     ASSERT_EQ(*ls2, "beispiel");
 
-    mlp.kind = basyx::ModelingKind::Instance;
 };
 
 TEST_F(BaseTest, Enum)
@@ -189,11 +203,11 @@ TEST_F(BaseTest, Enum)
 
 TEST_F(BaseTest, HasKind)
 {
-    auto mlp = std::make_unique<MultiLanguageProperty>("test");
+    Submodel sm("test",Identifier("testId"));
+    sm.setKind(ModelingKind::Template);
 
-    mlp->kind = ModelingKind::Template;
-    HasKind* has_kind = mlp.get();
-    has_kind->kind = ModelingKind::Instance;
+    HasKind has_kind = static_cast<HasKind>(sm);
+    ASSERT_EQ(ModelingKind::Template, has_kind.getKind());
 };
 
 TEST_F(BaseTest, RangeTest)

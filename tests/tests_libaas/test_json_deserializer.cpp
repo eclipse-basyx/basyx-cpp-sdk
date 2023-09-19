@@ -204,7 +204,7 @@ TEST_F(JsonDeserializerTest, Submodel)
 	auto sm = basyx::serialization::json::deserialize_submodel(json_submodel);
 
 	ASSERT_EQ(sm.getIdShort(), "sm_1");
-	ASSERT_EQ(sm.getIdentification().getId(), "submodel");
+   ASSERT_EQ(sm.getId().getId(), "submodel");
 
 	ASSERT_EQ(sm.getSubmodelElements().size(), 2);
 };
@@ -227,7 +227,7 @@ TEST_F(JsonDeserializerTest, AssetAdministrationShell)
 	auto aas = basyx::serialization::json::deserialize_aas(json_aas);
 
 	ASSERT_EQ(aas.getIdShort(), "aas_1");
-   ASSERT_EQ(aas.getIdentification().getId(), "asset_admin_shell_1");
+   ASSERT_EQ(aas.getId().getId(), "asset_admin_shell_1");
 
 	ASSERT_EQ(aas.getSubmodels().size(), 1);
 };

@@ -9,6 +9,7 @@
 #include <basyx/submodel.h>
 #include <basyx/reference.h>
 #include <basyx/identifiable.h>
+#include <basyx/semantics/hasDataSpecification.h>
 
 #include <basyx/util/optional/optional.hpp>
 
@@ -23,8 +24,9 @@ using Security = int;
 //using AssetInformation = int;
 // --------------------------
 
-class AssetAdministrationShell : 
-	public Identifiable, 
+class AssetAdministrationShell :
+   public Identifiable,
+   public HasDataSpecification,
    public ModelType<ModelTypes::AssetAdministrationShell>,
    private Identifiable::Copyable<AssetAdministrationShell>
 {
@@ -41,7 +43,7 @@ public:
 		: Identifiable(idShort, Identifier(id)), assetInformation(std::move(assetInformation)) {};
 public:
    AssetAdministrationShell(const AssetAdministrationShell &aas):
-      Identifiable(aas.getIdShort(), std::move(aas.getIdentification())),
+      Identifiable(aas.getIdShort(), std::move(aas.getId())),
       assetInformation(aas.getAssetInformation()) {
       this->submodels.append(aas.getSubmodels());
 
@@ -53,7 +55,7 @@ public:
    }
 
    AssetAdministrationShell& operator=(const AssetAdministrationShell &aas) {
-      this->Identifiable::setIdentification(aas.getIdentification());
+      this->Identifiable::setId(aas.getId());
       this->getIdShort() = aas.getIdShort();
       this->submodels.append(aas.getSubmodels());
 
@@ -83,8 +85,8 @@ public:
    void setSubmodels(ElementContainer<Submodel> submodels) { this->submodels = std::move(submodels); };
 
    // Identifiable - special purpose
-   void setIdentification(Token<Deserializer> t, Identifier identifier) {
-      this->Identifiable::setIdentification(identifier);
+   void setId(Token<Deserializer> t, Identifier id) {
+      this->Identifiable::setId(id);
    }
 };
 

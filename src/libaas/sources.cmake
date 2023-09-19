@@ -1,5 +1,5 @@
 SET(SOURCE_FILES_BASYX_AAS
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/administrative_information.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/administrativeInformation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/asset/assetinformation.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/assetadministrationshell.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/basyx_enums.cpp
@@ -37,7 +37,7 @@ SET(SOURCE_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/referable.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/reference.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/semantics/conceptdescription.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/semantics/hasdataspecification.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/semantics/hasDataSpecification.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/json/deserializer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/json/serializer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/private/deserializer_priv.cpp
@@ -61,10 +61,11 @@ SET(SOURCE_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodelelement/relationshipelement.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodelelement/submodelelement.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodelelement/submodelelementcollection.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/versionRevisionType.cpp
 )
 
 SET(HEADER_FILES_BASYX_AAS
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/administrative_information.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/administrativeInformation.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/asset/assetinformation.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/assetadministrationshell.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/base/basyx_enum_base.h
@@ -114,7 +115,7 @@ SET(HEADER_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/referable.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/reference.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/semantics/conceptdescription.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/semantics/hasdataspecification.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/semantics/hasDataSpecification.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/base/serialization.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/json/deserializer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/serialization/json/serializer.h
@@ -145,4 +146,5 @@ SET(HEADER_FILES_BASYX_AAS
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodelelement/relationshipelement.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodelelement/submodelelement.h
     ${CMAKE_CURRENT_SOURCE_DIR}/basyx/submodelelement/submodelelementcollection.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/basyx/versionRevisionType.h
 )

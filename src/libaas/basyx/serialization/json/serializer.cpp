@@ -45,7 +45,7 @@ void serialize_helper(json_t & json, const HasSemantics & hasSemantics)
 
 void serialize_helper(json_t & json, const HasKind & hasKind)
 {
-	json["kind"] = ModelingKind_::to_string(hasKind.kind);
+   json["kind"] = ModelingKind_::to_string(hasKind.getKind());
 };
 
 void serialize_helper(json_t & json, const modeltype_base & modelType)
@@ -159,14 +159,22 @@ void serialize_helper(json_t & json, const Capability & capability)
 
 void serialize_helper(json_t & json, const AdministrativeInformation & administrativeInformation)
 {
-	auto & version = administrativeInformation.get_version();
-	auto & revision = administrativeInformation.get_revision();
+   auto & version = administrativeInformation.getVersion();
+   auto & revision = administrativeInformation.getRevision();
+   auto & creator = administrativeInformation.getCreator();
+   auto & templateId = administrativeInformation.getTemplateId();
 
-	if(version)
-		json["version"] = *version;
+   if(version)
+      json["version"] = version->get();
 
-	if(revision)
-		json["revision"] = *revision;
+   if(revision)
+      json["revision"] = revision->get();
+
+   if (creator)
+      json["creator"] = serialize(creator.value());
+
+   if (templateId)
+      json["templateId"] = serialize(templateId.value());
 };
 
 void serialize_helper(json_t & json, const ReferenceElement & ref_element)
@@ -239,7 +247,7 @@ void serialize_helper(json_t & json, const Identifiable & identifiable)
 {
 	serialize_helper_h<Referable>(json, identifiable);
 
-	json["identification"] = serialize(identifiable.getIdentification());
+   json["identification"] = serialize(identifiable.getId());
 
 	if (identifiable.getAdministration())
 		json["administration"] = serialize(*identifiable.getAdministration());

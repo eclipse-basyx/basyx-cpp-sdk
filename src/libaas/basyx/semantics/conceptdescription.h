@@ -7,7 +7,7 @@
 #include <basyx/util/container/container.hpp>
 
 #include <basyx/identifiable.h>
-#include <basyx/semantics/hasdataspecification.h>
+#include <basyx/semantics/hasDataSpecification.h>
 
 #include <initializer_list>
 #include <vector>
