@@ -36,6 +36,7 @@ public:
    MinMaxString& operator=(const MinMaxString& str) noexcept;
    MinMaxString& operator=(const basyx::util::string_view& str) noexcept;
    MinMaxString& operator=(const std::string& str) noexcept;
+   std::string operator*() noexcept;
    //MinMaxString& operator=(MinMaxString &) noexcept = default;
 
    bool operator==(const std::string& rhs) {

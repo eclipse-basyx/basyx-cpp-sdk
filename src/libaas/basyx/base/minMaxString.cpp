@@ -15,6 +15,11 @@ MinMaxString &MinMaxString::operator=(const MinMaxString &str) noexcept {
    return *this;
 }
 
+std::string MinMaxString::operator*() noexcept {
+   return this->str();
+
+}
+
 MinMaxString &MinMaxString::operator=(const basyx::util::string_view& str) noexcept {
    replace(str.to_string());
    return *this;

@@ -53,7 +53,7 @@ TEST_F(BaseTest, MinMaxString) {
    ASSERT_EQ(min, mmStr.length());
    std::string cmp;
    cmp+= base::STRING_PADDING;
-   ASSERT_STREQ(cmp.data(), mmStr.str().data());
+   ASSERT_STREQ(cmp.data(), (*mmStr).data());
 
    // Check if max size is honored
    base::MinMaxString mmStr2(min, max);
@@ -77,6 +77,10 @@ TEST_F(BaseTest, MinMaxString) {
    mmStr5.assign(ste);
    ASSERT_STREQ(ste.data(), mmStr5.str().data());
 
+
+   base::MinMaxString mmStr6(min, max);
+   mmStr6.assign("bla");
+   std::string base = *mmStr6;
 }
 
 TEST_F(BaseTest, VersionRevisionType)
